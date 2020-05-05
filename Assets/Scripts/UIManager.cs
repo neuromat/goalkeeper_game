@@ -1455,8 +1455,7 @@ public class UIManager : MonoBehaviour
 						anim321.enabled = true;
 						anim321.SetTrigger ("anim321");
 						animCountDown = true;
-//						StartCoroutine (WaitThenDoThings (3.2f)); //170417 era 3.4 mas havia uam latência extra; a animacao dura exatos 3s
-						StartCoroutine (WaitThenDoThings (2.7f)); //170417 era 3.4 mas havia uam latência extra; a animacao dura exatos 3s
+						StartCoroutine (WaitThenDoThings (3.2f)); //170417 era 3.4 mas havia uam latência extra; a animacao dura exatos 3s
 					}
 				}
 			}
@@ -1523,6 +1522,7 @@ public class UIManager : MonoBehaviour
 	{
 		float tempoJogo;
 
+		time = 0.5f;
 		yield return new WaitForSeconds(time);
 
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
