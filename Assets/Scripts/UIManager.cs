@@ -243,11 +243,18 @@ public class UIManager : MonoBehaviour
 		float tempoJogo;
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
-	//	Debug.Log("@BtnActionGetEvent:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
-	//	//Debug.Log("movementTimeA = "+ movementTimeA);
-	//	//Debug.Log("decisionTimeA = "+ decisionTimeA);
-	//	Debug.Log("@BtnActionGetEvent:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-	//	Debug.Log("@BtnActionGetEvent:++++ tempoJogo = "+ tempoJogo);
+		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
+		if (!(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) ||
+		      Input.GetKey(KeyCode.RightArrow))) {
+			Debug.Log("Mouse key is held down");
+			return;
+		}
+
+		// Debug.Log("@BtnActionGetEvent:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
+		// Debug.Log("movementTimeA = "+ movementTimeA);
+		// Debug.Log("decisionTimeA = "+ decisionTimeA);
+		// Debug.Log("@BtnActionGetEvent:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
+		// Debug.Log("@BtnActionGetEvent:++++ tempoJogo = "+ tempoJogo);
 
 		RandomEvent eLog = new RandomEvent ();
 		eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
@@ -1522,7 +1529,7 @@ public class UIManager : MonoBehaviour
 	{
 		float tempoJogo;
 
-		time = 0.5f;
+		time = 0.3f;
 		yield return new WaitForSeconds(time);
 
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
