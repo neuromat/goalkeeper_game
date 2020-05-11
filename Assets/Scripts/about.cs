@@ -1,4 +1,4 @@
-﻿/**************************************************************************************/
+/**************************************************************************************/
 //  Module written by Josi Perez <josiperez.neuromat@gmail.com> (jun/18)
 //
 //	Responsible for show About details for Goalkeeper Game;

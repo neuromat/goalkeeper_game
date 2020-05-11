@@ -1,4 +1,4 @@
-﻿/**************************************************************************************/
+/**************************************************************************************/
 // Module written by Roberto Parente
 //  
 // Responsible for search all the time, for result files not sent to the server at game time

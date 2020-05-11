@@ -1,4 +1,4 @@
-﻿/**************************************************************************************/
+/**************************************************************************************/
 //  Module written by Josi Perez <josiperez.neuromat@gmail.com> (abr/17)
 //
 //	Responsible for declare the menu structure in configuration files

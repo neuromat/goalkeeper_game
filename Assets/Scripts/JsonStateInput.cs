@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;  //180614 convert "0.7" was giving 7...
 
 public class JsonStateInput
