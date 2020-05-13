@@ -1,4 +1,4 @@
-/************************************************************************************/
+﻿/************************************************************************************/
 // Module written by scaroni <renato.scaroni@gmail.com>
 // Rewrited by Josi Perez <josiperez.neuromat@gmail.com>
 //
@@ -53,8 +53,7 @@ public class LoadStages : MonoBehaviour
     //171124 same for iOS
     public static readonly string androidTreesServerLocation = "game.numec.prp.usp.br/game/CustomTreesANDROID/";
 	public static readonly string iosTreesServerLocation = "game.numec.prp.usp.br/game/CustomTreesIOS/";
-	public static readonly string webProtocol = "http://";
-
+	public static readonly string webProtocol = "https://";
 
 	//180126 Link https://www.myip.com/api-docs/
 	//       {"ip":"66.249.75.9","country":"United States","cc":"US"}

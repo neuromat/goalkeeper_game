@@ -115,12 +115,16 @@ public class GameFlowManager : MonoBehaviour
 
     public GameObject scrTutorial;        //180626 temporarily screen gameTutorial; will be changed for an Magara art
                                           //180626 TMP are called as gameObjects
+										  
+	public GameObject scrTelas;
+	
     private LocalizationManager translate;    //171006 trazer script das rotinas de translation
     public GameObject txtTut1;                //171006 elementos para traduzir na tela de Menu
     public GameObject txtTut2;
     public GameObject txtTut3;
     public GameObject txtTut4;
 	//public GameObject txtTut5;
+
     public Text txtTut5;
     public Text txtJogo;
     public Text txtMenu;
@@ -545,7 +549,7 @@ public class GameFlowManager : MonoBehaviour
         quitGameMenu.SetActive(false);
         bmGameOver.SetActive(false);    //170925 start without gameOver
         bmGameLover.SetActive(false);    //180321 start without gameLover
-
+scrTutorial.SetActive(true);
 
         //171006 declarar a instance para permitir chamar rotinas do outro script
         translate = LocalizationManager.instance;
@@ -556,14 +560,17 @@ public class GameFlowManager : MonoBehaviour
         //txtTut2.text = translate.getLocalizedValue("tut2").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
         //txtTut3.text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
         //txtTut4.text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
+        
         txtTut5.text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
+        txtTut5.fontSize = 14;
+        
         //180627 from UiText to TMPro
         txtTut1.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");
         txtTut2.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut2").Replace("\\n", "\n");
         txtTut3.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");
         txtTut4.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");
-		//txtTut5.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");
-
+		// txtTut5.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");
+       
         txtJogo.text = translate.getLocalizedValue("jogo");
         txtMenu.text = PlayerPrefs.GetString("teamSelected") + " : " + translate.getLocalizedValue("menu");
         txtSair.text = translate.getLocalizedValue("sair1");
@@ -581,67 +588,66 @@ public class GameFlowManager : MonoBehaviour
 
         //170311 validar arq conf ======================================
         errorNumber = probCalculator.configValidation();
-        // if (errorNumber != 0 || uiManager.diagSerial == 2)
-        // { //180105 besides configvalidation, test if serial open in a defined port
-        //
-        //     //171009 translate frases de erro
-        //     //171122 iOS (iPad/iPhone) + change order to avoid negatives
-        //     txtHeader.text = translate.getLocalizedValue("errHeader");
-        //     if ((Application.platform == RuntimePlatform.Android) ||
-        //         (Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
-        //     {
-        //         txtExit.text = translate.getLocalizedValue("toqueErrExit");
-        //     }
-        //     else
-        //     {
-        //         txtExit.text = translate.getLocalizedValue("aperteErrExit");
-        //     }
-        //
-        //     errorMessages.SetActive(true);
-        //     txtMessage.text = string.Empty;
-        //     //---
-        //     //180105
-        //     if (errorNumber - 64 >= 0)
-        //     {
-        //         //txtMessage.text = "O parâmetro 'sendMarkersToEEG' aceita apenas os valores serial, parallel ou none)";
-        //         showErrorMessage("err05", 64);
-        //     }
-        //     //---
-        //     //180105
-        //     if (errorNumber - 32 >= 0 || uiManager.diagSerial == 2)
-        //     {
-        //         //txtMessage.text = "'sendMarkersToEEG' indica envio pela serial, mas falta indicar a porta em 'portEEGserial'";
-        //         showErrorMessage("err06", 32);
-        //     }
-        //     //---
-        //     if (errorNumber - 16 >= 0)
-        //     {
-        //         //txtMessage.text = "O parâmetro 'menus' está inexistente ou inválido (falta associar o primeiro item de menu ou este aparece mais de uma vez)";
-        //         showErrorMessage("err04", 16);
-        //     }
-        //     //---
-        //     if (errorNumber - 8 >= 0)
-        //     {
-        //         //txtMessage.text = "- Nos arquivos de configuração, o parâmetro ID está com o mesmo nome em fases diferentes - o ID deve ser único em cada um deles.";
-        //         showErrorMessage("err01", 8);
-        //     }
-        //     //---
-        //     if (errorNumber - 4 >= 0)
-        //     {
-        //         //txtMessage.text = "- Faltam parâmetros de configuração: executável do Jogo incompatível com a definição dos times."; 
-        //         showErrorMessage("err02", 4);
-        //     }
-        //     //---
-        //    // if (errorNumber - 2 >= 0)
-        //    // {
-        //    //     //txtMessage.text = "- O envio de marcadores ao EEG através da porta paralela só está válido para ambientes Windows 32bits (parâmetro sendMarkersToEEG)."; 
-        //    //     showErrorMessage("err03", 2);
-        //    // }
-        //     waitingKeyToExit = true;  //aparece o quadro de erros e aguarda tecla para sair;
-        // }
+/*        if (errorNumber != 0 || uiManager.diagSerial == 2)
+        { //180105 besides configvalidation, test if serial open in a defined port
 
+            //171009 translate frases de erro
+            //171122 iOS (iPad/iPhone) + change order to avoid negatives
+            txtHeader.text = translate.getLocalizedValue("errHeader");
+            if ((Application.platform == RuntimePlatform.Android) ||
+                (Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
+            {
+                txtExit.text = translate.getLocalizedValue("toqueErrExit");
+            }
+            else
+            {
+                txtExit.text = translate.getLocalizedValue("aperteErrExit");
+            }
+
+            errorMessages.SetActive(true);
+            txtMessage.text = string.Empty;
+            //---
+            //180105
+           // if (errorNumber - 64 >= 0)
+           // {
+           //     //txtMessage.text = "O parâmetro 'sendMarkersToEEG' aceita apenas os valores serial, parallel ou none)";
+           //     showErrorMessage("err05", 64);
+           // }
+            //---
+            //180105
+            if (errorNumber - 32 >= 0 || uiManager.diagSerial == 2)
+            {
+                //txtMessage.text = "'sendMarkersToEEG' indica envio pela serial, mas falta indicar a porta em 'portEEGserial'";
+                showErrorMessage("err06", 32);
+            }
+            //---
+            if (errorNumber - 16 >= 0)
+            {
+                //txtMessage.text = "O parâmetro 'menus' está inexistente ou inválido (falta associar o primeiro item de menu ou este aparece mais de uma vez)";
+                showErrorMessage("err04", 16);
+            }
+            //---
+            if (errorNumber - 8 >= 0)
+            {
+                //txtMessage.text = "- Nos arquivos de configuração, o parâmetro ID está com o mesmo nome em fases diferentes - o ID deve ser único em cada um deles.";
+                showErrorMessage("err01", 8);
+            }
+            //---
+            if (errorNumber - 4 >= 0)
+            {
+                //txtMessage.text = "- Faltam parâmetros de configuração: executável do Jogo incompatível com a definição dos times."; 
+                showErrorMessage("err02", 4);
+            }
+            //---
+           // if (errorNumber - 2 >= 0)
+           // {
+           //     //txtMessage.text = "- O envio de marcadores ao EEG através da porta paralela só está válido para ambientes Windows 32bits (parâmetro sendMarkersToEEG)."; 
+           //     showErrorMessage("err03", 2);
+           // }
+            waitingKeyToExit = true;  //aparece o quadro de erros e aguarda tecla para sair;
+        }
+*/
         //=============================================================
-
 
         //Josi; onClick nao funciona no betweenLevels; ideia em https://docs.unity3d.com/ScriptReference/UI.Button-onClick.html
         Button btnNextLevel = nextLevel.GetComponent<Button>();
@@ -714,7 +720,6 @@ public class GameFlowManager : MonoBehaviour
                     go.GetComponentInChildren<Text>().text = translate.getLocalizedValue(gameN).Replace("\\n", "\n");
                     go.name = translate.getLocalizedValue(gameN);
                     go.GetComponentInChildren<Text>().color = new Color32(255, 255, 255, 220); //white without alpha
-                                                                                               //go.GetComponentInChildren<Text> ().fontSize = 10;
                     go.GetComponentInChildren<Text>().resizeTextForBestFit = true;
 
                     //180523 Insert menu icon into the gameMenu: AQ 1;JG 2;AR 4;JM 5 (3 ficou sem uso)
@@ -1051,8 +1056,8 @@ public class GameFlowManager : MonoBehaviour
                 aperteTecla.SetActive(false);                //BM msg aperteTecla
                 frameChute.SetActive(false);                 //BM: contorno amarelo para as setas de direcao
                 mdFirstScreen.SetActive(false);               //MD inicio
-                firstScreen = false;                          //MD
-                                                              //mdTutorial.SetActive (false);
+                firstScreen = false; 
+               // mdTutorial.SetActive (false);
 
                 //170622 agora existe o param showHistory para indicar se é para mostrar ou nao o historico na fase
                 if (probCalculator.getCurrentShowHistory())

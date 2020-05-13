@@ -1,4 +1,4 @@
-/************************************************************************************/
+﻿/************************************************************************************/
 //  Module written by scaroni <renato.scaroni@gmail.com>
 //  Changed by Josi to unity3D 2018-1-4f1
 //	Deprecated Module. Used for abstraction when dealing with 2 option probability

@@ -245,16 +245,17 @@ public class UIManager : MonoBehaviour
 
 		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
 		if (!(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) ||
-		      Input.GetKey(KeyCode.RightArrow))) {
+			Input.GetKey(KeyCode.RightArrow))) {
 			Debug.Log("Mouse key is held down");
 			return;
 		}
 
-		// Debug.Log("@BtnActionGetEvent:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
-		// Debug.Log("movementTimeA = "+ movementTimeA);
-		// Debug.Log("decisionTimeA = "+ decisionTimeA);
-		// Debug.Log("@BtnActionGetEvent:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-		// Debug.Log("@BtnActionGetEvent:++++ tempoJogo = "+ tempoJogo);
+		
+	//	Debug.Log("@BtnActionGetEvent:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
+	//	//Debug.Log("movementTimeA = "+ movementTimeA);
+	//	//Debug.Log("decisionTimeA = "+ decisionTimeA);
+	//	Debug.Log("@BtnActionGetEvent:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
+	//	Debug.Log("@BtnActionGetEvent:++++ tempoJogo = "+ tempoJogo);
 
 		RandomEvent eLog = new RandomEvent ();
 		eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
