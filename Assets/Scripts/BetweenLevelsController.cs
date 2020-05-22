@@ -57,7 +57,7 @@ public class BetweenLevelsController : MonoBehaviour
 
 		//btnExit.SetActive (true);
 		btnContinue.SetActive (true);
-		btnMenu.SetActive (true);     //180510: botao Menu em todos os betweenLevel por uniformidade
+		//btnMenu.SetActive (true);     //180510: botao Menu em todos os betweenLevel por uniformidade
 
 		msg.text = middleMsg;
 	}
