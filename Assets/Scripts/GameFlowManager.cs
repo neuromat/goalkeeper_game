@@ -116,7 +116,7 @@ public class GameFlowManager : MonoBehaviour
     public GameObject scrTutorial;        //180626 temporarily screen gameTutorial; will be changed for an Magara art
                                           //180626 TMP are called as gameObjects
 										  
-	public GameObject scrTelas;
+	//public GameObject scrTelas;
 	
     private LocalizationManager translate;    //171006 trazer script das rotinas de translation
     public GameObject txtTut1;                //171006 elementos para traduzir na tela de Menu
@@ -125,9 +125,9 @@ public class GameFlowManager : MonoBehaviour
     public GameObject txtTut4;
 	//public GameObject txtTut5;
 
-    public Text txtTut5;
+	public Text txtTut5;
     public Text txtJogo;
-    public Text txtMenu;
+	public Text txtMenu;
     public Text txtSair;
     public Text txtHeader;                   //171009 errMsgs
     public Text txtExit;
@@ -549,7 +549,7 @@ public class GameFlowManager : MonoBehaviour
         quitGameMenu.SetActive(false);
         bmGameOver.SetActive(false);    //170925 start without gameOver
         bmGameLover.SetActive(false);    //180321 start without gameLover
-scrTutorial.SetActive(true);
+        scrTutorial.SetActive(true);
 
         //171006 declarar a instance para permitir chamar rotinas do outro script
         translate = LocalizationManager.instance;
@@ -560,9 +560,9 @@ scrTutorial.SetActive(true);
         //txtTut2.text = translate.getLocalizedValue("tut2").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
         //txtTut3.text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
         //txtTut4.text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        
+  
         txtTut5.text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        txtTut5.fontSize = 14;
+        txtTut5.fontSize = 10;
         
         //180627 from UiText to TMPro
         txtTut1.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");
@@ -572,7 +572,8 @@ scrTutorial.SetActive(true);
 		// txtTut5.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");
        
         txtJogo.text = translate.getLocalizedValue("jogo");
-        txtMenu.text = PlayerPrefs.GetString("teamSelected") + " : " + translate.getLocalizedValue("menu");
+//        txtMenu.text = PlayerPrefs.GetString("teamSelected") + " : " + translate.getLocalizedValue("menu");
+		txtMenu.text = translate.getLocalizedValue("menu");
         txtSair.text = translate.getLocalizedValue("sair1");
         txtTeam.text = translate.getLocalizedValue("bckTeams");
 
