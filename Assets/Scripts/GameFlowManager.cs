@@ -542,7 +542,7 @@ public class GameFlowManager : MonoBehaviour
         intro.SetActive(true);
         introMenu.SetActive(true);
 
-        gameModeMenu.SetActive(false);
+		gameModeMenu.SetActive(false);
         betweenLevels.SetActive(false);
         gameCanvas.interactable = false;
         game.SetActive(false);
@@ -562,7 +562,7 @@ public class GameFlowManager : MonoBehaviour
         //txtTut4.text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
   
         txtTut5.text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        txtTut5.fontSize = 10;
+		//txtTut5.fontSize = 12;
         
         //180627 from UiText to TMPro
         txtTut1.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");
@@ -721,7 +721,7 @@ public class GameFlowManager : MonoBehaviour
                     go.GetComponentInChildren<Text>().text = translate.getLocalizedValue(gameN).Replace("\\n", "\n");
                     go.name = translate.getLocalizedValue(gameN);
                     go.GetComponentInChildren<Text>().color = new Color32(255, 255, 255, 220); //white without alpha
-                    go.GetComponentInChildren<Text>().resizeTextForBestFit = true;
+					go.GetComponentInChildren<Text>().resizeTextForBestFit = true;
 
                     //180523 Insert menu icon into the gameMenu: AQ 1;JG 2;AR 4;JM 5 (3 ficou sem uso)
                     GameObject menuIcon = Instantiate(menuIconList[ProbCalculator.machines[0].menuList[i].game - 1]);

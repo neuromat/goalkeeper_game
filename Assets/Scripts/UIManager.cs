@@ -179,6 +179,7 @@ public class UIManager : MonoBehaviour
 	public GameObject frame4EEG;
 	public float[] keyboardTimeMarkers;                 //180418 markers from experimenter (keyboard F1 until F9)
 
+	public float contadorT;
 
 	//170623 DLLs inpout32.dll from http://highrez.co.uk/
 	//171017 DLls inpoutx64.dll
@@ -241,6 +242,7 @@ public class UIManager : MonoBehaviour
 	public void BtnActionGetEvent(string input)
 	{
 		float tempoJogo;
+		contadorT += Time.deltaTime;
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
 		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
@@ -1196,6 +1198,7 @@ public class UIManager : MonoBehaviour
 		probs = ProbCalculator.instance;
 		gameFlow = GameFlowManager.instance;             //161230 para fechar objetos
 		float tempoJogo;
+		contadorT = 0.0f;
 
 		StartTime = Time.time;
 	
@@ -1611,7 +1614,7 @@ public class UIManager : MonoBehaviour
 				float tmpTime = eLog.time + decisionTimeA;
 //				cronosOut.GetComponent<Text>().text = decisionTimeA.ToString();
 				cronosOut.GetComponent<Text>().text = tmpTime.ToString();
-
+				Debug.Log("contadorT = "+ contadorT);
 
 
 /*				//180123 valid for all game modules
