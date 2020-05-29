@@ -508,7 +508,8 @@ public class ServerOperations
 
 
 		//url do servidor com o script php que receberá o arquivo
-		string loginURL = webProtocol + gameServerLocation + "/unityUpload.php";
+		//string loginURL = webProtocol + gameServerLocation + "/unityUpload.php";
+		string loginURL = webProtocol + gameServerLocation + "/unityUpload_test.php";
 
 		//iniciar o envio dor form (https://docs.unity3d.com/ScriptReference/WWW-ctor.html)
 		WWW w = new WWW (loginURL, formData);

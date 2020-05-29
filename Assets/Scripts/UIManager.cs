@@ -179,7 +179,6 @@ public class UIManager : MonoBehaviour
 	public GameObject frame4EEG;
 	public float[] keyboardTimeMarkers;                 //180418 markers from experimenter (keyboard F1 until F9)
 
-
 	//170623 DLLs inpout32.dll from http://highrez.co.uk/
 	//171017 DLls inpoutx64.dll
 /*	#if UNITY_STANDALONE_WIN  || UNITY_EDITOR_WIN
@@ -1611,8 +1610,6 @@ public class UIManager : MonoBehaviour
 				float tmpTime = eLog.time + decisionTimeA;
 //				cronosOut.GetComponent<Text>().text = decisionTimeA.ToString();
 				cronosOut.GetComponent<Text>().text = tmpTime.ToString();
-
-
 
 /*				//180123 valid for all game modules
 				if (probs.getSendMarkersToEEG () != "none") {

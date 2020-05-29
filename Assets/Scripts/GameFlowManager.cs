@@ -125,6 +125,12 @@ public class GameFlowManager : MonoBehaviour
     public GameObject txtTut4;
 	//public GameObject txtTut5;
 
+//	public Text txtTut6;
+	public Text txtInstrT;
+	public Text txtInstr6;
+	public Text txtInstr7;
+	public Text txtInstr8;
+
 	public Text txtTut5;
     public Text txtJogo;
 	public Text txtMenu;
@@ -542,7 +548,7 @@ public class GameFlowManager : MonoBehaviour
         intro.SetActive(true);
         introMenu.SetActive(true);
 
-        gameModeMenu.SetActive(false);
+		gameModeMenu.SetActive(false);
         betweenLevels.SetActive(false);
         gameCanvas.interactable = false;
         game.SetActive(false);
@@ -561,8 +567,7 @@ public class GameFlowManager : MonoBehaviour
         //txtTut3.text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
         //txtTut4.text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
   
-        txtTut5.text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        txtTut5.fontSize = 10;
+        //txtTut5.text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
         
         //180627 from UiText to TMPro
         txtTut1.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");
@@ -570,7 +575,12 @@ public class GameFlowManager : MonoBehaviour
         txtTut3.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");
         txtTut4.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");
 		// txtTut5.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");
-       
+
+		txtInstrT.text = translate.getLocalizedValue("menu").Replace("\\n", "\n"); 
+		txtInstr6.text = translate.getLocalizedValue("tut6").Replace("\\n", "\n");
+		txtInstr7.text = translate.getLocalizedValue("tut7").Replace("\\n", "\n");
+		txtInstr8.text = translate.getLocalizedValue("tut8").Replace("\\n", "\n");
+
         txtJogo.text = translate.getLocalizedValue("jogo");
 //        txtMenu.text = PlayerPrefs.GetString("teamSelected") + " : " + translate.getLocalizedValue("menu");
 		txtMenu.text = translate.getLocalizedValue("menu");
@@ -721,7 +731,7 @@ public class GameFlowManager : MonoBehaviour
                     go.GetComponentInChildren<Text>().text = translate.getLocalizedValue(gameN).Replace("\\n", "\n");
                     go.name = translate.getLocalizedValue(gameN);
                     go.GetComponentInChildren<Text>().color = new Color32(255, 255, 255, 220); //white without alpha
-                    go.GetComponentInChildren<Text>().resizeTextForBestFit = true;
+					go.GetComponentInChildren<Text>().resizeTextForBestFit = true;
 
                     //180523 Insert menu icon into the gameMenu: AQ 1;JG 2;AR 4;JM 5 (3 ficou sem uso)
                     GameObject menuIcon = Instantiate(menuIconList[ProbCalculator.machines[0].menuList[i].game - 1]);
