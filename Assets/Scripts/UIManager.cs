@@ -938,7 +938,7 @@ public class UIManager : MonoBehaviour
 				if (PlayerPrefs.GetInt ("gameSelected") == 4) {
 					extraTime = 0.5f;
 				}
-				StartCoroutine (WaitThenDoThings ( probs.animationTime() + extraTime ));  //170322 centralizado em uma rotina os tempos de animacao
+				StartCoroutine (WaitThenDoThings ( probs.animationTime() + extraTime - 0.09f ));  //170322 centralizado em uma rotina os tempos de animacao
 
 
 				//Score here, else shows up before play
@@ -1530,7 +1530,7 @@ public class UIManager : MonoBehaviour
 	{
 		float tempoJogo;
 
-		time = 0.3f;
+		// time = 0.3f;
 		yield return new WaitForSeconds(time);
 
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
