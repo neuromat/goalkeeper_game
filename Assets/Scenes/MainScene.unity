@@ -18373,6 +18373,7 @@ MonoBehaviour:
   frame3EEG: {fileID: 2051950779}
   frame4EEG: {fileID: 1153906178}
   keyboardTimeMarkers: []
+  contadorT: 0
 --- !u!1 &1471698819
 GameObject:
   m_ObjectHideFlags: 0
@@ -18870,7 +18871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1518675976
 RectTransform:
   m_ObjectHideFlags: 0

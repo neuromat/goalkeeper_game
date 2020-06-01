@@ -179,6 +179,8 @@ public class UIManager : MonoBehaviour
 	public GameObject frame4EEG;
 	public float[] keyboardTimeMarkers;                 //180418 markers from experimenter (keyboard F1 until F9)
 
+	public float contadorT;
+
 	//170623 DLLs inpout32.dll from http://highrez.co.uk/
 	//171017 DLls inpoutx64.dll
 /*	#if UNITY_STANDALONE_WIN  || UNITY_EDITOR_WIN
@@ -240,6 +242,11 @@ public class UIManager : MonoBehaviour
 	public void BtnActionGetEvent(string input)
 	{
 		float tempoJogo;
+
+		contadorT = 0.0f;
+//Celso_Debug		cronosOut.GetComponent<Text> ().text = contadorT.ToString();
+//Celso_Debug		contadorT = Time.time;
+
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
 		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
@@ -1195,6 +1202,7 @@ public class UIManager : MonoBehaviour
 		probs = ProbCalculator.instance;
 		gameFlow = GameFlowManager.instance;             //161230 para fechar objetos
 		float tempoJogo;
+		contadorT = 0.0f;
 
 		StartTime = Time.time;
 	
@@ -1609,7 +1617,16 @@ public class UIManager : MonoBehaviour
 				eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
 				float tmpTime = eLog.time + decisionTimeA;
 //				cronosOut.GetComponent<Text>().text = decisionTimeA.ToString();
-				cronosOut.GetComponent<Text>().text = tmpTime.ToString();
+//				cronosOut.GetComponent<Text>().text = tmpTime.ToString();
+
+//Celso_Debug				float TimerControl = Time.time - contadorT;
+//Celso_Debug				string mins = ((int)TimerControl/60).ToString("00");
+//Celso_Debug				string segs = (TimerControl % 60).ToString("00");
+//Celso_Debug				string milisegs = ((TimerControl * 100)%100).ToString ("00");
+
+//Celso_Debug				string TimerString = string.Format ("{00}:{01}:{02}", mins, segs, milisegs);
+
+//Celso_Debug 				cronosOut.GetComponent<Text> ().text = TimerControl.ToString();
 
 /*				//180123 valid for all game modules
 				if (probs.getSendMarkersToEEG () != "none") {
