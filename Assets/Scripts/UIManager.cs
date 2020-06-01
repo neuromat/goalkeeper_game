@@ -937,7 +937,12 @@ public class UIManager : MonoBehaviour
 				if (PlayerPrefs.GetInt ("gameSelected") == 4) {
 					extraTime = 0.5f;
 				}
-				StartCoroutine (WaitThenDoThings ( probs.animationTime() + extraTime - 0.09f ));  //170322 centralizado em uma rotina os tempos de animacao
+				/**
+				 * TODO: 0.29f is a magic number to fix the problem of syncronization between the red arrows and the
+				 * idle form of the player before new kick. The issue is partially fixed by diminishing the animation
+				 * time of the animations related to goalkeeper not caughting the ball.
+				 */
+				StartCoroutine (WaitThenDoThings ( probs.animationTime() + extraTime - 0.29f ));  //170322 centralizado em uma rotina os tempos de animacao
 
 
 				//Score here, else shows up before play
