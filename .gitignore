@@ -79,3 +79,6 @@ crashlytics-build.properties
 
 # Game configuration files
 CustomTrees
+CustomTrees.meta
+Assets/CustomTrees_example.meta
+Assets/CustomTrees_example/README.txt.meta
