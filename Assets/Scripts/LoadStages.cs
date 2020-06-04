@@ -269,8 +269,10 @@ public class LoadStages : MonoBehaviour
 				
 
 			//put the team names in a vector
-			if (www.text != null) {
-				string[] files = www.text.Split(';'); // package list  
+			if (www.text != null)
+			{
+				string text = www.text.Replace(System.Environment.NewLine, ""); // reading with WWW puts new line char
+				string[] files = text.Split(';'); // package list
 
 				if(LoadedPackage.packages == null)	{
 					LoadedPackage.packages = new Dictionary<string, Package> ();

@@ -180,6 +180,7 @@ public class UIManager : MonoBehaviour
 	public float[] keyboardTimeMarkers;                 //180418 markers from experimenter (keyboard F1 until F9)
 
 	public float contadorT;
+	public GameObject showMsg;
 
 	//170623 DLLs inpout32.dll from http://highrez.co.uk/
 	//171017 DLls inpoutx64.dll
@@ -249,10 +250,19 @@ public class UIManager : MonoBehaviour
 
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
+		showMsg.GetComponent<Text>().text = "";
 		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
 		if (!(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) ||
 			Input.GetKey(KeyCode.RightArrow))) {
 			Debug.Log("Mouse key is held down");
+			return;
+		}
+
+
+		if (!Screen.fullScreen)
+		{
+			//Debug.Log("You must be in Full Screen mode to play the game");
+            showMsg.GetComponent<Text>().text = "You must be in Full Screen mode to play the game";
 			return;
 		}
 
@@ -1376,6 +1386,8 @@ public class UIManager : MonoBehaviour
 		int number; //180419 to facilitate the routine
 		float tempoJogo;
 
+		Screen.fullScreen = true;
+
 		float TimerControl = Time.time - StartTime;
 		string mins = ((int)TimerControl/60).ToString("00");
 		string segs = (TimerControl % 60).ToString("00");
@@ -1774,8 +1786,7 @@ public class UIManager : MonoBehaviour
 			keyboardTimeMarkers [i] = 0.0f;
 		}
 	}
-
-
+		
 	//---------------------------------------------------------------------------------------
 	//180510 apply correct phase speedGKAnim; there is only 3 field scenarios -
 	//       when there is more than 3 phases, the scenario is always the last: professional (until do more);
