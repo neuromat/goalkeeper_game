@@ -602,7 +602,7 @@ public class LoadStages : MonoBehaviour
 
 	// -----------------------------------------------------------------------------------------------------
 	public void ToGame (int error)             //170310 param error, vindo do probs.confValidation
-	{                                          
+	{    
 		SceneManager.LoadScene ("MainScene");
 	}
 

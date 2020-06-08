@@ -109,7 +109,8 @@ public class TCLE: MonoBehaviour
 
                 //180625 logUsers was after select a game module and now, after select idiom
                 //@@gameFlowManager.NewGame (PlayerPrefs.GetInt ("gameSelected"));    //Josi: antes havia esta continuidade no onClick Unity, agora passa para ca para poder reclamar do apelido vazio
-                SceneManager.LoadScene("Configurations");
+
+				SceneManager.LoadScene("Configurations");
             }
 		}
 	}
@@ -173,6 +174,7 @@ public class TCLE: MonoBehaviour
 		alias.Select();
 		alias.ActivateInputField();
 		#endif
+		Screen.fullScreen = true;
 	}
 
 

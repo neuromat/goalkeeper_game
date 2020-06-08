@@ -557,7 +557,7 @@ public class GameFlowManager : MonoBehaviour
         bmGameLover.SetActive(false);    //180321 start without gameLover
         scrTutorial.SetActive(true);
 
-        //171006 declarar a instance para permitir chamar rotinas do outro script
+		//171006 declarar a instance para permitir chamar rotinas do outro script
         translate = LocalizationManager.instance;
 
         //171006 trocar os textos
