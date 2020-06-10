@@ -181,6 +181,8 @@ public class UIManager : MonoBehaviour
 
 	public float contadorT;
 	public GameObject showMsg;
+	private bool showWarning = false;
+	private bool stopLoop = true;
 
 	//170623 DLLs inpout32.dll from http://highrez.co.uk/
 	//171017 DLls inpoutx64.dll
@@ -261,8 +263,18 @@ public class UIManager : MonoBehaviour
 
 		if (!Screen.fullScreen)
 		{
+			btnExit.SetActive (false);
 			showMsg.GetComponent<Text>().text = "As you exit Fullscreen mode the game was aborted." + "\n" + "Thanks for participating in this research.";
 
+			//            if (Input.anyKeyDown) {
+			if (showWarning) {
+				//                Application.Quit();
+				if (stopLoop) {
+					System.Diagnostics.Process.GetCurrentProcess ().Kill ();
+				}
+			}
+			showWarning = true;
+			stopLoop = false;
 			return;
 		}
 
