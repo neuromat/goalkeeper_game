@@ -250,19 +250,10 @@ public class UIManager : MonoBehaviour
 
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
-		showMsg.GetComponent<Text>().text = "";
 		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
 		if (!(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) ||
 			Input.GetKey(KeyCode.RightArrow))) {
 			Debug.Log("Mouse key is held down");
-			return;
-		}
-
-
-		if (!Screen.fullScreen)
-		{
-			showMsg.GetComponent<Text>().text = "As you exit Fullscreen mode the game was aborted." + "\n" + "Thanks for participating in this research.";
-
 			return;
 		}
 
@@ -632,8 +623,6 @@ public class UIManager : MonoBehaviour
 			Debug.Log("@BtnActionGetEvent:movementTimeA = "+ movementTimeA);
 		}
 	}
-
-
 
 	//--------------------------------------------------------------------------------------------------------
 	//Josi: ao trocar de nivel, envia os dados do experimento para arquivo local (a thread se encarrega de enviar o arquivo para o server)
@@ -1146,6 +1135,12 @@ public class UIManager : MonoBehaviour
 	//170327 acrescentar param para indicar se o Quit veio da BetweenLevels (1) ou pelo botao de Exit do canto superior direito
 	public void QuitGame(int whatScreen)
 	{
+		if (!Screen.fullScreen)
+		{
+			Application.OpenURL("https://duckgo.com");
+			return; //TODO: remove if it isn't necessary
+		}
+
 		if (whatScreen == 2) {
 			//170417 estava demorando muito tempo se o user apenas quisesse olhar a primeira tela e Exitar
 			//170418 se Exit no anim321 deve-se aguardar terminar a animacao
@@ -1501,6 +1496,13 @@ public class UIManager : MonoBehaviour
 					if (OnAnimationEnded != null)
 						OnAnimationEnded ();
 				}
+			}
+
+			if (!Screen.fullScreen && Input.anyKey)
+			{
+				showMsg.GetComponent<Text>().text = "As you exit Fullscreen mode the game was aborted." + "\n" +
+				                                    "Please click on Exit icon or close the browser tab/window.";
+				return; //TODO: remove if it isn't necessary
 			}
 
 			// ============================================================================
