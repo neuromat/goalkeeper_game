@@ -17,7 +17,7 @@ public class ExpandScreen : MonoBehaviour {
 	void Start () {
 		translate = LocalizationManager.instance;
 
-		warningText.text = translate.getLocalizedValue ("tut7");
+		warningText.text = translate.getLocalizedValue ("expandir");
  
 		btnFwrd.text = translate.getLocalizedValue("avancar");
 

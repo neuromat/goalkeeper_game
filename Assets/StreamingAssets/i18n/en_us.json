@@ -95,5 +95,6 @@
 "iniciaJ":"Start\ngame",
 "comP":"With Pause",
 "semP":"Without Pause",
+"expandir":"From now on, the Full Screen mode will be activated automatically. Please keep it that way until the game ends. If you exit Full Screen mode during the game, you will be aborting it.",
 "":""
 }

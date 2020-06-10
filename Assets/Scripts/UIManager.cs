@@ -1397,7 +1397,7 @@ public class UIManager : MonoBehaviour
 		int number; //180419 to facilitate the routine
 		float tempoJogo;
 
-		//Celso_Debug Screen.fullScreen = true;
+		Screen.fullScreen = true;
 
 		float TimerControl = Time.time - StartTime;
 		string mins = ((int)TimerControl/60).ToString("00");
