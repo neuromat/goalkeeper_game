@@ -88,6 +88,7 @@
 "txtWhat":"Jogo do Goleiro\nO que é\n\nSoftware de código aberto, desenvolvido por NeuroMat, Amparo e Abraço, com o objetivo de estudar as estratégias de funcionamento do cérebro, a partir dos tempos e das tomadas de decisão ao longo das fases do jogo.\n\nHá um Termo de Consentimento Livre e Esclarecido (TCLE) que permite que suas respostas não sejam coletadas, mas, destaca-se que não há como reconhecer indivíduos, a menos que o JG esteja integrado ao NeuroScience Experiments System (NES).\n\nNo NES é possível registrar dados pessoais, clínicos, geográficos, de respostas a questionários, e estes, serem integrados aos resultados do Jogo do Goleiro.",
 "txtSoftware":"Jogo do Goleiro\nSoftwares utilizados no desenvolvimento:\n\nUnity3D Personal Edition (C#)\nJsonFx\nXcode\nPostgreSQL/pgAdmin\nGNU Image Manipulation Program (GIMP)\nInkScape",
 "txtDoc":"Jogo do Goleiro\nDocumentação\n\nDisponível em GitHub Goleiro Wiki, em\n<link="docJG">https://github.com/neuromat/goleiro-godot/wiki</link>",
+"txtAbort":"Como você saiu do modo tela cheia, o jogo foi abortado.\nPor favor clique no ícone de Saída\nou feche a aba/janela do navegador.",
 "sobre":"SOBRE",
 "premios":"PRÊMIOS",
 "creditos":"Créditos",

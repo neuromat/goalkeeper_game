@@ -1500,8 +1500,7 @@ public class UIManager : MonoBehaviour
 
 			if (!Screen.fullScreen && Input.anyKey)
 			{
-				showMsg.GetComponent<Text>().text = "As you exit Fullscreen mode the game was aborted." + "\n" +
-				                                    "Please click on Exit icon or close the browser tab/window.";
+				showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtAbort").Replace("\\n", "\n");
 				return; //TODO: remove if it isn't necessary
 			}
 
