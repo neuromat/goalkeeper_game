@@ -19,7 +19,7 @@
 "P6":"Coordinator",
 "T1":"Academic Publications",
 "menu":"Instruction",
-"sair1":"Exit (or ESC)",
+"sair1":"Exit",
 "tut1":"When the red arrows appear, you must decide where to defend the goal.",
 "tut2":"Then, the penalty taker will kick the ball and the goalkeeper will jump in the direction chosen by you.",
 "tut3":"Use the left, down and right arrows on the keyboard to choose the left, center and right side of the goal, respectively.",
@@ -96,5 +96,6 @@
 "iniciaJ":"Start\ngame",
 "comP":"With Pause",
 "semP":"Without Pause",
+"expandir":"From now on, the Full Screen mode will be activated automatically. Please keep it that way until the game ends. If you exit Full Screen mode during the game, you will be aborting it.",
 "":""
 }

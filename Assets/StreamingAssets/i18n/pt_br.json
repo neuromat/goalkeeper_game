@@ -19,7 +19,7 @@
 "P6":"Coordenador",
 "T1":"Publicações acadêmicas",
 "menu":"Instruções",
-"sair1":"Sair (ou ESC)",
+"sair1":"Sair",
 "tut1":"Ao aparecerem as setas\nvermelhas, você deverá\ndecidir onde defender o gol.\n ",
 "tut2":"Em seguida, o batedor chutará\na bola e o goleiro pulará\nna direção escolhida por você.\n ",
 "tut3":"Utilize as setas esquerda, para baixo\ne direita do teclado para escolher,\nrespectivamente, o lado esquerdo,\ncentro e direito do gol.",
@@ -96,5 +96,6 @@
 "iniciaJ":"Iniciar\njogo",
 "comP":"COM pausa",
 "semP":"SEM pausa",
+"expandir":"Daqui para frente, o modo Tela Cheia (Full Screen) será ativado automaticamente. Por favor mantenha-o assim até que termine a partida. Se você sair do modo Tela Cheia durante a partida, estará abortando o jogo.",
 "":""
 }
