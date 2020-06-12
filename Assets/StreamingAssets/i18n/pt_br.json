@@ -96,6 +96,6 @@
 "iniciaJ":"Iniciar\njogo",
 "comP":"COM pausa",
 "semP":"SEM pausa",
-"expandir":"Daqui para frente, o modo Tela Cheia (Full Screen) será ativado automaticamente. Por favor mantenha-o assim até que termine a partida. Se você sair do modo Tela Cheia durante a partida, estará abortando o jogo.",
+"expandir": "O modo Tela Cheia (Full Screen) será ativado automaticamente. NÃO PRESSIONE A TECLA ESC para sair do modo Tela Cheia. Mantenha-o assim até o final do jogo. A partir de agora, se você sair do modo Tela Cheia o jogo será abortado.",
 "":""
 }
