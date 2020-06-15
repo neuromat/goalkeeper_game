@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;                       //to use StringBuilder
+using System.IO;
 using UnityEngine.EventSystems;          //170308 to know which was last button clicked - did not work ...
 
 
@@ -242,6 +243,18 @@ public class UIManager : MonoBehaviour
 	//      esta função é tbem chamada no onClick do mainScene/.../Pergunta/<em cada uma das direcoes de chute>
 	public void BtnActionGetEvent(string input)
 	{
+		if (!File.Exists("log_player_entry.csv"))
+		{
+			var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.CreateNew));
+			writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
+			writer.Close();
+		}
+		else
+		{
+			var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.Append));
+			writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
+			writer.Close();
+		}
 		float tempoJogo;
 
 		contadorT = 0.0f;
@@ -253,7 +266,7 @@ public class UIManager : MonoBehaviour
 		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
 		if (!(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) ||
 			Input.GetKey(KeyCode.RightArrow))) {
-			Debug.Log("Mouse key is held down");
+			// Debug.Log("Mouse key is held down");
 			return;
 		}
 
@@ -292,7 +305,7 @@ public class UIManager : MonoBehaviour
 			//170919 descontar os possiveis tempos de pausa do Play/Pause
 			//eLog.time = Time.realtimeSinceStartup - movementTimeA;
 			eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
-			Debug.Log("eLog.time = "+ eLog.time);
+			// Debug.Log("eLog.time = "+ eLog.time);
 			eLog.pauseTime = gameFlow.otherPausesTime;
 			eLog.realTime = Time.realtimeSinceStartup - gameFlow.startSessionTime;    //180418 to accomplish marker time by keyboard
 			//Debug.Log("eLog.realTime = "+ eLog.realTime);
@@ -620,7 +633,7 @@ public class UIManager : MonoBehaviour
 			// e nao mais espera pelo final da fase
 
 			//Debug.Log("-------------------> INPUT PRESSIONADO = " +eLog.realTime);
-			Debug.Log("@BtnActionGetEvent:movementTimeA = "+ movementTimeA);
+			// Debug.Log("@BtnActionGetEvent:movementTimeA = "+ movementTimeA);
 		}
 	}
 
@@ -1013,8 +1026,8 @@ public class UIManager : MonoBehaviour
 
 //		Debug.Log("@CEL:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 //		Debug.Log("@CEL:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-		Debug.Log("@CEL:++++ decisionTimeA = "+ movementTimeA);
-		Debug.Log("@CEL:++++ decisionTimeA = "+ decisionTimeA);
+		// Debug.Log("@CEL:++++ decisionTimeA = "+ movementTimeA);
+		// Debug.Log("@CEL:++++ decisionTimeA = "+ decisionTimeA);
 		
 		//170915 se está nesta rotina, não está pausado, logo, garantir os botoes Play/Pause
 		if (probs.getShowPlayPauseButton ()) {
@@ -1217,12 +1230,12 @@ public class UIManager : MonoBehaviour
 	
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
-		Debug.Log("@START:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
+		// Debug.Log("@START:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 		//Debug.Log("movementTimeA = "+ movementTimeA);
 		//Debug.Log("decisionTimeA = "+ decisionTimeA);
-		Debug.Log("@START:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-		Debug.Log("@START:++++ tempoJogo = "+ tempoJogo);
-		Debug.Log("@START:++++ decisionTimeA = "+ decisionTimeA);
+		// Debug.Log("@START:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
+		// Debug.Log("@START:++++ tempoJogo = "+ tempoJogo);
+		// Debug.Log("@START:++++ decisionTimeA = "+ decisionTimeA);
 		cronosIn.GetComponent<Text>().text = decisionTimeA.ToString();
 
 
@@ -1625,12 +1638,12 @@ public class UIManager : MonoBehaviour
 					}
 				}
 				RandomEvent eLog = new RandomEvent ();
-				Debug.Log("@FINISHED:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
+				// Debug.Log("@FINISHED:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 				//Debug.Log("movementTimeA = "+ movementTimeA);
 				//Debug.Log("decisionTimeA = "+ decisionTimeA);
-				Debug.Log("@FINISHED:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-				Debug.Log("@FINISHED:++++ tempoJogo = "+ tempoJogo);
-				Debug.Log("@FINISHED:++++ decisionTimeA = "+ decisionTimeA);
+				// Debug.Log("@FINISHED:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
+				// Debug.Log("@FINISHED:++++ tempoJogo = "+ tempoJogo);
+				// Debug.Log("@FINISHED:++++ decisionTimeA = "+ decisionTimeA);
 				eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
 				float tmpTime = eLog.time + decisionTimeA;
 //				cronosOut.GetComponent<Text>().text = decisionTimeA.ToString();
