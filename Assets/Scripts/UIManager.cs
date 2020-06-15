@@ -243,18 +243,6 @@ public class UIManager : MonoBehaviour
 	//      esta função é tbem chamada no onClick do mainScene/.../Pergunta/<em cada uma das direcoes de chute>
 	public void BtnActionGetEvent(string input)
 	{
-		if (!File.Exists("log_player_entry.csv"))
-		{
-			var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.CreateNew));
-			writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
-			writer.Close();
-		}
-		else
-		{
-			var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.Append));
-			writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
-			writer.Close();
-		}
 		float tempoJogo;
 
 		contadorT = 0.0f;
@@ -1513,8 +1501,8 @@ public class UIManager : MonoBehaviour
 
 			if (!Screen.fullScreen && Input.anyKey)
 			{
-				showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtAbort").Replace("\\n", "\n");
-				return; //TODO: remove if it isn't necessary
+				// showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtAbort").Replace("\\n", "\n");
+				// return; //TODO: remove if it isn't necessary
 			}
 
 			// ============================================================================

@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;  //170102 List
 using JsonFx.Json;
@@ -945,6 +947,19 @@ public class GameFlowManager : MonoBehaviour
     //---------------------------------------------------------------------------------------
     public void StartGame(int gameSelected)       //Josi: 161209: incluir parâmetro para o jogo selecionado
     {
+        if (!File.Exists("log_player_entry.csv"))
+        {
+            var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.CreateNew));
+            writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
+            writer.Close();
+        }
+        else
+        {
+            var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.Append));
+            writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
+            writer.Close();
+        }
+
         //180524
         uiManager.initKeyboardTimeMarkers();
 
