@@ -1603,7 +1603,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "V1.04_Abra\xE7o"
+  m_Text: "V1.05_Abra\xE7o"
 --- !u!222 &1971670998
 CanvasRenderer:
   m_ObjectHideFlags: 0
