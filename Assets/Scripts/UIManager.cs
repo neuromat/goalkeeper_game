@@ -1177,7 +1177,7 @@ public class UIManager : MonoBehaviour
 		//Application.Quit ();
 		if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 			if (Application.platform == RuntimePlatform.WebGLPlayer) {
-				Application.OpenURL (PlayerPrefs.GetString ("gameURL"));
+				Application.OpenURL ("https://duckgo.com");
 			} else {
 				//171121 not working kill()
 				if ((Application.platform == RuntimePlatform.IPhonePlayer) ||
@@ -1501,8 +1501,8 @@ public class UIManager : MonoBehaviour
 
 			if (!Screen.fullScreen && Input.anyKey)
 			{
-				// showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtAbort").Replace("\\n", "\n");
-				// return; //TODO: remove if it isn't necessary
+				showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtAbort").Replace("\\n", "\n");
+				return; //TODO: remove if it isn't necessary
 			}
 
 			// ============================================================================

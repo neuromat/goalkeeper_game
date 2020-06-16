@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using System.IO;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;  //170102 List
 using JsonFx.Json;
@@ -814,6 +815,11 @@ public class GameFlowManager : MonoBehaviour
         bmGameLover.SetActive(false);      //Amparo, when gameLover, goes out using "yes,abandon", and these screens stayed fixed; corrected!
         bmGameOver.SetActive(false); 
         uiManager.userAbandonModule = true; //to guarantee to save results
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            Application.OpenURL("https://duckgo.com");
+            return;
+        }
         GoToIntro();
     }
 
@@ -947,18 +953,23 @@ public class GameFlowManager : MonoBehaviour
     //---------------------------------------------------------------------------------------
     public void StartGame(int gameSelected)       //Josi: 161209: incluir parâmetro para o jogo selecionado
     {
-        if (!File.Exists("log_player_entry.csv"))
-        {
-            var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.CreateNew));
-            writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
-            writer.Close();
-        }
-        else
-        {
-            var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.Append));
-            writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
-            writer.Close();
-        }
+        // if (!File.Exists("log_player_entry.csv"))
+        // {
+        //     var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.CreateNew));
+        //     writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
+        //     writer.Close();
+        // }
+        // else
+        // {
+        //     var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.Append));
+        //     writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
+        //     writer.Close();
+        // }
+
+        StartCoroutine(
+            uploadFile("log_user_entry", 
+            "nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"))
+            );
 
         //180524
         uiManager.initKeyboardTimeMarkers();
@@ -1181,6 +1192,26 @@ public class GameFlowManager : MonoBehaviour
 
         uiManager.BtwnLvls = false;
         playing = true;
+    }
+
+    IEnumerator uploadFile(string fileName, string contentFile)
+    {
+        byte[] fileData = Encoding.UTF8.GetBytes (contentFile);
+
+        WWWForm formData = new WWWForm ();
+
+        formData.AddField("action", "level upload");
+        formData.AddField("file", "file");
+        formData.AddBinaryData("file", fileData, fileName, "text/plain");
+
+        string loginURL = "http://goalkeeper.local/upload_file.php";
+
+        WWW w = new WWW(loginURL, formData);
+        yield return w;
+        
+        if (w.error != null) {
+            Debug.Log ("file " + fileName + " w.error = " + w.error);
+        }
     }
 
 
@@ -1493,7 +1524,7 @@ public class GameFlowManager : MonoBehaviour
                     {  //if in the editor, this command would kill unity...
                         if (Application.platform == RuntimePlatform.WebGLPlayer)
                         {
-                            Application.OpenURL(PlayerPrefs.GetString("gameURL"));
+                            Application.OpenURL("https://duckgo.com");
                         }
                         else
                         {

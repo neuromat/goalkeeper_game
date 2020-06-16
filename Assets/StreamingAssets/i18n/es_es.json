@@ -96,6 +96,6 @@
 "iniciaJ":"Iniciar\njuego",
 "comP":"COM pausa",
 "semP":"SIN pausa",
-"expandir":"De ahora en adelante el modo Pantalla Completa (Full Screen) se activará automáticamente. Por favor, manténgalo así hasta que finalice el juego. Si sale del modo Pantalla Completa durante el juego, estará cancelando el mismo.",
+"expandir":"Esta pantalla activará automáticamente el modo Pantalla completa (Full screen). El modo Pantalla completa es esencial para el éxito del experimento. ¡Tenga cuidado! Si sale del modo Pantalla completa (presionando la tecla ESC), estará abortando el juego.",
 "":""
 }

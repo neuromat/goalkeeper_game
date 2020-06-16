@@ -150,7 +150,7 @@ public class LevelEditorManager : MonoBehaviour
 		//Application.Quit ();
 		if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 			if (Application.platform == RuntimePlatform.WebGLPlayer) {
-				Application.OpenURL (PlayerPrefs.GetString ("gameURL"));
+				Application.OpenURL ("https://duckgo.com");
 			} else {
 				//171121 not working kill()
 				if ((Application.platform == RuntimePlatform.IPhonePlayer) || 
