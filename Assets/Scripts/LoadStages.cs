@@ -269,8 +269,10 @@ public class LoadStages : MonoBehaviour
 				
 
 			//put the team names in a vector
-			if (www.text != null) {
-				string[] files = www.text.Split(';'); // package list  
+			if (www.text != null)
+			{
+				string text = www.text.Replace(System.Environment.NewLine, ""); // reading with WWW puts new line char
+				string[] files = text.Split(';'); // package list
 
 				if(LoadedPackage.packages == null)	{
 					LoadedPackage.packages = new Dictionary<string, Package> ();
@@ -600,7 +602,7 @@ public class LoadStages : MonoBehaviour
 
 	// -----------------------------------------------------------------------------------------------------
 	public void ToGame (int error)             //170310 param error, vindo do probs.confValidation
-	{                                          
+	{    
 		SceneManager.LoadScene ("MainScene");
 	}
 
@@ -618,7 +620,7 @@ public class LoadStages : MonoBehaviour
 			//Application.Quit ();
 			if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 				if (Application.platform == RuntimePlatform.WebGLPlayer) {
-					Application.OpenURL (PlayerPrefs.GetString ("gameURL"));
+					Application.OpenURL ("https://duckgo.com");
 				} else {
 					//171121 not working kill()
 					if ((Application.platform == RuntimePlatform.IPhonePlayer) || 

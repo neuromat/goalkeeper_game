@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
+using System.IO;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;  //170102 List
 using JsonFx.Json;
@@ -557,7 +560,7 @@ public class GameFlowManager : MonoBehaviour
         bmGameLover.SetActive(false);    //180321 start without gameLover
         scrTutorial.SetActive(true);
 
-        //171006 declarar a instance para permitir chamar rotinas do outro script
+		//171006 declarar a instance para permitir chamar rotinas do outro script
         translate = LocalizationManager.instance;
 
         //171006 trocar os textos
@@ -812,6 +815,11 @@ public class GameFlowManager : MonoBehaviour
         bmGameLover.SetActive(false);      //Amparo, when gameLover, goes out using "yes,abandon", and these screens stayed fixed; corrected!
         bmGameOver.SetActive(false); 
         uiManager.userAbandonModule = true; //to guarantee to save results
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            Application.OpenURL("https://duckgo.com");
+            return;
+        }
         GoToIntro();
     }
 
@@ -945,6 +953,14 @@ public class GameFlowManager : MonoBehaviour
     //---------------------------------------------------------------------------------------
     public void StartGame(int gameSelected)       //Josi: 161209: incluir parâmetro para o jogo selecionado
     {
+        // Log user entry
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            StartCoroutine(logUserStartGame(
+                    "nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss") + "\n")
+            );
+        }
+
         //180524
         uiManager.initKeyboardTimeMarkers();
 
@@ -1166,6 +1182,21 @@ public class GameFlowManager : MonoBehaviour
 
         uiManager.BtwnLvls = false;
         playing = true;
+    }
+
+    IEnumerator logUserStartGame(string content)
+    {
+        WWWForm formData = new WWWForm ();
+
+        formData.AddField("content", content);
+        string loginURL = "https://game.numec.prp.usp.br/game/upload_file.php";
+
+        WWW w = new WWW(loginURL, formData);
+        yield return w;
+        
+        if (w.error != null) {
+            Debug.Log (" w.error: " + w.error);
+        }
     }
 
 
@@ -1478,7 +1509,7 @@ public class GameFlowManager : MonoBehaviour
                     {  //if in the editor, this command would kill unity...
                         if (Application.platform == RuntimePlatform.WebGLPlayer)
                         {
-                            Application.OpenURL(PlayerPrefs.GetString("gameURL"));
+                            Application.OpenURL("https://duckgo.com");
                         }
                         else
                         {

@@ -19,7 +19,7 @@
 "P6":"Coordinator",
 "T1":"Academic Publications",
 "menu":"Instruction",
-"sair1":"Exit (or ESC)",
+"sair1":"Exit",
 "tut1":"When the red arrows appear, you must decide where to defend the goal.",
 "tut2":"Then, the penalty taker will kick the ball and the goalkeeper will jump in the direction chosen by you.",
 "tut3":"Use the left, down and right arrows on the keyboard to choose the left, center and right side of the goal, respectively.",
@@ -88,6 +88,7 @@
 "txtWhat":"Goalkeeper Game\nWhat is\n\nOpen-source software, developed by NeuroMat, Amparo and Abraço, with the objective of studying the strategies of brain functioning, from the times and the decision making throughout the phases of the game.\n\nThere is an Informed Consent Form that allows your answers not to be collected, but it is noted that there is no way to recognize individuals unless JG is integrated with the Neuroscience Experiments System (NES).\n\nIn the NES it is possible to record personal, clinical, geographic, questionnaire responses, and these are integrated into the results of the Goalkeeper's Game.",
 "txtSoftware":"Goalkeeper Game\nSoftwares used in development:\n\nUnity3D Personal Edition (C#)\nJsonFx\nXcode\nPostgreSQL/pgAdmin\nGNU Image Manipulation Program (GIMP)\nInkScape",
 "txtDoc":"Goalkeeper Game\nDocumentation\n\nAvailable in GitHub Goleiro Wiki at\n<link="docJG">https://github.com/neuromat/goleiro-godot/wiki</link>",
+"txtAbort":"As you exit Fullscreen mode the game was aborted.\nPlease click on Exit icon or close the browser tab/window.",
 "sobre":"About",
 "premios":"PRIZES",
 "creditos":"Credits",
@@ -95,5 +96,6 @@
 "iniciaJ":"Start\ngame",
 "comP":"With Pause",
 "semP":"Without Pause",
+"expandir":"This screen will automatically activate the Full screen mode. The Full screen mode is essential for the success of the experiment. Be careful! If you exit Full screen mode (by pressing the ESC key), you will be aborting the game.",
 "":""
 }
