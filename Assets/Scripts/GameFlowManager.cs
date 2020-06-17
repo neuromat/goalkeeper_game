@@ -953,23 +953,13 @@ public class GameFlowManager : MonoBehaviour
     //---------------------------------------------------------------------------------------
     public void StartGame(int gameSelected)       //Josi: 161209: incluir parâmetro para o jogo selecionado
     {
-        // if (!File.Exists("log_player_entry.csv"))
-        // {
-        //     var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.CreateNew));
-        //     writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
-        //     writer.Close();
-        // }
-        // else
-        // {
-        //     var writer = new StreamWriter(File.Open("log_player_entry.csv", FileMode.Append));
-        //     writer.WriteLine("nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"));
-        //     writer.Close();
-        // }
-
-        StartCoroutine(
-            uploadFile("log_user_entry", 
-            "nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss"))
+        // Log user entry
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            StartCoroutine(logUserStartGame(
+                    "nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss") + "\n")
             );
+        }
 
         //180524
         uiManager.initKeyboardTimeMarkers();
@@ -1194,23 +1184,18 @@ public class GameFlowManager : MonoBehaviour
         playing = true;
     }
 
-    IEnumerator uploadFile(string fileName, string contentFile)
+    IEnumerator logUserStartGame(string content)
     {
-        byte[] fileData = Encoding.UTF8.GetBytes (contentFile);
-
         WWWForm formData = new WWWForm ();
 
-        formData.AddField("action", "level upload");
-        formData.AddField("file", "file");
-        formData.AddBinaryData("file", fileData, fileName, "text/plain");
-
+        formData.AddField("content", content);
         string loginURL = "http://goalkeeper.local/upload_file.php";
 
         WWW w = new WWW(loginURL, formData);
         yield return w;
         
         if (w.error != null) {
-            Debug.Log ("file " + fileName + " w.error = " + w.error);
+            Debug.Log (" w.error: " + w.error);
         }
     }
 
