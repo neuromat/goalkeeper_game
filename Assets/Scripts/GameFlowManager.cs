@@ -1189,7 +1189,7 @@ public class GameFlowManager : MonoBehaviour
         WWWForm formData = new WWWForm ();
 
         formData.AddField("content", content);
-        string loginURL = "http://goalkeeper.local/upload_file.php";
+        string loginURL = "https://game.numec.prp.usp.br/game/upload_file.php";
 
         WWW w = new WWW(loginURL, formData);
         yield return w;
