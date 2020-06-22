@@ -953,10 +953,9 @@ public class GameFlowManager : MonoBehaviour
     //---------------------------------------------------------------------------------------
     public void StartGame(int gameSelected)       //Josi: 161209: incluir parâmetro para o jogo selecionado
     {
-        // Log user entry
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
-            StartCoroutine(logUserStartGame(
+            StartCoroutine(logUserStartGameWebGL(
                     "nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss") + "\n")
             );
         }
@@ -1184,12 +1183,14 @@ public class GameFlowManager : MonoBehaviour
         playing = true;
     }
 
-    IEnumerator logUserStartGame(string content)
+    private IEnumerator logUserStartGameWebGL(string content)
     {
+        if (!(Application.platform == RuntimePlatform.WebGLPlayer)) yield return "";
+
         WWWForm formData = new WWWForm ();
 
         formData.AddField("content", content);
-        string loginURL = "https://game.numec.prp.usp.br/game/upload_file.php";
+        string loginURL = Application.absoluteURL + "upload_file.php";
 
         WWW w = new WWW(loginURL, formData);
         yield return w;

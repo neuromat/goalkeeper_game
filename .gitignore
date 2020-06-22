@@ -82,3 +82,6 @@ CustomTrees
 CustomTrees.meta
 Assets/CustomTrees_example.meta
 Assets/CustomTrees_example/README.txt.meta
+Assets/Resources/GKGConfig.meta
+Assets/Resources/GKGConfig/GKGConfig.xml
+Assets/Resources/GKGConfig/GKGConfig.xml.meta

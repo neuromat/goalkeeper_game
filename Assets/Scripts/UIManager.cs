@@ -1499,10 +1499,10 @@ public class UIManager : MonoBehaviour
 				}
 			}
 
-			if (!Screen.fullScreen && Input.anyKey)
+			if (Application.platform == RuntimePlatform.WebGLPlayer && !Screen.fullScreen && Input.anyKey)
 			{
 				showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtAbort").Replace("\\n", "\n");
-				return; //TODO: remove if it isn't necessary
+				return;
 			}
 
 			// ============================================================================

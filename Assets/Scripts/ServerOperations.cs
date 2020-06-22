@@ -31,8 +31,6 @@ using System.Security.Cryptography;     //170830 sha512Hash available
 public class ServerOperations 
 {
 	//170612 where to save results if Android, iOS or WebGL
-	public static readonly string gameServerLocation = "game.numec.prp.usp.br/game/";     //170928 from Carlos Ribas
-	public static readonly string webProtocol = "https://";
 //	string fileContent;    //contains all data results, before to send to web
 
 
@@ -506,10 +504,10 @@ public class ServerOperations
 		formData.AddField("file","file");
 		formData.AddBinaryData ( "file", fileData, fileName, "text/plain");
 
-
-		//url do servidor com o script php que receberá o arquivo
-		//string loginURL = webProtocol + gameServerLocation + "/unityUpload.php";
-		string loginURL = webProtocol + gameServerLocation + "/unityUpload_test.php";
+		GKGConfigContainer gkgConfig = GKGConfigContainer.Load();
+		// TODO: GKGConfigContainer returns a list. First element's list is the webSite corresponding
+		//   attribute with its elements. Improve access by referencing by name, not by index.
+		string loginURL = gkgConfig.configItems[0].URL + "/unityUpload_test.php";
 
 		//iniciar o envio dor form (https://docs.unity3d.com/ScriptReference/WWW-ctor.html)
 		WWW w = new WWW (loginURL, formData);
