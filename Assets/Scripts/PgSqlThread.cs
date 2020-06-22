@@ -94,7 +94,7 @@ public class PgSqlThread : MonoBehaviour {
 				// Segundo passo: Formatar a inserção no PostGreSQL
 				//string query = "INSERT INTO goalGame VALUES ('" + FileContent + "')";
 				//170330 criando serial e chave primaria na tabela
-				string query = "INSERT INTO testeresults (gamekey, filecontent) VALUES ('" + FileKey + "', '" + FileContent + "')";
+				string query = "INSERT INTO results (gamekey, filecontent) VALUES ('" + FileKey + "', '" + FileContent + "')";
 
 				// Terceiro passo: Conexão e envio ao banco de dados
 				if (!this.OpenConn ()) {

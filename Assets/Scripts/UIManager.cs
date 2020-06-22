@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;                       //to use StringBuilder
+using System.IO;
 using UnityEngine.EventSystems;          //170308 to know which was last button clicked - did not work ...
 
 
@@ -179,6 +180,8 @@ public class UIManager : MonoBehaviour
 	public GameObject frame4EEG;
 	public float[] keyboardTimeMarkers;                 //180418 markers from experimenter (keyboard F1 until F9)
 
+	public float contadorT;
+	public GameObject showMsg;
 
 	//170623 DLLs inpout32.dll from http://highrez.co.uk/
 	//171017 DLls inpoutx64.dll
@@ -241,7 +244,19 @@ public class UIManager : MonoBehaviour
 	public void BtnActionGetEvent(string input)
 	{
 		float tempoJogo;
+
+		contadorT = 0.0f;
+//Celso_Debug		cronosOut.GetComponent<Text> ().text = contadorT.ToString();
+//Celso_Debug		contadorT = Time.time;
+
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
+
+		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
+		if (!(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) ||
+			Input.GetKey(KeyCode.RightArrow))) {
+			// Debug.Log("Mouse key is held down");
+			return;
+		}
 
 	//	Debug.Log("@BtnActionGetEvent:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 	//	//Debug.Log("movementTimeA = "+ movementTimeA);
@@ -278,7 +293,7 @@ public class UIManager : MonoBehaviour
 			//170919 descontar os possiveis tempos de pausa do Play/Pause
 			//eLog.time = Time.realtimeSinceStartup - movementTimeA;
 			eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
-			Debug.Log("eLog.time = "+ eLog.time);
+			// Debug.Log("eLog.time = "+ eLog.time);
 			eLog.pauseTime = gameFlow.otherPausesTime;
 			eLog.realTime = Time.realtimeSinceStartup - gameFlow.startSessionTime;    //180418 to accomplish marker time by keyboard
 			//Debug.Log("eLog.realTime = "+ eLog.realTime);
@@ -606,11 +621,9 @@ public class UIManager : MonoBehaviour
 			// e nao mais espera pelo final da fase
 
 			//Debug.Log("-------------------> INPUT PRESSIONADO = " +eLog.realTime);
-			Debug.Log("@BtnActionGetEvent:movementTimeA = "+ movementTimeA);
+			// Debug.Log("@BtnActionGetEvent:movementTimeA = "+ movementTimeA);
 		}
 	}
-
-
 
 	//--------------------------------------------------------------------------------------------------------
 	//Josi: ao trocar de nivel, envia os dados do experimento para arquivo local (a thread se encarrega de enviar o arquivo para o server)
@@ -930,7 +943,12 @@ public class UIManager : MonoBehaviour
 				if (PlayerPrefs.GetInt ("gameSelected") == 4) {
 					extraTime = 0.5f;
 				}
-				StartCoroutine (WaitThenDoThings ( probs.animationTime() + extraTime ));  //170322 centralizado em uma rotina os tempos de animacao
+				/**
+				 * TODO: 0.29f is a magic number to fix the problem of syncronization between the red arrows and the
+				 * idle form of the player before new kick. The issue is partially fixed by diminishing the animation
+				 * time of the animations related to goalkeeper not caughting the ball.
+				 */
+				StartCoroutine (WaitThenDoThings ( probs.animationTime() + extraTime - 0.29f ));  //170322 centralizado em uma rotina os tempos de animacao
 
 
 				//Score here, else shows up before play
@@ -996,8 +1014,8 @@ public class UIManager : MonoBehaviour
 
 //		Debug.Log("@CEL:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 //		Debug.Log("@CEL:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-		Debug.Log("@CEL:++++ decisionTimeA = "+ movementTimeA);
-		Debug.Log("@CEL:++++ decisionTimeA = "+ decisionTimeA);
+		// Debug.Log("@CEL:++++ decisionTimeA = "+ movementTimeA);
+		// Debug.Log("@CEL:++++ decisionTimeA = "+ decisionTimeA);
 		
 		//170915 se está nesta rotina, não está pausado, logo, garantir os botoes Play/Pause
 		if (probs.getShowPlayPauseButton ()) {
@@ -1118,6 +1136,12 @@ public class UIManager : MonoBehaviour
 	//170327 acrescentar param para indicar se o Quit veio da BetweenLevels (1) ou pelo botao de Exit do canto superior direito
 	public void QuitGame(int whatScreen)
 	{
+		if (!Screen.fullScreen)
+		{
+			Application.OpenURL("https://duckgo.com");
+			return; //TODO: remove if it isn't necessary
+		}
+
 		if (whatScreen == 2) {
 			//170417 estava demorando muito tempo se o user apenas quisesse olhar a primeira tela e Exitar
 			//170418 se Exit no anim321 deve-se aguardar terminar a animacao
@@ -1153,7 +1177,7 @@ public class UIManager : MonoBehaviour
 		//Application.Quit ();
 		if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 			if (Application.platform == RuntimePlatform.WebGLPlayer) {
-				Application.OpenURL (PlayerPrefs.GetString ("gameURL"));
+				Application.OpenURL ("https://duckgo.com");
 			} else {
 				//171121 not working kill()
 				if ((Application.platform == RuntimePlatform.IPhonePlayer) ||
@@ -1188,17 +1212,18 @@ public class UIManager : MonoBehaviour
 		probs = ProbCalculator.instance;
 		gameFlow = GameFlowManager.instance;             //161230 para fechar objetos
 		float tempoJogo;
+		contadorT = 0.0f;
 
 		StartTime = Time.time;
 	
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
-		Debug.Log("@START:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
+		// Debug.Log("@START:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 		//Debug.Log("movementTimeA = "+ movementTimeA);
 		//Debug.Log("decisionTimeA = "+ decisionTimeA);
-		Debug.Log("@START:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-		Debug.Log("@START:++++ tempoJogo = "+ tempoJogo);
-		Debug.Log("@START:++++ decisionTimeA = "+ decisionTimeA);
+		// Debug.Log("@START:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
+		// Debug.Log("@START:++++ tempoJogo = "+ tempoJogo);
+		// Debug.Log("@START:++++ decisionTimeA = "+ decisionTimeA);
 		cronosIn.GetComponent<Text>().text = decisionTimeA.ToString();
 
 
@@ -1356,6 +1381,8 @@ public class UIManager : MonoBehaviour
 		int number; //180419 to facilitate the routine
 		float tempoJogo;
 
+		//Celso_Debug Screen.fullScreen = true;
+
 		float TimerControl = Time.time - StartTime;
 		string mins = ((int)TimerControl/60).ToString("00");
 		string segs = (TimerControl % 60).ToString("00");
@@ -1455,8 +1482,7 @@ public class UIManager : MonoBehaviour
 						anim321.enabled = true;
 						anim321.SetTrigger ("anim321");
 						animCountDown = true;
-//						StartCoroutine (WaitThenDoThings (3.2f)); //170417 era 3.4 mas havia uam latência extra; a animacao dura exatos 3s
-						StartCoroutine (WaitThenDoThings (2.7f)); //170417 era 3.4 mas havia uam latência extra; a animacao dura exatos 3s
+						StartCoroutine (WaitThenDoThings (3.2f)); //170417 era 3.4 mas havia uam latência extra; a animacao dura exatos 3s
 					}
 				}
 			}
@@ -1471,6 +1497,12 @@ public class UIManager : MonoBehaviour
 					if (OnAnimationEnded != null)
 						OnAnimationEnded ();
 				}
+			}
+
+			if (Application.platform == RuntimePlatform.WebGLPlayer && !Screen.fullScreen && Input.anyKey)
+			{
+				showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtAbort").Replace("\\n", "\n");
+				return;
 			}
 
 			// ============================================================================
@@ -1523,6 +1555,7 @@ public class UIManager : MonoBehaviour
 	{
 		float tempoJogo;
 
+		// time = 0.3f;
 		yield return new WaitForSeconds(time);
 
 		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
@@ -1593,18 +1626,25 @@ public class UIManager : MonoBehaviour
 					}
 				}
 				RandomEvent eLog = new RandomEvent ();
-				Debug.Log("@FINISHED:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
+				// Debug.Log("@FINISHED:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 				//Debug.Log("movementTimeA = "+ movementTimeA);
 				//Debug.Log("decisionTimeA = "+ decisionTimeA);
-				Debug.Log("@FINISHED:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-				Debug.Log("@FINISHED:++++ tempoJogo = "+ tempoJogo);
-				Debug.Log("@FINISHED:++++ decisionTimeA = "+ decisionTimeA);
+				// Debug.Log("@FINISHED:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
+				// Debug.Log("@FINISHED:++++ tempoJogo = "+ tempoJogo);
+				// Debug.Log("@FINISHED:++++ decisionTimeA = "+ decisionTimeA);
 				eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
 				float tmpTime = eLog.time + decisionTimeA;
 //				cronosOut.GetComponent<Text>().text = decisionTimeA.ToString();
-				cronosOut.GetComponent<Text>().text = tmpTime.ToString();
+//				cronosOut.GetComponent<Text>().text = tmpTime.ToString();
 
+//Celso_Debug				float TimerControl = Time.time - contadorT;
+//Celso_Debug				string mins = ((int)TimerControl/60).ToString("00");
+//Celso_Debug				string segs = (TimerControl % 60).ToString("00");
+//Celso_Debug				string milisegs = ((TimerControl * 100)%100).ToString ("00");
 
+//Celso_Debug				string TimerString = string.Format ("{00}:{01}:{02}", mins, segs, milisegs);
+
+//Celso_Debug 				cronosOut.GetComponent<Text> ().text = TimerControl.ToString();
 
 /*				//180123 valid for all game modules
 				if (probs.getSendMarkersToEEG () != "none") {
@@ -1747,8 +1787,7 @@ public class UIManager : MonoBehaviour
 			keyboardTimeMarkers [i] = 0.0f;
 		}
 	}
-
-
+		
 	//---------------------------------------------------------------------------------------
 	//180510 apply correct phase speedGKAnim; there is only 3 field scenarios -
 	//       when there is more than 3 phases, the scenario is always the last: professional (until do more);

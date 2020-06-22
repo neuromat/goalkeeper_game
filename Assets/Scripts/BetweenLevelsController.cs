@@ -57,7 +57,7 @@ public class BetweenLevelsController : MonoBehaviour
 
 		//btnExit.SetActive (true);
 		btnContinue.SetActive (true);
-		btnMenu.SetActive (true);     //180510: botao Menu em todos os betweenLevel por uniformidade
+		//btnMenu.SetActive (true);     //180510: botao Menu em todos os betweenLevel por uniformidade
 
 		msg.text = middleMsg;
 	}
@@ -92,7 +92,8 @@ public class BetweenLevelsController : MonoBehaviour
 	{                                                                    //170927 bmMode (AQ/AR): 1=minHits, 2=minSequ
 		//btnExit.SetActive (true);
 		btnContinue.SetActive (false);
-		btnMenu.SetActive (true);
+		//btnMenu.SetActive (true);
+		btnMenu.SetActive (false);
 
 		if ((gameSelected == 1) || (gameSelected == 4)) { //BM ou BMcomTempo
 			msg.text = endMsgBM;
