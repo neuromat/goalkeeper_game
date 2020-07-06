@@ -1141,7 +1141,7 @@ public class UIManager : MonoBehaviour
 	{
 		if (!Screen.fullScreen)
 		{
-			Application.OpenURL("https://duckgo.com");
+			Application.OpenURL("https://game.numec.prp.usp.br");
 			return; //TODO: remove if it isn't necessary
 		}
 
@@ -1180,7 +1180,7 @@ public class UIManager : MonoBehaviour
 		//Application.Quit ();
 		if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 			if (Application.platform == RuntimePlatform.WebGLPlayer) {
-				Application.OpenURL ("https://duckgo.com");
+				Application.OpenURL ("https://game.numec.prp.usp.br");
 			} else {
 				//171121 not working kill()
 				if ((Application.platform == RuntimePlatform.IPhonePlayer) ||

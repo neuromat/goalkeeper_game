@@ -817,7 +817,7 @@ public class GameFlowManager : MonoBehaviour
         uiManager.userAbandonModule = true; //to guarantee to save results
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
-            Application.OpenURL("https://duckgo.com");
+            Application.OpenURL("https://game.numec.prp.usp.br");
             return;
         }
         GoToIntro();
@@ -1510,7 +1510,7 @@ public class GameFlowManager : MonoBehaviour
                     {  //if in the editor, this command would kill unity...
                         if (Application.platform == RuntimePlatform.WebGLPlayer)
                         {
-                            Application.OpenURL("https://duckgo.com");
+                            Application.OpenURL("https://game.numec.prp.usp.br");
                         }
                         else
                         {
