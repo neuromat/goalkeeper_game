@@ -188,7 +188,7 @@ public class ServerOperations
 			}
 		}
 
-		tmp = (1000 + UnityEngine.Random.Range (0, 1000)).ToString().Substring(1,3);  //170126: a random between 000 e 999
+		tmp = (1000 + UnityEngine.Random.Range (0, 1000)).ToString().Substring(1,3);
 		LogGame.Length = 0;                                           //keeps capacity, LogGame="" and pointer starts at zero
 
 		//170608 if webGL needs to save in an free area

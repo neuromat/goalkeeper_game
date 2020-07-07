@@ -1,43 +1,46 @@
-﻿/**************************************************************************************/
-//  Module written by scaroni <renato.scaroni@gmail.com>
-//  Rewrited by Josi Perez <josiperez.neuromat@gmail.com>, keeping the original code in comment
-//
-/**************************************************************************************/
+﻿/**
+ * Module written by scaroni <renato.scaroni@gmail.com>
+ * Rewritten by Josi Perez <josiperez.neuromat@gmail.com>
+ */
+
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;                       //to use StringBuilder
+using System.Text;
 using System.IO;
-using UnityEngine.EventSystems;          //170308 to know which was last button clicked - did not work ...
+using UnityEngine.EventSystems;
 
 
-//170623 only valids for Windows (to call inpout32.dll)
+// Only valids for Windows (to call inpout32.dll)
 #if UNITY_STANDALONE_WIN  || UNITY_EDITOR_WIN
-using System.Runtime.InteropServices;    //[DLLimport para envio ao EEG pela porta paralela
+using System.Runtime.InteropServices;
 #endif
-using System;                            //180201 para declara Byte[0] e buildar para linux
+
+using System;
 using System.IO.Ports;
 using System.Net.Mime;
 
-//180104 to use serialPort; works in linux and mac?
 
-
-
-//------------------------------------------------------------------------------------
-public class RandomEvent            //Josi: result matrix to save experiment results
+public class RandomEvent
 {
-	public int resultInt;           //defense waited: 0, 1 or 2 (if choices=3), or 1,2 (if choices=2)
-	public char ehRandom;           //170215 JG: random play? Y, or n; in any other module it is "n" (AQ/AR is random...)
-	public int optionChosenInt;     //defense choosed by player; numeric format
-	public string result;           //defense waited in string format: dir, esq, cen
-	public string optionChosen;     //defense choosed  in string format: dir, esq, cen
-	public bool correct;            //correct (true) or no (false)
+	// Defense waited: 0, 1 or 2 (if choices=3), or 1,2 (if choices=2)
+	public int resultInt;
+	// Random play? Y, or n; in any other module it is "n" (AQ/AR is random...)
+	public char ehRandom;
+	// Defense choosed by player; numeric format
+	public int optionChosenInt;
+	// Defense waited in string format: dir, esq, cen
+	public string result;
+	// Defense choosed in string format: dir, esq, cen
+	public string optionChosen;
+	public bool correct;
 	public string state;
 	public float time;
-	public float decisionTime;       //170113 tempo de decisao
-	public float pauseTime;          //170919 tempo em pausa (do Play/Pause) nesta jogada
-	public float realTime;           //180418 tempo corrido (para analisar com os marcadores)
+	public float decisionTime;
+	public float pauseTime;
+	// Para analisar com os marcadores
+	public float realTime;
 }
 
 
@@ -1138,7 +1141,7 @@ public class UIManager : MonoBehaviour
 	{
 		if (!Screen.fullScreen)
 		{
-			Application.OpenURL("https://duckgo.com");
+			Application.OpenURL("https://game.numec.prp.usp.br");
 			return; //TODO: remove if it isn't necessary
 		}
 
@@ -1177,7 +1180,7 @@ public class UIManager : MonoBehaviour
 		//Application.Quit ();
 		if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 			if (Application.platform == RuntimePlatform.WebGLPlayer) {
-				Application.OpenURL ("https://duckgo.com");
+				Application.OpenURL ("https://game.numec.prp.usp.br");
 			} else {
 				//171121 not working kill()
 				if ((Application.platform == RuntimePlatform.IPhonePlayer) ||
