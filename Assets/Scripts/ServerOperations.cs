@@ -506,7 +506,7 @@ public class ServerOperations
 
 		GKGConfigContainer gkgConfig = GKGConfigContainer.Load();
 		// TODO: GKGConfigContainer returns a list. First element's list is the webSite corresponding
-		//   attribute with its elements. Improve access by referencing by name, not by index.
+		//   attribute with its elements. Improve access by referencing by name, not by index!
 		string loginURL = gkgConfig.configItems[0].URL + "/unityUpload_test.php";
 
 		//iniciar o envio dor form (https://docs.unity3d.com/ScriptReference/WWW-ctor.html)

@@ -1190,7 +1190,7 @@ public class GameFlowManager : MonoBehaviour
         WWWForm formData = new WWWForm ();
 
         formData.AddField("content", content);
-        string loginURL = Application.absoluteURL + "upload_file.php";
+        string loginURL = Application.absoluteURL + "upload_file_test.php";
 
         WWW w = new WWW(loginURL, formData);
         yield return w;
