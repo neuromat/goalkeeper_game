@@ -441,12 +441,10 @@ public class ProbCalculator : MonoBehaviour
 					} else {
 						//Josi: jogada probabilistica - já estava assim
 						//      com base no random gerado, define onde fazer o sorteio (no evento 0, 1 ou 2)
-						float r = UnityEngine.Random.Range (0.0f, 1.0f);  //Josi: como estah float, vai gerar numeros entre 0 e 1 inclusive: https://docs.unity3d.com/ScriptReference/Random.Range.html
+						float r = UnityEngine.Random.Range (0.0f, 1.0f);
 
-						ehRandomKick = true;  //170215
+						ehRandomKick = true;
 
-						//gerando
-						//print(">>>> Random:"+r);
 						result = "0";
 
                         if (r > currentState.GetProbEvent0() && r < currentState.GetProbEvent0() + currentState.GetProbEvent1()) {
@@ -461,17 +459,14 @@ public class ProbCalculator : MonoBehaviour
 				
 					int i = -1;
 
-					//Josi: garantir comecar de contexto
-					//      @@ Insert é menos eficiente do que Add, mas trocar vai alterar muita coisa, melhor deixar para a versao Godot
-					//      @@ Também penso que a cada nivel: transitionHistory.Clear() para restartar a history...
+					// Josi: garantir comecar de contexto
 					if (transitionHistory.Count == 0) {
 						for (int j = 0; j < currentState.path.Length; j++) {
 							transitionHistory.Insert (0, currentState.path [j].ToString ());
 						}
 					}
-					//logString += " estado anterior: " + currentState.path;    //Josi: comentado
 
-					//Josi: busca o contexto da arvore, a partir da folha em maos e juntando a folha anterior, com base na altura da arvore
+					// Josi: busca o contexto da arvore, a partir da folha em maos e juntando a folha anterior, com base na altura da arvore
 					while (i < machines [currentStateMachineIndex].depth) {
 						if (i >= 0)
 							result = transitionHistory [i] + result;
@@ -482,16 +477,11 @@ public class ProbCalculator : MonoBehaviour
 						}
 					}
 		
-					//logString += " estado atual: "+currentState.path+" resultado: "+ bkpResult +"\n";    //Josi: comentado	
-					//print ("Estado atual: "+currentState.path);                                          //Josi: comentado
-		
 					transitionHistory.Insert (0, bkpResult);
 				
 					return System.Convert.ToInt16 (bkpResult);
-				} //else ler da arvore
-			} //fim JG
-
-//		//-----------------------------------------------------------------------------------------------------------
+				}
+			}
 			else 
 			{
 				if (gameSelected == 3)      //MD
@@ -846,8 +836,7 @@ public class ProbCalculator : MonoBehaviour
 	}
 
 
-	//------------------------------------------------------------------------------------
-	//Josi: ninguem chama este trecho
+	// Ninguém chama este trecho
 	void SetInitState(JsonInput t)
 	{
 		int max = t.states.Length;
@@ -856,45 +845,28 @@ public class ProbCalculator : MonoBehaviour
 		currentState = t.states[r];
 	}
 
-
-	//------------------------------------------------------------------------------------
-	static bool inited = false;	
+	static bool inited = false;
 	public void Start () 
 	{
-		//Josi ** sai daqui e entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
-		//currentStateMachineIndex = 0;
 		StateMachine tmp;
 		if (!inited) {
 
-            //180614 need this case player backToMenuTeams
+            // Need this in case of player backToMenuTeams
             machines.Clear();
 
-
-            //Josi ** entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
             currentStateMachineIndex = 0;
+			currentSequOtimaIndex = 0;
+			currentBMSequIndex = 0;
+			currentMDSequIndex = 0;
+			currentJGSequIndex = 0;
 
-			currentSequOtimaIndex = 0; //Josi: ponteiro que le a sequ otima no JG
-			currentBMSequIndex = 0;    //Josi: ponteiro que le a sequ de chutes na BM
-			currentMDSequIndex = 0;    //Josi: 161212: pointer para a sequ do memoriaDeclarativa
-			currentJGSequIndex = 0;    //170216
-
-			// carrega as árvores caso ainda não tenham sido carregadas
 			if (LoadedPackage.loaded == null)
 				LoadStages.LoadTreePackageFromResources ();
 
 			int i = 0;
 			foreach (string s in LoadedPackage.loaded.stages) {
-				//se eh o primeiro arquivo (tem param menus) e ainda nao detectou IncompatibleVersion
-				//170921 new params for september/17 version
-				//170922 if  there is a missing parameter in some file, error
-				//180104 param portEEGserial after v180102
-				//180326 param minHitsInSequence for JG + mdMaxPlays to stop JM in some play
-				//180328 param user input defense keys
-				//180402 param alternative for playPause button
-				//180410 param attentionPoint and attentionDiameter
-				//180413 param speedGKAnim
-				if ((i == 0) && !configFileIncompatibleWithVersion) {   //detected error in other config file
-					if (s.Contains ("limitValue") || s.Contains ("zeroPhaseJG")) {  //180328 params removed (obsolete)
+				if ((i == 0) && !configFileIncompatibleWithVersion) {   // detected error in other config file
+					if (s.Contains ("limitValue") || s.Contains ("zeroPhaseJG")) {
 						configFileIncompatibleWithVersion = true;
 					} else {
 						if (!(s.Contains ("menus") && s.Contains ("showHistory")
@@ -918,7 +890,6 @@ public class ProbCalculator : MonoBehaviour
 				}
 			}
 
-			//inited = true;           //180614 now, it is possible backToMenuTeams
             currentSequOtimaIndex = 0; //Josi garantir ponteiro da sequOtima
 			currentBMSequIndex = 0;    //Josi: ponteiro que le a sequ de chutes na BM
 			currentMDSequIndex = 0;    //Josi: 161212: pointer para a sequ do memo Declarativa
@@ -930,12 +901,11 @@ public class ProbCalculator : MonoBehaviour
 			saveOriginalMDsequ = machines [currentStateMachineIndex].mdSequ;
 		}
 
-		//Josi: todo o trecho abaixo estaria melhor em outro ponto do programa, onde se soubesse qual jogo será selecionado
-		//      dado que se refere especificamente ao JG no modo ler árvore - como tenho prazo e nao atrapalha, fica ai
+		// Josi: todo o trecho abaixo estaria melhor em outro ponto do programa, onde se soubesse qual jogo será selecionado
+		// dado que se refere especificamente ao JG no modo ler árvore - como tenho prazo e nao atrapalha, fica ai
 		int max = machines[currentStateMachineIndex].states.Count;
 
 		// Define o início da sequência aleatória.  Sempre fixa.
-		//Random.InitState(42);  //manter apenas uma, no loadStages
 		int index = UnityEngine.Random.Range(0, max);
 
 		string key = machines[currentStateMachineIndex].dicKeys[index];
