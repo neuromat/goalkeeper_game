@@ -507,16 +507,19 @@ public class ServerOperations
 		GKGConfigContainer gkgConfig = GKGConfigContainer.Load();
 		// TODO: GKGConfigContainer returns a list. First element's list is the webSite corresponding
 		//   attribute with its elements. Improve access by referencing by name, not by index!
-		string loginURL = gkgConfig.configItems[0].URL + "/unityUpload_test.php";
+		string loginURL = gkgConfig.configItems[0].URL + "/unityUpload.php";
 
 		//iniciar o envio dor form (https://docs.unity3d.com/ScriptReference/WWW-ctor.html)
-		WWW w = new WWW (loginURL, formData);
-		yield return w;
+		WWW www = new WWW (loginURL, formData);
+		yield return www;
 
 		//se w.error envia erro, logar nome do arquivo para tentar descobrir o problema
-		if (w.error != null) {
-			Debug.Log ("file " + fileName + " w.error = " + w.error);
-		} 
+		if (www.error != null) {
+			Debug.Log ("file " + fileName + " w.error = " + www.error);
+		}
+
+		// DEBUG: test for connection via GET
+		yield return new WWW(gkgConfig.configItems[0].URL + "/get_sent.html");
 	}
 
 

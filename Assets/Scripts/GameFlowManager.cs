@@ -1190,13 +1190,13 @@ public class GameFlowManager : MonoBehaviour
         WWWForm formData = new WWWForm ();
 
         formData.AddField("content", content);
-        string loginURL = Application.absoluteURL + "upload_file_test.php";
+        string loginURL = Application.absoluteURL + "upload_file.php";
 
-        WWW w = new WWW(loginURL, formData);
-        yield return w;
+        WWW www = new WWW(loginURL, formData);
+        yield return www;
         
-        if (w.error != null) {
-            Debug.Log (" w.error: " + w.error);
+        if (www.error != null) {
+            Debug.Log ("Error logging entry date to the server: " + www.error);
         }
     }
 
