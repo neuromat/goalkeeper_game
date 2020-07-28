@@ -955,9 +955,9 @@ public class GameFlowManager : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
-            StartCoroutine(logUserStartGameWebGL(
-                    "nickname: " + PlayerInfo.alias + "; entry date: " + DateTime.Now.ToString("yyMMdd_HHmmss") + "\n")
-            );
+            string content = "nickname: " + PlayerInfo.alias + "; entry date: " +
+                             DateTime.Now.ToString("yyMMdd_HHmmss") + "\n"; 
+            StartCoroutine(ServerOperations.instance.logUserActivity("upload_file.php", content));
         }
 
         //180524
@@ -1182,25 +1182,6 @@ public class GameFlowManager : MonoBehaviour
         uiManager.BtwnLvls = false;
         playing = true;
     }
-
-    private IEnumerator logUserStartGameWebGL(string content)
-    {
-        if (!(Application.platform == RuntimePlatform.WebGLPlayer)) yield return "";
-
-        WWWForm formData = new WWWForm ();
-
-        formData.AddField("content", content);
-        string loginURL = Application.absoluteURL + "upload_file.php";
-
-        WWW www = new WWW(loginURL, formData);
-        yield return www;
-        
-        if (www.error != null) {
-            Debug.Log ("Error logging entry date to the server: " + www.error);
-        }
-    }
-
-
 
     //---------------------------------------------------------------------------------------
     //170125 Jogo da Memória: experimentador passa a Jogar jogo do Goleiro fase 3 (com modificacoes)

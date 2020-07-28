@@ -28,7 +28,7 @@ using System.Security.Cryptography;     //170830 sha512Hash available
 
           
 //------------------------------------------------------------------------------------
-public class ServerOperations 
+public class ServerOperations : MonoBehaviour
 {
 	//170612 where to save results if Android, iOS or WebGL
 //	string fileContent;    //contains all data results, before to send to web
@@ -372,7 +372,7 @@ public class ServerOperations
 			if (gameSelected != 5) {	
 				foreach (RandomEvent l in log) {
 					sequExecutada.Insert (line, l.resultInt.ToString ());
-					line++;                                               
+					line++;
 				}
 			} else {
 				//No JG, se o jogador erra, insiste-se ateh que acerte a jogada
@@ -380,7 +380,7 @@ public class ServerOperations
 				foreach (RandomEvent l in log) {
 //					if (l.correct == true) {
 					sequExecutada.Insert (line, l.resultInt.ToString ());
-					line++;                                               
+					line++;
 //					}
 				}
 				//180418 player can interrupt the game with 3 or less plays, then, we can know the sequence to memorize
@@ -520,6 +520,23 @@ public class ServerOperations
 
 		// DEBUG: test for connection via GET
 		yield return new WWW(gkgConfig.configItems[0].URL + "/get_sent.html");
+	}
+
+	public IEnumerator logUserActivity(string filename, string content)
+	{
+		if (Application.platform != RuntimePlatform.WebGLPlayer) yield return "";
+
+		WWWForm formData = new WWWForm ();
+
+		formData.AddField("content", content);
+		string loginURL = Application.absoluteURL + filename;
+
+		WWW www = new WWW(loginURL, formData);
+		yield return www;
+
+		if (www.error != null) {
+			Debug.Log ("Error logging user activity to the server: " + www.error);
+		}
 	}
 
 

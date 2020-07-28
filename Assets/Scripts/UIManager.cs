@@ -445,127 +445,14 @@ public class UIManager : MonoBehaviour
 			}
 
 			eventCount++;
-/*
-			//170630
-			//============================================================
-			//180104 if parallel connection, valid for Windows environment only
-			//       if serial, anyone
-			//if (PlayerPrefs.GetInt ("gameSelected") == 2) {      //180122 valid to all game modules
-			if (probs.getSendMarkersToEEG () != "none") {
-				if (probs.getSendMarkersToEEG () == "parallel") {
-					//-------------------------------------------------------------
-					#if UNITY_STANDALONE_WIN  || UNITY_EDITOR_WIN
-					//170626 enviar os marcadores EEG se necessario (apenas se JG);
-					//       com base na tabela sugerida por Magá (INDC/RJ)
-					int j;
 
-					//marcador de direcao de defesa esperada
-					if (e == 0) {
-						Write (0x02);        //marcador 2: DEFESA ESPERADA aa esquerda
-					} else {
-						if (e == 1) {
-							Write (0x04);    //marcador 4: DEFESA ESPERADA ao centro
-						} else {
-							Write (0x08);    //marcador 8: DEFESA ESPERADA aa direita
-						}
-					}
-					for (j = 1; j < timeBetweenMarkers; j++) {
-						j = j + 1;
-					}
-					;  //170626 para dar um tempico entre envios à paralela
-					Write (0x00);             //170626 envio do marcador zero
-
-
-					// marcador indicativo de jogada random ou não random
-					if (eLog.ehRandom == 'Y') {
-						Write (0x10);        //marcador 16: JOGADA RANDOM
-					} else {
-						Write (0x20);        //marcador 32: JOGADA NAO RANDOM
-					}
-					for (j = 1; j < timeBetweenMarkers; j++) {
-						j = j + 1;
-					}
-					;  //170626 para dar um tempico entre envios à paralela
-					Write (0x00);             //170626 envio do marcador zero
-
-
-					// marcador de direcao de defesa selecionada
-					if (eLog.optionChosenInt == 0) {
-						Write (0x02);        //marcador 2: DEFESA DADA aa esquerda
-					} else {
-						if (eLog.optionChosenInt == 1) {
-							Write (0x04);    //marcador 4: DEFESA DADA ao centro
-						} else {
-							Write (0x08);    //marcador 4: DEFESA DADA aa direita
-						}
-					}
-					for (j = 1; j < timeBetweenMarkers; j++) {
-						j = j + 1;
-					}
-					;  //170626 para dar um tempico entre envios à paralela
-					Write (0x00);             //170626 envio do marcador zero
-					#endif
-					//-------------------------------------------------------------
-				} else {
-					//180104 only for standalone desktops... not very sure...
-					if (probs.getSendMarkersToEEG () == "serial") {
-						//-------------------------------------------------------------
-						#if UNITY_STANDALONE || UNITY_EDITOR
-						//180201 changed to convert 3 markers in 1; need 18 markers changing response by stimuli on EEG BrainProducts;
-						//       to avoid marker lost and to avoid a delayer (loop)
-						if (e == 0) {
-							if (eLog.ehRandom == 'Y') {
-								if (eLog.optionChosenInt == 0) {
-									data[0] = 0x0a;                                         //0y0
-								} else {
-									data[0] = (eLog.optionChosenInt == 1) ? Convert.ToByte(0x0b) : Convert.ToByte(0x0c);    //0y1 e 0y2
-								}
-							} else {
-								if (eLog.optionChosenInt == 0) {
-									data[0] = 0x0d;                                         //0n0
-								} else {
-									data[0] = (eLog.optionChosenInt == 1) ? Convert.ToByte(0x0e) : Convert.ToByte(0x0f);    //0n1 e 0n2
-								}
-							}
-						} else {
-							if (e == 1) {
-								if (eLog.ehRandom == 'Y') {
-									if (eLog.optionChosenInt == 0) {
-										data[0] = 0x10;                                         //1y0
-									} else {
-										data[0] = (eLog.optionChosenInt == 1) ? Convert.ToByte(0x11) : Convert.ToByte(0x12);    //1y1 e 1y2
-									}
-								} else {
-									if (eLog.optionChosenInt == 0) {
-										data[0] = 0x13;                                         //1n0
-									} else {
-										data[0] = (eLog.optionChosenInt == 1) ? Convert.ToByte(0x14) : Convert.ToByte(0x15);    //1n1 e 1n2
-									}
-								}
-							} else {  //(e == 2)
-								if (eLog.ehRandom == 'Y') {
-									if (eLog.optionChosenInt == 0) {
-										data[0] = 0x16;                                         //2y0
-									} else {
-										data[0] = (eLog.optionChosenInt == 1) ? Convert.ToByte(0x17) : Convert.ToByte(0x18);    //2y1 e 2y2
-									}
-								} else {
-									if (eLog.optionChosenInt == 0) {
-										data[0] = 0x19;                                         //2n0
-									} else {
-										data[0] = (eLog.optionChosenInt == 1) ? Convert.ToByte(0x1A) : Convert.ToByte(0x1B);    //2n1 e 2n2
-									}
-								}
-							}
-						}
-						sendDataToSerial(data);
-						#endif
-						//-------------------------------------------------------------
-					}
-				}
-			}  //if (probs.getSendMarkersToEEG () != "none")
-*/
-			//============================================================
+			// TODO (GG-1/GG-2): DEBUG: remove after discover error
+			if (Application.platform == RuntimePlatform.WebGLPlayer && eventCount % 10 == 0)
+			{
+				string content = "nickname: " + PlayerInfo.alias + "; plays: " + eventCount + "; date: "
+				                 + DateTime.Now.ToString("yyMMdd_HHmmss") + "\n";
+				StartCoroutine(ServerOperations.instance.logUserActivity("log_user_activity.php", content));
+			}
 
 			int successCountInWindow = 0;
 			for (int i = 0; i < eventWindow; i++) {
