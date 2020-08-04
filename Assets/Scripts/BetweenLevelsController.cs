@@ -81,7 +81,7 @@ public class BetweenLevelsController : MonoBehaviour
 		//btnExit.SetActive (true);
 		btnContinue.SetActive (true);
 
-		btnMenu.SetActive (true);                //Josi: 161212: botao Menu
+		btnMenu.SetActive (true);
 		msg.text = postEndMsg;
 		gameSelectedText (gameSelected, bmMode); //180327 no more phaseZero parameters
 	}

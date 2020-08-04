@@ -138,18 +138,16 @@ public class GameFlowManager : MonoBehaviour
     public Text txtJogo;
 	public Text txtMenu;
     public Text txtSair;
-    public Text txtHeader;                   //171009 errMsgs
+    public Text txtHeader;
     public Text txtExit;
-    public Text txtTeam;                     //180614 back to Team Selection
-    public Text txtStartG;                   //180629 start game
-    public Text txtComP;                     //180629 com pausa
-    public Text txtSemP;                     //180629 sem pausa
-
+    public Text txtTeam;
+    public Text txtStartG;
+    public Text txtComP;
+    public Text txtSemP;
     int errorNumber;                         //180105 to create a function
-    public string sequJMGiven;               //180418 to save the sequence given to the player in JM
+    public string sequJMGiven;
+    
 
-
-    //-------------------------------------------------------------------------------------
     static private GameFlowManager _instance;
     static public GameFlowManager instance
     {
@@ -563,15 +561,6 @@ public class GameFlowManager : MonoBehaviour
 		//171006 declarar a instance para permitir chamar rotinas do outro script
         translate = LocalizationManager.instance;
 
-        //171006 trocar os textos
-        //180626 manter a tela de tutorial com as 4 imagens/texto ate que venha uma sugestão do designer
-        //txtTut1.text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        //txtTut2.text = translate.getLocalizedValue("tut2").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        //txtTut3.text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        //txtTut4.text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-  
-        //txtTut5.text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
-        
         //180627 from UiText to TMPro
         txtTut1.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");
         txtTut2.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut2").Replace("\\n", "\n");
@@ -594,73 +583,13 @@ public class GameFlowManager : MonoBehaviour
         txtComP.text = translate.getLocalizedValue("comP");                            //180629 com pausa
         txtSemP.text = translate.getLocalizedValue("semP");                            //180629 sem pausa
 
-    //180612 new buttons
-    menuAbout.GetComponentInChildren<Text>().text = translate.getLocalizedValue("sobre");       //.Replace("\\n", "\n");
-    //@@menuCredits.GetComponentInChildren<Text>().text = translate.getLocalizedValue("creditos");  //.Replace("\\n", "\n");
-    menuPrizes.GetComponentInChildren<Text>().text = translate.getLocalizedValue("premios");    //.Replace("\\n", "\n");
-    menuTutorial.GetComponentInChildren<Text>().text = translate.getLocalizedValue("tutor");    //.Replace("\\n", "\n");
+        //180612 new buttons
+        menuAbout.GetComponentInChildren<Text>().text = translate.getLocalizedValue("sobre");       //.Replace("\\n", "\n");
+        //@@menuCredits.GetComponentInChildren<Text>().text = translate.getLocalizedValue("creditos");  //.Replace("\\n", "\n");
+        menuPrizes.GetComponentInChildren<Text>().text = translate.getLocalizedValue("premios");    //.Replace("\\n", "\n");
+        menuTutorial.GetComponentInChildren<Text>().text = translate.getLocalizedValue("tutor");    //.Replace("\\n", "\n");
 
-        //170311 validar arq conf ======================================
         errorNumber = probCalculator.configValidation();
-/*        if (errorNumber != 0 || uiManager.diagSerial == 2)
-        { //180105 besides configvalidation, test if serial open in a defined port
-
-            //171009 translate frases de erro
-            //171122 iOS (iPad/iPhone) + change order to avoid negatives
-            txtHeader.text = translate.getLocalizedValue("errHeader");
-            if ((Application.platform == RuntimePlatform.Android) ||
-                (Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
-            {
-                txtExit.text = translate.getLocalizedValue("toqueErrExit");
-            }
-            else
-            {
-                txtExit.text = translate.getLocalizedValue("aperteErrExit");
-            }
-
-            errorMessages.SetActive(true);
-            txtMessage.text = string.Empty;
-            //---
-            //180105
-           // if (errorNumber - 64 >= 0)
-           // {
-           //     //txtMessage.text = "O parâmetro 'sendMarkersToEEG' aceita apenas os valores serial, parallel ou none)";
-           //     showErrorMessage("err05", 64);
-           // }
-            //---
-            //180105
-            if (errorNumber - 32 >= 0 || uiManager.diagSerial == 2)
-            {
-                //txtMessage.text = "'sendMarkersToEEG' indica envio pela serial, mas falta indicar a porta em 'portEEGserial'";
-                showErrorMessage("err06", 32);
-            }
-            //---
-            if (errorNumber - 16 >= 0)
-            {
-                //txtMessage.text = "O parâmetro 'menus' está inexistente ou inválido (falta associar o primeiro item de menu ou este aparece mais de uma vez)";
-                showErrorMessage("err04", 16);
-            }
-            //---
-            if (errorNumber - 8 >= 0)
-            {
-                //txtMessage.text = "- Nos arquivos de configuração, o parâmetro ID está com o mesmo nome em fases diferentes - o ID deve ser único em cada um deles.";
-                showErrorMessage("err01", 8);
-            }
-            //---
-            if (errorNumber - 4 >= 0)
-            {
-                //txtMessage.text = "- Faltam parâmetros de configuração: executável do Jogo incompatível com a definição dos times."; 
-                showErrorMessage("err02", 4);
-            }
-            //---
-           // if (errorNumber - 2 >= 0)
-           // {
-           //     //txtMessage.text = "- O envio de marcadores ao EEG através da porta paralela só está válido para ambientes Windows 32bits (parâmetro sendMarkersToEEG)."; 
-           //     showErrorMessage("err03", 2);
-           // }
-            waitingKeyToExit = true;  //aparece o quadro de erros e aguarda tecla para sair;
-        }
-*/
         //=============================================================
 
         //Josi; onClick nao funciona no betweenLevels; ideia em https://docs.unity3d.com/ScriptReference/UI.Button-onClick.html
@@ -1225,7 +1154,7 @@ public class GameFlowManager : MonoBehaviour
 
 
     //---------------------------------------------------------------------------------------
-    public void ShowInBetween(int gameSelected)   //Josi: 161226: parametro jogo jogado
+    public void ShowInBetween(int gameSelected)
     {
         playing = false;
         betweenLevels.SetActive(false); //171220
@@ -1341,7 +1270,6 @@ public class GameFlowManager : MonoBehaviour
             uiManager.ResetEventList(gameSelected);
             game.SetActive(true);
             intro.SetActive(false);
-            betweenLevels.SetActive(true);
 
             //170927 novo param em btLevelController para precisar o nome do jogo
             int bmMode = (probCalculator.getMinHitsInSequence() > 0) ? 2 : 1;
@@ -1406,45 +1334,24 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-
-    //---------------------------------------------------------------------------------------
-    //Josi: botao SAIR na tela inicial de menu de jogos
-    //180628 changed by Exit Icon: betweenLevels screen
-    //public void Sair()
-    //{
-    //    //170322 unity3d tem erro ao usar application.Quit
-    //    //       workaround: http://unity3dtrenches.blogspot.com.br/2015/10/unity-3d-compiled-game-freezes-or.html
-    //    //Application.Quit ();
-    //    if (!Application.isEditor)
-    //    {  //if in the editor, this command would kill unity...
-    //        if (Application.platform == RuntimePlatform.WebGLPlayer)
-    //        {
-    //            Application.OpenURL(PlayerPrefs.GetString("gameURL"));
-    //        }
-    //        else
-    //       {
-    //            //171121 not working kill()
-    //            if ((Application.platform == RuntimePlatform.IPhonePlayer) ||
-    //                (SystemInfo.deviceModel.Contains("iPad")))
-    //            {           //try #IF UNITY_IOS
-    //                Application.Quit();
-    //            }
-    //            else
-    //            {
-    //                System.Diagnostics.Process.GetCurrentProcess().Kill();
-    //            }
-    //        }
-    //    }
-    //}
-
-
-    //---------------------------------------------------------------------------------------
     public bool playing = false;  //180402 public now: needed to avoid capture keys when gameOver/gameLover active
     public void Update()
     {
-        //Josi: outra maneira de Sair, sem clicar no botão: apertar a tecla ESCAPE
-        //      https://docs.unity3d.com/ScriptReference/Application.Quit.html
-        //
+        if (uiManager.wwwDone)
+        {
+            if (uiManager.www.error == null)
+            {
+                Debug.Log("www done!");
+                betweenLevels.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("www.error: " + uiManager.www.error);
+                uiManager.showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtFailedSendPlayData").Replace("\\n", "\n");
+            }
+            uiManager.wwwDone = false;
+        }
+
         if (Input.GetKey("escape"))
         {
             translate.clickSair();
@@ -1479,14 +1386,7 @@ public class GameFlowManager : MonoBehaviour
             if (waitingKeyToExit)
             {
                 if (Input.anyKey || Input.GetMouseButtonDown(0))
-                {       //para aceitar qualquer tecla!
-                        //170322 unity3d tem erro ao usar application.Quit
-                        //       workaround: http://unity3dtrenches.blogspot.com.br/2015/10/unity-3d-compiled-game-freezes-or.html
-                        //Application.Quit ();
-
-                    //180105 the function verifies if serial isOpen before close
-                    //uiManager.closeSerialPort();
-
+                {
                     if (!Application.isEditor)
                     {  //if in the editor, this command would kill unity...
                         if (Application.platform == RuntimePlatform.WebGLPlayer)
@@ -1510,8 +1410,6 @@ public class GameFlowManager : MonoBehaviour
                 }
             }
 
-            //170925 take "spacebar" after "game over" (better keep separated from gameLover...)
-            //       Input.GetMouseButtonDown(0) simulates a tap on mobile devices
             if (waitingKeyGameOver)
             {
                 if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))
@@ -1519,19 +1417,10 @@ public class GameFlowManager : MonoBehaviour
                    //if (Input.anyKey) {               //para aceitar qualquer tecla
                     waitingKeyGameOver = false;
                     bmGameOver.SetActive(false);
- //@@                   if (PlayerPrefs.GetInt("gameSelected") == 2)
- //@@                   {
                         ShowInBetween(PlayerPrefs.GetInt("gameSelected"));
- //@@                   }
- //@@                   else
- //@@                   {
- //@@                       GoToIntro();  //180627 in this way, the player can't see the betweenLevels screen, creating a different protocol
- //@@                   }
                 }
             }
 
-            //180321 take "spacebar" after "game lover"
-            //       Input.GetMouseButtonDown(0) simulates a tap on mobile devices
             if (waitingKeyGameLover)
             {
                 if (Input.GetKeyDown("space")  || Input.GetMouseButtonDown(0))
@@ -1539,14 +1428,7 @@ public class GameFlowManager : MonoBehaviour
                    //if (Input.anyKey) {                //para aceitar qualquer tecla
                     waitingKeyGameLover = false;
                     bmGameLover.SetActive(false);
- //@@                   if (PlayerPrefs.GetInt("gameSelected") == 2)
- //@@                   {
                         ShowInBetween(PlayerPrefs.GetInt("gameSelected"));
- //@@                   }
- //@@                   else
- //@@                   {
- //@@                   GoToIntro();  //180627 in this way, the player can't see the betweenLevels screen, creating a different protocol
- //@@               }
                 }
             }
         }

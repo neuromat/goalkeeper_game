@@ -8,28 +8,13 @@
 /************************************************************************************/
 
 using UnityEngine;
-using UnityEngine.UI;           //para os toggles
+using UnityEngine.UI;
 using System.Collections;
-//using System.Media.Sounds;    //Josi: for SystemSounds (using UnityEditor; vale no editor não em build): https://forum.unity3d.com/threads/beep.180045/
-//using UnityEngine.EventSystems; //Josi: para dar foco no apelido, ver em https://www.reddit.com/r/Unity3D/comments/2nom92/forcing_focus_on_input_field_in_46/
-//using TMPro;                    //171009 textMesh Pro (justified text and many other resources
-
-
 
 public class LogUser : MonoBehaviour 
 {
 	public GameObject userData;                //Josi: IntroScene(1)/Canvas/LogBox/MenuGameMode
 	public InputField alias;
-
-    //	public InputField age;                 //161205 pedir apenas nome
-	//	public GameObject Gender;              //161205 pedir apenas nome
-	// public Dropdown gender;                 //161205 pedir apenas nome
-	// public Dropdown education;              //161205 pedir apenas nome
-	// public Dropdown destro;
-    //	public string gender;           
-	//	public string education;                //Josi: 161205 pedir apenas nome
-	//	public string destro;                   //Josi: 161205 pedir apenas nome
-
 	public Toggle agree;                        //170829 TCLE concorda 
 	public Toggle notAgree;                     //170830      ou não
 	public ColorBlock agreeOriginalColors;      //170926 guardar as cores originais (qdo user muda de decisao)

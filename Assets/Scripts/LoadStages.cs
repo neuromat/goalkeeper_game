@@ -510,6 +510,7 @@ public class LoadStages : MonoBehaviour
 				return;
 			}
 			
+			// TODO: Sometimes WEBGL throws UnityException exception: UnityException: Tag: debugLoadedTrees is not defined.
 			GameObject debugLoadedTrees = GameObject.FindGameObjectWithTag("debugLoadedTrees");
 			if(debugLoadedTrees != null)
 			{

@@ -16,6 +16,7 @@ using System.IO;
 using JsonFx.Json;				        //iOS JsonFx: http://answers.unity3d.com/questions/502124/importing-jsonfx.html
 using System.Text;                      //StringBuilder
 using System.Security.Cryptography;     //170830 sha512Hash available
+using UnityEngine.UI;
 
 //using UnityEngine.Networking;         //180126 get ipAddress, but return Intranet IP if is the case; 
                                         //       strategy changed for read myip.com app site in LocalizationManager 
@@ -28,7 +29,7 @@ using System.Security.Cryptography;     //170830 sha512Hash available
 
           
 //------------------------------------------------------------------------------------
-public class ServerOperations : MonoBehaviour
+public class ServerOperations
 {
 	//170612 where to save results if Android, iOS or WebGL
 //	string fileContent;    //contains all data results, before to send to web
@@ -55,9 +56,11 @@ public class ServerOperations : MonoBehaviour
 //	private string gameCommonData;                                //170213 para inserir em cada linha do arquivo de resultado
 //	private string fileHeader;                                    //170217 para manter apenas linhas de resutados e acrescentar dados em colunas
 	private bool casoEspecialInterruptedOnFirstScreen;            //170223 detectar dif entre interromper na firstScreen ou no jogo, no JM
+	public bool wwwDone = false;
+	public WWW www = null;
+	private UIManager uiManager;
+	private LocalizationManager translate;
 
-
-	//--------------------------------------------------------------------------------------
 	static private ServerOperations _instance;
 	static public ServerOperations instance
 	{
@@ -69,63 +72,19 @@ public class ServerOperations : MonoBehaviour
 		}
 	}
 
-
-	// -------------------------------------------------------------------------------------
-	//Josi: 161205: acrescido parametro sobre o modo de operacao do jogo
-	//170126 added param bmMinHits 
-	//170310 added phaseNumber
-	//170316 added endSessionTime
-	//170622 added showHistory
-	//170629 researchGroup (now groupCode)
-	//171025 choices and showPlayPauseButton
-	//180117 locale
-	//180326 new parameters: minHitsInSequenceForJG, ForJM, mdMaxPlays
-	//180417 send speedAnim
-	//180419 write keyboardTimeMarkers
-	public void RegisterPlay (MonoBehaviour mb, string locale, float endSessionTime, string stageID, bool gameMode, int phaseNumber, int totalPlays, int totalCorrect, float successRate,
-		int bmMinHits, int bmMaxPlays, int bmMinHitsInSequence, List<RandomEvent> log, bool interrupted, List<RandomEvent> firstScreenMD, string animationType,
-		int playsToRelax,
-		bool showHistory,
-		string sendMarkersToEEG,
-		string portEEGserial,
-		string groupCode,
-		bool scoreboard,
-		string finalScoreboard,
-		string treeContextsAndProbabilities,
-		int choices,
-		bool showPlayPauseButton,
-		int jgMinHitsInSequence,
-		int mdMinHitsInSequence,
-		int mdMaxPlays,
-		string institution,
-		bool attentionPoint,
-		string attentionDiameter,
-		string attentionColorStart,
-		string attentionColorCorrect,
-		string attentionColorWrong,
-		string speedGKAnim,
-
-		string portSendData,
-		string timeFaixa0,
-		string timeFaixa1,
-		string timeFaixa2,
-		string timeFaixa3,
-		string timeFaixa4,
-
-		float[] keyboardTimeMarkers
-	)
+	public void RegisterPlay (MonoBehaviour mb, string locale, float endSessionTime, string stageID, bool gameMode, int phaseNumber, 
+		int totalPlays, int totalCorrect, float successRate, int bmMinHits, int bmMaxPlays, int bmMinHitsInSequence,
+		List<RandomEvent> log, bool interrupted, List<RandomEvent> firstScreenMD, string animationType, int playsToRelax,
+		bool showHistory, string sendMarkersToEEG, string portEEGserial, string groupCode, bool scoreboard,
+		string finalScoreboard, string treeContextsAndProbabilities, int choices, bool showPlayPauseButton,
+		int jgMinHitsInSequence, int mdMinHitsInSequence, int mdMaxPlays, string institution, bool attentionPoint,
+		string attentionDiameter, string attentionColorStart, string attentionColorCorrect, string attentionColorWrong,
+		string speedGKAnim, string portSendData, string timeFaixa0, string timeFaixa1, string timeFaixa2,
+		string timeFaixa3, string timeFaixa4, float[] keyboardTimeMarkers)
 
 	{
-		//170123 Garantir que existe o diretório de backup dos resultados
-		//       http://answers.unity3d.com/questions/528641/how-do-you-create-a-folder-in-c.html
-		//       backupResults = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "/backupResults";
-		//170608 if WEB do not create directory
-		//170622 mais seguro perguntar desta maneira, sem diretivas de compilacao
-		//170818 if Android do not save in a local directory
-		//171123 if iOS do not save in a local directory
 		if ((Application.platform != RuntimePlatform.WebGLPlayer) && (Application.platform != RuntimePlatform.Android) &&
 			(Application.platform != RuntimePlatform.IPhonePlayer) && (!SystemInfo.deviceModel.Contains("iPad"))) {
-			//170622 concentrate resultsBk here
 			backupResults = Application.dataPath + "/ResultsBk";
 
 			try {
@@ -133,12 +92,9 @@ public class ServerOperations : MonoBehaviour
 					Directory.CreateDirectory (backupResults);
 				}
 			} catch (IOException ex) {
-				//171011 to see in output.txt
 				Debug.Log ("Error creating Results Backup directory (ResultsBk): " + ex.Message);
 			}
 		}
-
-
 
 		//Josi: using StringBuilder; based https://forum.unity3d/threads/how-to-write-a-file.8864
 		//      caminhoLocal/Plays_grupo1-v1_HP-HP_YYMMDD_HHMMSS_fff.csv
@@ -378,10 +334,8 @@ public class ServerOperations : MonoBehaviour
 				//No JG, se o jogador erra, insiste-se ateh que acerte a jogada
 				//180418 save all plays, hit or error, until max plays...
 				foreach (RandomEvent l in log) {
-//					if (l.correct == true) {
 					sequExecutada.Insert (line, l.resultInt.ToString ());
 					line++;
-//					}
 				}
 				//180418 player can interrupt the game with 3 or less plays, then, we can know the sequence to memorize
 				sr.WriteLine ("sequJMGiven,{0}", mb.GetComponent<GameFlowManager> ().sequJMGiven);
@@ -468,11 +422,6 @@ public class ServerOperations : MonoBehaviour
 				File.Delete(Application.dataPath + tmp + ".meta");        // deletar os .meta criados pelo unity3d
 			}
 
-
-
-			//170818 trying to save result files for mobile devices in Android
-			//171122 iOS (iPad/iPhone)
-			// ==============================================================================
 			if ((Application.platform == RuntimePlatform.WebGLPlayer) || (Application.platform == RuntimePlatform.Android) ||
 				(Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
 			{
@@ -481,12 +430,9 @@ public class ServerOperations : MonoBehaviour
 			}
 			// ==============================================================================
 
-		}   //if (!File.Exists
-	}       //public void RegisterPlay
-
-
-	// --------------------------------------------------------------------------------------
-	//170612
+		}
+	}
+	
 	IEnumerator uploadFile(string fileName, string contentFile)
 	{
 		//converting text to bytes to be ready for upload (really necessary?)
@@ -506,17 +452,13 @@ public class ServerOperations : MonoBehaviour
 
 		GKGConfigContainer gkgConfig = GKGConfigContainer.Load();
 		// TODO: GKGConfigContainer returns a list. First element's list is the webSite corresponding
-		//   attribute with its elements. Improve access by referencing by name, not by index!
+		// attribute with its elements. Improve access by referencing by name, not by index!
 		string loginURL = gkgConfig.configItems[0].URL + "/unityUpload.php";
-
+		
 		//iniciar o envio dor form (https://docs.unity3d.com/ScriptReference/WWW-ctor.html)
 		WWW www = new WWW (loginURL, formData);
 		yield return www;
-
-		//se w.error envia erro, logar nome do arquivo para tentar descobrir o problema
-		if (www.error != null) {
-			Debug.Log ("file " + fileName + " w.error = " + www.error);
-		}
+		wwwDone = true;
 
 		// DEBUG: test for connection via GET
 		yield return new WWW(gkgConfig.configItems[0].URL + "/get_sent.html");
