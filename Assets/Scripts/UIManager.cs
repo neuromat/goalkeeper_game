@@ -175,6 +175,7 @@ public class UIManager : MonoBehaviour
 	public bool testa1 = true;
 	public bool testa2 = false;
 	public string pIn;
+	public bool sentFile = false;
 
 
 	//170626
@@ -201,7 +202,6 @@ public class UIManager : MonoBehaviour
 	public float contadorT;
 	public GameObject showMsg;
 	
-	public bool wwwDone = false;
 
 	//170623 DLLs inpout32.dll from http://highrez.co.uk/
 	//171017 DLls inpoutx64.dll
@@ -649,55 +649,15 @@ public class UIManager : MonoBehaviour
 	//180411 set the color of attentionPoint: green if player turn; red if program turn
 	public void attentionPointColor(int color)
 	{
-		//on Inspector: 0: start, 1:correct, 2:wrong
-		//troca a bola pela cruz - 20190702 attentionPoint.GetComponentsInChildren<Image>()[0].enabled = (color == 0) ? true : false;
-		//troca a bola pela cruz - 20190702 attentionPoint.GetComponentsInChildren<Image>()[1].enabled = (color == 1) ? true : false;
-		//troca a bola pela cruz - 20190702 attentionPoint.GetComponentsInChildren<Image>()[2].enabled = (color == 2) ? true : false;
-		//troca a bola pela cruz - 20190702 attentionPoint.SetActive (true);
-
-		
-		switch (color) //troca a bola pela cruz - 20190702 
+		switch (color) 
 		{
 			case 0:  // Laranja
-// Paulo Roberto pediu para tirar - 20190715				cruzLaranja.gameObject.SetActive(true);
-// Paulo Roberto pediu para tirar - 20190715				cruzVerde.gameObject.SetActive(false);
-// Paulo Roberto pediu para tirar - 20190715				cruzPreta.gameObject.SetActive(false);
-/*
-				exibeFaixa.GetComponent<Text>().text = "Faixa 1";
-				frame1EEG.SetActive(true);
-				frame2EEG.SetActive(false);
-				frame3EEG.SetActive(false);
-				frame4EEG.SetActive(false);
-*/
 				break; 
-
 			case 1:  // Verde
-// Paulo Roberto pediu para tirar - 20190715				cruzLaranja.gameObject.SetActive(false);
-// Paulo Roberto pediu para tirar - 20190715				cruzVerde.gameObject.SetActive(true);
-// Paulo Roberto pediu para tirar - 20190715				cruzPreta.gameObject.SetActive(false);
-/*
-				exibeFaixa.GetComponent<Text>().text = "Faixa 2";
-				frame1EEG.SetActive(false);
-				frame2EEG.SetActive(true);
-				frame3EEG.SetActive(false);
-				frame4EEG.SetActive(false);
-*/
 				break; 
-
 			case 2:  //Preta
-// Paulo Roberto pediu para tirar - 20190715				cruzLaranja.gameObject.SetActive(false);
-// Paulo Roberto pediu para tirar - 20190715				cruzVerde.gameObject.SetActive(false);
-// Paulo Roberto pediu para tirar - 20190715				cruzPreta.gameObject.SetActive(true);
-/*
-				exibeFaixa.GetComponent<Text>().text = "Faixa 3/4";
-				frame1EEG.SetActive(false);
-				frame2EEG.SetActive(false);
-				frame3EEG.SetActive(false);
-				frame4EEG.SetActive(false);
-*/
 				break; 
-		} //troca a bola pela cruz - 20190702
-		
+		}
 	}
 
 	//--------------------------------------------------------------------------------------------------------
@@ -1575,7 +1535,6 @@ public class UIManager : MonoBehaviour
 		//      string x stringBuilder: em https://msdn.microsoft.com/en-us/library/system.text.stringbuilder(v=vs.110).aspx
 		int gameSelected = PlayerPrefs.GetInt ("gameSelected");
 
-
 		gamePlayed.Length = 0;
 		switch (gameSelected) {                       //Josi: 161212: indicar no server, arquivo (nome e conteudo), o jogo jogado
 		case 1:
@@ -1819,7 +1778,7 @@ public class UIManager : MonoBehaviour
 				}                                                
 			}
 
-			//TODO: remove this. Only for test.
+			//TODO: remove this. It's only for test.
 			for (int i = 0; i < 998; i++)
 			{
 				sr.WriteLine ("{0},{1},{2}", ++line, tmp, "decision time" );
@@ -1859,27 +1818,21 @@ public class UIManager : MonoBehaviour
 			if ((Application.platform == RuntimePlatform.WebGLPlayer) || (Application.platform == RuntimePlatform.Android) ||
 				(Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
 			{
-				mb.StartCoroutine( uploadFile(resultsFileName, resultsFileContent) );
+				buildPost(resultsFileName, resultsFileContent);
 			}
-			// ==============================================================================
-
 		}
 	}
 	
-	IEnumerator uploadFile(string fileName, string contentFile)
+	private void buildPost(string fileName, string contentFile)
 	{
-		//converting text to bytes to be ready for upload (really necessary?)
 		byte[] fileData = Encoding.UTF8.GetBytes (contentFile);
 
-		//180226 hash; inside routine convert to byte
 		string hash = GetHash(contentFile)	;
 		hash = GetHash(hash);
 
-		//criar o form que receberá o conteudo do arquivo
 		WWWForm formData = new WWWForm ();
-
 		formData.AddField("action", "level upload");
-		formData.AddField("ident", hash);          //180226
+		formData.AddField("ident", hash);
 		formData.AddField("file","file");
 		formData.AddBinaryData ( "file", fileData, fileName, "text/plain");
 
@@ -1887,36 +1840,22 @@ public class UIManager : MonoBehaviour
 		// TODO: GKGConfigContainer returns a list. First element's list is the webSite corresponding
 		// attribute with its elements. Improve access by referencing by name, not by index!
 		string loginURL = gkgConfig.configItems[0].URL + "/unityUpload.php";
-
-		www = new WWW (loginURL, formData);
-		Debug.Log("Começou www.");
-		showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtSendingPlayData").Replace("\\n", "\n");
-		yield return www;
-		wwwDone = true;
-		Debug.Log("Terminou www.");
-
-		// DEBUG: test for connection via GET
-		yield return new WWW(gkgConfig.configItems[0].URL + "/get_sent.html");
+		
+		StartCoroutine(ServerOperations.instance.uploadFile(loginURL, formData, UIManager.instance));
 	}
 	
 	static string GetHash(string input)
-	{	//SHA512 sha512Hash = SHA512.Create();   NullReferenceException: Object reference not set to an instance of an object
-		//Em https://stackoverflow.com/questions/30055358/md5-gethash-work-only-in-unity-editor :
-		//MD5.Create() doesn't return an object on Unity Android when the Stripping Level is set to Micro mscorlib, but 'new MD5CryptoServiceProvider()' does.
+	{	
 		var sha512Hash = new SHA512CryptoServiceProvider();
 
-		// Convert the input string to a byte array and compute the hash.//
 		byte[] data = sha512Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
 
-		// Create a new Stringbuilder to collect the bytes and create a string.
 		StringBuilder sBuilder = new StringBuilder();
-
-		// Loop through each byte of the hashed data and format each one as a hexadecimal string.
+		// Format as a hexadecimal string.
 		for (int i = 0; i < data.Length; i++) {
 			sBuilder.Append(data[i].ToString("x2"));
 		}
 
-		// Return the hexadecimal string.
 		return sBuilder.ToString();
 	}
 		

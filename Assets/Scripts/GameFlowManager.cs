@@ -146,8 +146,6 @@ public class GameFlowManager : MonoBehaviour
     public Text txtSemP;
     int errorNumber;                         //180105 to create a function
     public string sequJMGiven;
-    
-
     static private GameFlowManager _instance;
     static public GameFlowManager instance
     {
@@ -1258,15 +1256,11 @@ public class GameFlowManager : MonoBehaviour
             gameCanvas.interactable = false;
 
             //161207: passa a gravar ao chegar na tela betweenLevels, nao ao Avancar
-            uiManager.SendEventsToServer(gameSelected);  //170109
-
+            uiManager.SendEventsToServer(gameSelected);
         }
         else
         {
-
-            //Josi: 161207: passa a gravar ao chegar na tela betweenLevels, nao ao Avancar; ultimo nivel eh um caso especial
-            uiManager.SendEventsToServer(gameSelected);   //170109
-
+            uiManager.SendEventsToServer(gameSelected);
             uiManager.ResetEventList(gameSelected);
             game.SetActive(true);
             intro.SetActive(false);
@@ -1337,7 +1331,7 @@ public class GameFlowManager : MonoBehaviour
     public bool playing = false;  //180402 public now: needed to avoid capture keys when gameOver/gameLover active
     public void Update()
     {
-        if (uiManager.wwwDone)
+        if (uiManager.sentFile)
         {
             if (uiManager.www.error == null)
             {
@@ -1349,17 +1343,15 @@ public class GameFlowManager : MonoBehaviour
                 Debug.Log("www.error: " + uiManager.www.error);
                 uiManager.showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtFailedSendPlayData").Replace("\\n", "\n");
             }
-            uiManager.wwwDone = false;
+            uiManager.sentFile = false;
         }
 
         if (Input.GetKey("escape"))
         {
             translate.clickSair();
-
         }
 
-        //170915 trocado por "se nao pausado, pegaInput" dado que nao funcionou pegar o current;
-        //       algum dia deve-se  identar todo este jogo...
+        //Trocado por "se nao pausado, pegaInput" dado que nao funcionou pegar o current;
         if (!uiManager.pausePressed)
         {
 
@@ -1414,7 +1406,6 @@ public class GameFlowManager : MonoBehaviour
             {
                 if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))
                 {  //180620 aceitar tecla especifica para não confundir com as do jogo e a msg passar em branco
-                   //if (Input.anyKey) {               //para aceitar qualquer tecla
                     waitingKeyGameOver = false;
                     bmGameOver.SetActive(false);
                         ShowInBetween(PlayerPrefs.GetInt("gameSelected"));
@@ -1525,6 +1516,5 @@ public class GameFlowManager : MonoBehaviour
         //170913 catar o parametro que indica se é para iniciar os jogos com pausa ou não
         PlayerPrefs.SetInt("startPaused", startPaused ? 1 : 0); //menu "Jogar com pausa" selecionado
     }
-
 
 }
