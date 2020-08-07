@@ -20,7 +20,8 @@ public class ServerOperations
 {
 	private LocalizationManager translate;
 	private UIManager uiManager;
-
+	public bool postDone = false;
+	public WWW www = null;
 
 	static private ServerOperations _instance;
 	static public ServerOperations instance
@@ -45,7 +46,7 @@ public class ServerOperations
 		yield return new WWW(gkgConfig.configItems[0].URL + "/get_sent.html");
 	}
 
-	public IEnumerator logUserActivity(string filename, string content)
+	public IEnumerator logUserActivity(string filename, string content, UIManager uiManager = null)
 	{
 		if (Application.platform != RuntimePlatform.WebGLPlayer) yield return "";
 
@@ -54,8 +55,15 @@ public class ServerOperations
 		formData.AddField("content", content);
 		string loginURL = Application.absoluteURL + filename;
 
-		WWW www = new WWW(loginURL, formData);
+		www = new WWW(loginURL, formData);
+		//To differentiate from registering user entry than user activity (plays)
+		if (uiManager)
+		{
+			uiManager.showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtRegisteringUserEntry").Replace("\\n", "\n");
+		}
 		yield return www;
+		//To differentiate from registering user entry than user activity (plays)
+		if (uiManager) postDone = true;
 
 		if (www.error != null) {
 			Debug.Log ("Error logging user activity to the server: " + www.error);

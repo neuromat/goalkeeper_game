@@ -33,9 +33,6 @@ public class GameFlowManager : MonoBehaviour
     public GameObject logBox;         //Josi: JG: box com as 8 jogadas mainScene/gameScene/gameUICanvas/LogBox
     public GameObject bmMsg;          //Josi: BM: tutorial ou "aperte tecla" mainScene/gameScene/gameUICanvas/bmMsg
     public GameObject aperteTecla;    //Josi: 161229: reuniao: sai tutorial, mas no BMcomTempo entra aviso de AperteTecla para 3-2-1
-
-    //	public GameObject mdTutorial;     //Josi: MD: tutorial do memoDecl - mainScene/gameScene/gameUICanvas/mdTutorial: Reuniao pede para eliminar
-    //	public GameObject progressionBar; //Josi: 161227: reuniao pede para eliminar a menos do Jogo do Goleiro
     public GameObject frameChute;     //Josi: 161229: reuniao: contorno que recebe a indicacao da seta de direcao mainScene/gameScene/gameUICanvas/bmIndicaChute
 
     public GameObject mdFirstScreen;  //170102: reuniao: primeira tela do MD (ou Base Memoria)
@@ -79,7 +76,7 @@ public class GameFlowManager : MonoBehaviour
     public Text txtAbandon;                 //MainScene... GiveUpMenu
     public int playLimit = 0;
 
-    public BetweenLevelsController btLevelsController; //Josi 161214 erro em betweenLevels.GetComponent<BetweenLevelsController>().PostEnd/Middle/EndGame
+    public BetweenLevelsController btLevelsController;
 
     private ProbCalculator probCalculator;
     private UIManager uiManager;
@@ -146,6 +143,7 @@ public class GameFlowManager : MonoBehaviour
     public Text txtSemP;
     int errorNumber;                         //180105 to create a function
     public string sequJMGiven;
+    private bool failedRegisterUserEntry;
     static private GameFlowManager _instance;
     static public GameFlowManager instance
     {
@@ -390,27 +388,11 @@ public class GameFlowManager : MonoBehaviour
                         }
                     }
                 }
-                //-------------------------------------------------------
-                //float TimerControl = Time.time - StartTime;
-                //string mins = ((int)TimerControl/60).ToString("00");
-                //string segs = (TimerControl % 60).ToString("00");
-                //string milisegs = ((TimerControl * 100)%100).ToString ("00");
-         
-                //string TimerString = string.Format ("{00}:{01}:{02}", mins, segs, milisegs);
-                //cronosOut.GetComponent<Text>().text = TimerString.ToString ();
-                //Debug.Log("Terminou a animação"+TimerString.ToString ());
-                //-------------------------------------------------------
-
-                //if(playing && uiManager.events.Count >= probCalculator.GetCurrentPlayLimit())    //Josi: era assim  
-                //				if (playing && uiManager.events.Count >= numPlays) {   //170106 events contem o log,que no caso do MD acumula os testes iniciais
-                //if (playing && (uiManager.eventCount >= numPlays)) {   //       eventCount contem o numero de jogadas de uma fase
                 if (playing && (uiManager.eventCount >= numPlays) && (PlayerPrefs.GetInt("gameSelected") != 5))
                 { //
                     uiManager.BtwnLvls = true;
-
-                    //170320 wait dependendo do tipo de animacao
-                    //170322 criada uma rotina para devolver o tempo das animacoes - pelo menos se concentra em um lugar
-                    StartCoroutine(waitTime(PlayerPrefs.GetInt("gameSelected"), probCalculator.animationTime(), 1)); //170307 param3: apos esperar vai para betweenLevels
+                    //Após esperar vai para betweenLevels
+                    StartCoroutine(waitTime(PlayerPrefs.GetInt("gameSelected"), probCalculator.animationTime(), 1));
                 }
             }
         }
@@ -479,10 +461,10 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-
-    //------------------------------------------------------------------------------------------------------
-    //170205 esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
-    //170307 ou a de giveUP (2) - virou public para chamar no UImanager.QuitGame
+        /**
+         * Esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
+         * ou a de giveUP (2) - virou public para chamar no UImanager.QuitGame
+         */
     public IEnumerator waitTime(int gameSelected, float time, int whatScreen)
     {
         yield return new WaitForSeconds(time);
@@ -624,13 +606,6 @@ public class GameFlowManager : MonoBehaviour
         Button btnAbout = menuAbout.GetComponent<Button>();
         btnAbout.onClick.AddListener(showAbout);
 
-        //================
-        //170302 definir MENU DE JOGOS com base no primeiro arquivo de configuracao
-        //170303 fixar machines[0] para o menu: somente estah arquivado aqui (depois de implementar a leitura do param no 1o arq conf)
-        //170303 *static members* don't belong to a specific instance, the variable only exists once and is shared between all instances of that class
-
-        //171006 reconhecer o locale para decidir sobre os titulos dos jogos no menu
-        string locale = translate.getLocalizedValue("locale");
         string gameN;
 
         //171130 refactoring the cellSizes to adapt to iPad (strategy found on Internet)
@@ -654,9 +629,6 @@ public class GameFlowManager : MonoBehaviour
                     GameObject go = Instantiate(btnPrefab);
                     go.transform.SetParent(menuJogos.transform);
 
-                    //171006 se idioma pt_br fica o title do param menu, dado que o user pode alterar,
-                    //       senao, pegar o texto do arquivo de locale
-                    //171113 title sempre coletado do arquivo de locale
                     gameN = "game" + ProbCalculator.machines[0].menuList[i].game;
                     go.GetComponentInChildren<Text>().text = translate.getLocalizedValue(gameN).Replace("\\n", "\n");
                     go.name = translate.getLocalizedValue(gameN);
@@ -884,7 +856,7 @@ public class GameFlowManager : MonoBehaviour
         {
             string content = "nickname: " + PlayerInfo.alias + "; entry date: " +
                              DateTime.Now.ToString("yyMMdd_HHmmss") + "\n"; 
-            StartCoroutine(ServerOperations.instance.logUserActivity("upload_file.php", content));
+            StartCoroutine(ServerOperations.instance.logUserActivity("upload_file.php", content, uiManager));
         }
 
         //180524
@@ -1268,7 +1240,7 @@ public class GameFlowManager : MonoBehaviour
             //170927 novo param em btLevelController para precisar o nome do jogo
             int bmMode = (probCalculator.getMinHitsInSequence() > 0) ? 2 : 1;
 
-            btLevelsController.EndGame(gameSelected, bmMode);    //170927 novo param bmMode para AQ/AR minHits ou minSequ
+            btLevelsController.EndGame(gameSelected, bmMode);
             gameCanvas.interactable = false;
         }
     }
@@ -1346,6 +1318,22 @@ public class GameFlowManager : MonoBehaviour
             uiManager.sentFile = false;
         }
 
+        if (ServerOperations.instance.postDone)
+        {
+            if (ServerOperations.instance.www.error == null)
+            {
+                Debug.Log("www done (register user entry)!");
+                uiManager.showMsg.GetComponent<Text>().text = null;
+            }
+            else
+            {
+                Debug.Log("www.error (register user entry): " + ServerOperations.instance.www.error);
+                uiManager.showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtFailedRegisterUserEntry").Replace("\\n", "\n");
+                uiManager.failedRegisterUserEntry = true;
+            }
+            ServerOperations.instance.postDone = false;
+        }
+
         if (Input.GetKey("escape"))
         {
             translate.clickSair();
@@ -1358,11 +1346,9 @@ public class GameFlowManager : MonoBehaviour
             //170222 pegar tecla do "aperte qualquer tecla para continuar" após descanso
             if (uiManager.aguardandoTeclaPosRelax)
             {
-                if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))  //they want to stop the game in mobiles?!
-                {  //170223 aceitar tecla especifica para não confundir com as do jogo e a msg passar em branco
-                   //if (Input.anyKey) {               //para aceitar qualquer tecla
+                if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))
+                {
                     uiManager.aguardandoTeclaPosRelax = false;
-                    //uiManager.estouNoPegaQualquerTecla = true;  //170110 para aceitar qualquer tecla, inclusive as do jogo
                     relaxTime.SetActive(false);
 
                     endRelaxTime = Time.realtimeSinceStartup;

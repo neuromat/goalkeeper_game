@@ -64,7 +64,6 @@ public class UIManager : MonoBehaviour
 	private int line = 0;                                         //170213 para inserir numero da linha no arquivo (uma sequencia)
 	private bool casoEspecialInterruptedOnFirstScreen;            //170223 detectar dif entre interromper na firstScreen ou no jogo, no JM
 	public WWW www = null;
-	private float StartTime;
 	public GameObject cronosIn;
 	public GameObject cronosOut;
 	public GameObject tmpDecisao;
@@ -176,52 +175,21 @@ public class UIManager : MonoBehaviour
 	public bool testa2 = false;
 	public string pIn;
 	public bool sentFile = false;
-
-
-	//170626
-	public  int  timeBetweenMarkers = 100000000;        //QG para dar um tempico entre envios à paralela;
-	//public  int  timeBetweenMarkersSerial = 10000000; //180129 10^7 time between sendMarkersToSerial on BrainProductsEEG connected to TriggerBox
-	                                                    //       can see markers on vmrk and sobreposition on recorder screen at the moment
-	//public  int  timeBetweenMarkersSerial = 100000;   //180131 10^5, com samplrate 5000, samplInterval 200; ok!
-	//public  int  timeBetweenMarkersSerial = 10000;    //180131 10^4, com samplrate 5000, samplInterval 200; ok!
-	//public  int  timeBetweenMarkersSerial = 100;      //180131 10^2, com samplrate 5000, samplInterval 200; perdeu 1 em 48mkr...
-	public  int timeBetweenMarkersSerial = 100000;      //180131
-
-	public bool userAbandonModule = false;              //180326 not more possible to decide considering the numPlays (if gamer hits before, it goes out)
-
+	public  int  timeBetweenMarkers = 100000000;  //tempo entre envios à paralela;
+	public  int timeBetweenMarkersSerial = 100000;
+	public bool userAbandonModule = false;
 	public GameObject attentionPoint;
-	//public GameObject frameEEG;
-	public GameObject frame0EEG;                //180410 in the middle screen to fix player attention (EEG experiments)
+	public GameObject frame0EEG;  //middle of the screen to fix player attention (EEG experiments)
 	public GameObject exibeFaixa;
 	public GameObject frame1EEG;
 	public GameObject frame2EEG;
 	public GameObject frame3EEG;
 	public GameObject frame4EEG;
-	public float[] keyboardTimeMarkers;                 //180418 markers from experimenter (keyboard F1 until F9)
-
-	public float contadorT;
+	public float[] keyboardTimeMarkers;
 	public GameObject showMsg;
-	
-
-	//170623 DLLs inpout32.dll from http://highrez.co.uk/
-	//171017 DLls inpoutx64.dll
-/*	#if UNITY_STANDALONE_WIN  || UNITY_EDITOR_WIN
-	[DllImport("inpout32")]
-	private static extern UInt32 IsInpOutDriverOpen();
-
-	[DllImport("inpout32")]
-	private static extern void Out32(ushort PortAddress, ushort Data);
-
-	[DllImport("inpoutx64", EntryPoint = "IsInpOutDriverOpen")]
-	private static extern UInt32 IsInpOutDriverOpen_x64();
-
-	[DllImport("inpoutx64", EntryPoint = "Out32")]
-	private static extern void Out32_x64(ushort PortAddress, ushort Data);
-	#endif
-*/
+	public bool failedRegisterUserEntry = false;
 	public delegate void AnimationEnded();
 	public static event AnimationEnded OnAnimationEnded;
-
 	public delegate void AnimationStarted();
 	public static event AnimationStarted OnAnimationStarted;
 
@@ -263,14 +231,6 @@ public class UIManager : MonoBehaviour
 	//      esta função é tbem chamada no onClick do mainScene/.../Pergunta/<em cada uma das direcoes de chute>
 	public void BtnActionGetEvent(string input)
 	{
-		float tempoJogo;
-
-		contadorT = 0.0f;
-//Celso_Debug		cronosOut.GetComponent<Text> ().text = contadorT.ToString();
-//Celso_Debug		contadorT = Time.time;
-
-		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
-
 		// Inhibit typing by mouse. Only accept if main keys DownArrow, LeftArrow e RightArrow
 		if (!(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) ||
 			Input.GetKey(KeyCode.RightArrow))) {
@@ -1032,22 +992,9 @@ public class UIManager : MonoBehaviour
 	void Start ()
 	{
 		probs = ProbCalculator.instance;
-		gameFlow = GameFlowManager.instance;             //161230 para fechar objetos
-		float tempoJogo;
-		contadorT = 0.0f;
-
-		StartTime = Time.time;
+		gameFlow = GameFlowManager.instance;  // para fechar objetos
 	
-		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
-
-		// Debug.Log("@START:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
-		//Debug.Log("movementTimeA = "+ movementTimeA);
-		//Debug.Log("decisionTimeA = "+ decisionTimeA);
-		// Debug.Log("@START:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
-		// Debug.Log("@START:++++ tempoJogo = "+ tempoJogo);
-		// Debug.Log("@START:++++ decisionTimeA = "+ decisionTimeA);
 		cronosIn.GetComponent<Text>().text = decisionTimeA.ToString();
-
 
 		//171005 declarar a instance para permitir chamar rotinas do outro script
 		translate = LocalizationManager.instance;
@@ -1147,27 +1094,19 @@ public class UIManager : MonoBehaviour
 	//--------------------------------------------------------------------------------------------------------
 	void Update ()
 	{
-		int currAnim = probs.GetCurrMachineIndex ();
-		bool estouNoPegaQualquerTecla = false;  //170223170110 para aceitar qualquer tecla, inclusive as do jogo
-		int number; //180419 to facilitate the routine
-		float tempoJogo;
-
-		//Celso_Debug Screen.fullScreen = true;
-
-		float TimerControl = Time.time - StartTime;
-		string mins = ((int)TimerControl/60).ToString("00");
-		string segs = (TimerControl % 60).ToString("00");
-		string milisegs = ((TimerControl * 100)%100).ToString ("00");
-         
-		string TimerString = string.Format ("{00}:{01}:{02}", mins, segs, milisegs);
-         
-		//cronos.GetComponent<Text>().text = TimerString.ToString ();
+		if (failedRegisterUserEntry) return;
 		
-		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
+		int currAnim = probs.GetCurrMachineIndex ();
+		bool estouNoPegaQualquerTecla = false;
+		int number;
 
-		//161226 nunca entra aqui por ser >= gkAnim...
-		//170130 mas eh obrigatorio para acertar o gkAnim correto nos hashes, no caso de pular direto paa campo profissional
-		if ((currAnim >= gkAnim.Length) || (gameFlow.jogarMDfase3 && ((PlayerPrefs.GetInt ("gameSelected") == 3) || (PlayerPrefs.GetInt ("gameSelected") == 5)))) {
+		/*
+		 * Nunca entra aqui mas é obrigatorio para acertar o gkAnim correto nos hashes,
+		 * mas é no caso de pular direto para campo profissional.
+		 */
+		if ((currAnim >= gkAnim.Length) || (gameFlow.jogarMDfase3 
+		                                    && ((PlayerPrefs.GetInt ("gameSelected") == 3) 
+		                                        || (PlayerPrefs.GetInt ("gameSelected") == 5)))) {
 			currAnim = gkAnim.Length - 1;
 		}
 
@@ -1316,12 +1255,7 @@ public class UIManager : MonoBehaviour
 	//170111 coroutine para aguardar tempo enquanto a animacao nao termina
 	public IEnumerator WaitThenDoThings(float time)   //170203 publica, para ser acessada no gameFlow.
 	{
-		float tempoJogo;
-
-		// time = 0.3f;
 		yield return new WaitForSeconds(time);
-
-		tempoJogo = Time.realtimeSinceStartup - gameFlow.startSessionTime;
 
 		//acabou de aparecer a imagem, faca isto
 		if (animCountDown) {
@@ -1390,7 +1324,6 @@ public class UIManager : MonoBehaviour
 				}
 				RandomEvent eLog = new RandomEvent ();
 				eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
-				float tmpTime = eLog.time + decisionTimeA;
 			}
 		}
 	}

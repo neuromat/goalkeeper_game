@@ -90,9 +90,7 @@ public class BetweenLevelsController : MonoBehaviour
 	//----------------------------------------------------------------------------------------
 	public void EndGame(int gameSelected, int bmMode)  //161226 parametro jogo jogado, com msg especifica para cada um
 	{                                                                    //170927 bmMode (AQ/AR): 1=minHits, 2=minSequ
-		//btnExit.SetActive (true);
 		btnContinue.SetActive (false);
-		//btnMenu.SetActive (true);
 		btnMenu.SetActive (false);
 
 		if ((gameSelected == 1) || (gameSelected == 4)) { //BM ou BMcomTempo
@@ -106,8 +104,7 @@ public class BetweenLevelsController : MonoBehaviour
 				}
 			}
 		}								
-		gameSelectedText (gameSelected, bmMode); //180327 no more phaseZero parameters
-		                                         //170927 bmMode (AQ/AR): 1=minHits, 2=minSequ
+		gameSelectedText (gameSelected, bmMode);
 	}
 
 
