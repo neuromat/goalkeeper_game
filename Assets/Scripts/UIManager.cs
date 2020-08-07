@@ -46,7 +46,6 @@ public class RandomEvent
 
 
 
-//------------------------------------------------------------------------------------
 public class UIManager : MonoBehaviour
 {
 	private string backupResults;                                 //170622 to save a copy of results
@@ -638,8 +637,6 @@ public class UIManager : MonoBehaviour
 		updateScore (gameSelected);
 	}
 
-
-
 	//--------------------------------------------------------------------------------------------------------
 	//Josi: activate animations: perdeu/defendeu (visual) and lamento/alegria (sonoro)
 	public void PostAnimThings ()
@@ -847,7 +844,6 @@ public class UIManager : MonoBehaviour
 		}
 
 		showMDsequence( probs.getMDsequ() );   //170102 cuidado para nao gerar novamente!
-//		stopwatch = 0;                         //170309 trocado por movementTime;  170113 MD ao colocar a sequencia na tela, comeca a contagem
 
 		decisionTimeA = Time.realtimeSinceStartup; //170213 log JM firstScreen: tempo desde que aparece a tela com os símbolos
 	}
@@ -1711,23 +1707,11 @@ public class UIManager : MonoBehaviour
 				}                                                
 			}
 
-			//TODO: remove this. It's only for test.
-			for (int i = 0; i < 998; i++)
-			{
-				sr.WriteLine ("{0},{1},{2}", ++line, tmp, "decision time" );
-			}
-			
 			sr.Close ();
 
-
-			//171122 iOS (iPad/iPhone)
 			if ((Application.platform == RuntimePlatform.WebGLPlayer) || (Application.platform == RuntimePlatform.Android) ||
 				(Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")) ) {
-				//SyncFiles();                                        //170622 fast refresh
 				Application.ExternalEval("_JS_FileSystem_Sync();");
-
-				//170620 ter o nome do arquivo de resultados e abrir todo o arquivo para coletar o conteúdo, para enviar por formWeb
-				//170622 reler o arquivo só eh necessario se eh WEBGL
 				int i = LogGame.ToString().IndexOf("/Plays");
 				resultsFileName = LogGame.ToString ().Substring (i, LogGame.Length - i);
 

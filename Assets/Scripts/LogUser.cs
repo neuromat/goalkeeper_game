@@ -107,12 +107,7 @@ public class LogUser : MonoBehaviour
 
 	// -----------------------------------------------------------------------------------------------------
 	void Start () 
-	{   //161205 pedir apenas nome
-		//PlayerInfo.gender = "M";
-		//PlayerInfo.education = "Fundamental Completo";
-		//PlayerInfo.destro = "D";
-
-
+	{
 		//171009 declarar a instance para permitir chamar rotinas do outro script
 		translate = LocalizationManager.instance;
 
@@ -141,7 +136,6 @@ public class LogUser : MonoBehaviour
 
 	// -----------------------------------------------------------------------------------------------------
 	void Update () {
-		//Josi 170817
 		#if UNITY_ANDROID || UNITY_IOS
 //		if (! isKeyboardOpen) {
 //			isKeyboardOpen = true;

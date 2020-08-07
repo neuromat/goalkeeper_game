@@ -19,9 +19,6 @@ using JsonFx.Json;
 public class GameFlowManager : MonoBehaviour
 {
     private float StartTime;
-//    public GameObject cronosIn;
-//    public GameObject cronosOut;
-    
     public GameObject game;
     public CanvasGroup gameCanvas;
     public GameObject betweenLevels;
@@ -35,12 +32,11 @@ public class GameFlowManager : MonoBehaviour
     public GameObject aperteTecla;    //Josi: 161229: reuniao: sai tutorial, mas no BMcomTempo entra aviso de AperteTecla para 3-2-1
     public GameObject frameChute;     //Josi: 161229: reuniao: contorno que recebe a indicacao da seta de direcao mainScene/gameScene/gameUICanvas/bmIndicaChute
 
-    public GameObject mdFirstScreen;  //170102: reuniao: primeira tela do MD (ou Base Memoria)
-                                      //	public GameObject ExitFirstScreenJM;     //170309 mainScene/gameScene/gameUIcanvas/mdFirstScreen/ExitFirstScreenJM botao de exit
+    public GameObject mdFirstScreen;
     public GameObject mdAperteTecla;  //170912: para poder alterar a transparência enquanto está em modo Pause (não encontrei sintaxe sem declarar)
 
     public GameObject errorMessages;         //170311 em configuration/canvas/errorMessages; QG para apontar se o param ID estah repetido...
-    public Text txtMessage;                  //170623 txt do erro
+    public Text txtMessage;
     private bool waitingKeyToExit = false;   //170311 para sair apos encontrar erro nos confFiles
 
     public float startSessionTime;           //170316 inicio da sessao: selecionar jogo (para comparativo entre os tempos de decsao/movimento)
@@ -171,32 +167,17 @@ public class GameFlowManager : MonoBehaviour
         UIManager.OnAnimationStarted -= OnAnimationStarted;
     }
 
-
-    //-------------------------------------------------------------------------------------
     void OnAnimationStarted()
     {
-        //-------------------------------------------------------
-        //float TimerControl = Time.time - StartTime;
-        //string mins = ((int)TimerControl/60).ToString("00");
-        //string segs = (TimerControl % 60).ToString("00");
-        //string milisegs = ((TimerControl * 100)%100).ToString ("00");
-         
-        //string TimerString = string.Format ("{00}:{01}:{02}", mins, segs, milisegs);
-         
-        //cronosIn.GetComponent<Text>().text = TimerString.ToString ();
-        //Debug.Log("Iniciou a animação"+TimerString.ToString ());
-
-        //-------------------------------------------------------
-        //Josi: 161212: independente do jogo, deixar so animations
+        // Independente do jogo, deixar so animations
         uiManager.btnsAndQuestion.SetActive(false);
-        frameChute.SetActive(false);             //170112 sobra no JG
+        frameChute.SetActive(false);  //sobra no JG
         uiManager.setaEsq.SetActive(false);
         uiManager.setaCen.SetActive(false);
         uiManager.setaDir.SetActive(false);
     }
 
 
-    //-------------------------------------------------------------------------------------
     void OnAnimationEnded()
     {
         if (!onVersusMode)
@@ -398,9 +379,6 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-
-    //----------------------------------------------------------------------------------------------------
-    //180312 to avoid repeat this code
     public void gameOver(int game)
     {
         //wait defended/ended animation to end before to shows up the gameOver screen
@@ -429,9 +407,6 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-
-
-    //----------------------------------------------------------------------------------------------------
     //180321 to avoid repeat this code
     public void gameLover(int game)
     {
@@ -534,8 +509,8 @@ public class GameFlowManager : MonoBehaviour
         gameCanvas.interactable = false;
         game.SetActive(false);
         quitGameMenu.SetActive(false);
-        bmGameOver.SetActive(false);    //170925 start without gameOver
-        bmGameLover.SetActive(false);    //180321 start without gameLover
+        bmGameOver.SetActive(false);
+        bmGameLover.SetActive(false);
         scrTutorial.SetActive(true);
 
 		//171006 declarar a instance para permitir chamar rotinas do outro script
