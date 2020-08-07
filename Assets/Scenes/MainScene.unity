@@ -18334,6 +18334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6da9cd37356534e93cac7fe4691a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  failed: 0
   cronosIn: {fileID: 1158949070}
   cronosOut: {fileID: 582122741}
   tmpDecisao: {fileID: 1659162541}
@@ -18437,6 +18438,7 @@ MonoBehaviour:
   testa1: 1
   testa2: 0
   pIn: 
+  sentFile: 0
   timeBetweenMarkers: 100000000
   timeBetweenMarkersSerial: 100000
   userAbandonModule: 0
@@ -18448,8 +18450,8 @@ MonoBehaviour:
   frame3EEG: {fileID: 2051950779}
   frame4EEG: {fileID: 1153906178}
   keyboardTimeMarkers: []
-  contadorT: 0
   showMsg: {fileID: 1028007077}
+  failedRegisterUserEntry: 0
 --- !u!1 &1471698819
 GameObject:
   m_ObjectHideFlags: 0
