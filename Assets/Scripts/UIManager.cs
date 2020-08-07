@@ -13,7 +13,7 @@ using UnityEngine.EventSystems;
 using System.Security.Cryptography;     //170830 sha512Hash available
 
 
-// Only valids for Windows (to call inpout32.dll)
+// Only valid for Windows (to call inpout32.dll)
 #if UNITY_STANDALONE_WIN  || UNITY_EDITOR_WIN
 using System.Runtime.InteropServices;
 #endif
@@ -984,23 +984,21 @@ public class UIManager : MonoBehaviour
 	//--------------------------------------------------------------------------------------------------------
 	int centerStateHash;
 	int currentState;
-	//	IEnumerator Start ()
+
 	void Start ()
 	{
 		probs = ProbCalculator.instance;
-		gameFlow = GameFlowManager.instance;  // para fechar objetos
+		gameFlow = GameFlowManager.instance;
 	
 		cronosIn.GetComponent<Text>().text = decisionTimeA.ToString();
 
-		//171005 declarar a instance para permitir chamar rotinas do outro script
 		translate = LocalizationManager.instance;
 
-		//171006 textos a alterar na interface
 		setaCen.GetComponentInChildren<Text>().text = translate.getLocalizedValue ("cen");
 		setaEsq.GetComponentInChildren<Text>().text = translate.getLocalizedValue ("esq");
 		setaDir.GetComponentInChildren<Text>().text = translate.getLocalizedValue ("dir");
 
-		//171010 botoes MD (Jogo da Memoria)
+		// Botoes MD (Jogo da Memoria)
 		mostrarSequ.GetComponentInChildren<Text>().text = translate.getLocalizedValue ("mdBack");
 		jogar.GetComponentInChildren<Text>().text = translate.getLocalizedValue ("mdPlay");
 		menuJogos.GetComponentInChildren<Text>().text = translate.getLocalizedValue ("mdMenu").Replace("\\n","\n");

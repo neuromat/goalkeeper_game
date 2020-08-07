@@ -697,9 +697,6 @@ public class GameFlowManager : MonoBehaviour
         GoToIntro();
     }
 
-
-    //---------------------------------------------------------------------------------------
-    //161227 Tela de menu; vem para cá ao terminar os níveis ou no "sim, quero abandonar este jogo"
     public void GoToIntro()
     {
         if (uiManager.userAbandonModule)    //180618 was: if(game.activeInHierarchy), but now, many options come to GoToIntro...

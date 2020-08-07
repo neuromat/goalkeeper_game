@@ -1,22 +1,22 @@
-/**************************************************************************************/
-//  Module written by Josi Perez <josiperez.neuromat@gmail.com> (out/17)
-//
-//	Responsible for loading localization files from StreamingAssets/i18n
-//  Name <locale>.json (example: en_us.json, pt_br.json)
-//  Manual reading to keep small files, using pairs "msgCalledInTheCode":"translation"
-//  (example: "locale":"en_us")
-/**************************************************************************************/
+/**
+ * Module written by Josi Perez <josiperez.neuromat@gmail.com> (out/17)
+ *
+ * Responsible for loading localization files from StreamingAssets/i18n
+ * Name <locale>.json (example: en_us.json, pt_br.json)
+ * Manual reading to keep small files, using pairs "msgCalledInTheCode":"translation"
+ * (example: "locale":"en_us") 
+ */
+
 using UnityEngine;
-using System.Collections;                //171005 IEnumerator
-using System.Collections.Generic;        //171005 Dictionary
-using UnityEngine.SceneManagement;       //171005 LoadScene
-using System;                            //180130 [serializable] json myIP
-using UnityEngine.UI;                    //180627 Text
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System;
+using UnityEngine.UI;
 
 
 public class LocalizationManager : MonoBehaviour {
 
-	//171005 to make this module available to all programs
 	static private LocalizationManager _instance;
 	static public LocalizationManager instance
 	{	get
@@ -29,7 +29,6 @@ public class LocalizationManager : MonoBehaviour {
 	}
 
 
-//	private GameObject localizationScreen;               //171004 language selection screen
 	private string missingTextString = "@";              //171004 missing key msgCalledInTheCode
 	public static Dictionary<string, string> localizedText = new Dictionary<string, string>();
 	private bool isRunning = false;                      //171023 not sure if it is necessary...
@@ -82,7 +81,6 @@ public class LocalizationManager : MonoBehaviour {
 		if (!string.IsNullOrEmpty (www.error)) {
 			error = true;
 		}
-			
 
 		//171020 if the file does not exist send msg to the output.txt and it does not stop the game,
 		//       but all translatable texts will appear as @ - as defined above (arbitrary)
@@ -104,24 +102,15 @@ public class LocalizationManager : MonoBehaviour {
 			Debug.LogError (">>> Cannot find localization file StreamingAssets" + "/i18n/" + language + ".json");
 		}
 
-        //read or not, call up the team selection screen
-        //180625 GameDevIME suggests intercalate TCLE screen here  - SceneManager.LoadScene("Configurations");
         SceneManager.LoadScene("TCLE");
     }
 		
-
-	// -----------------------------------------------------------------------------------------------------
-	// routine used by all programs 
-	// returns the key translation to the selected language
     public string getLocalizedValue(string key)
     {	
 		if (localizedText.ContainsKey (key)) return localizedText [key];
 		else return missingTextString;
     }
 		
-
-	// -----------------------------------------------------------------------------------------------------
-	//180115 ESC button
 	public void Update()
 	{
 		if (Input.GetKey ("escape")) {
@@ -129,26 +118,18 @@ public class LocalizationManager : MonoBehaviour {
 		}
 	}
 
-
-
-    // -----------------------------------------------------------------------------------------------------
-    //170407 Return button
-    //180627 Centralizes here goes to "where"
     public void clickVoltar(int where)
     {
         if (where == 1)
         {
             SceneManager.LoadScene("About");
         }
-        else { //where==2
+        else {
             SceneManager.LoadScene("MainScene");
         }
         
     }
 
-
-    // -----------------------------------------------------------------------------------------------------
-    //171025 Exit button
     public void clickSair ()
     {   //170322 unity3d tem erro ao usar application.Quit
         //       workaround: http://unity3dtrenches.blogspot.com.br/2015/10/unity-3d-compiled-game-freezes-or.html
@@ -217,6 +198,5 @@ public class LocalizationManager : MonoBehaviour {
 			}
 		}
 	}
-
 
 }
