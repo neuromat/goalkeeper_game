@@ -65,7 +65,6 @@ public class LoadStages : MonoBehaviour
 		public string cc;
 	}
 
-	//170417 aumentar num de fases
 	public static string [] files = new string[] {
 		"tree1",
 		"tree2",
@@ -81,7 +80,7 @@ public class LoadStages : MonoBehaviour
 	// -----------------------------------------------------------------------------------------------------
 	void AddSourcePath(string url)
 	{
-		SourceType st;			// web or file
+		SourceType st;  // web or file
 
 		if (url.StartsWith ("http")) {
 			st = SourceType.web;
