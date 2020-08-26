@@ -1,7 +1,5 @@
-/**
- * Module written by scaroni <renato.scaroni@gmail.com>
- * Rewrited by Josi Perez <josiperez.neuromat@gmail.com>, keeping the original code in comment
- */
+// Module written by scaroni <renato.scaroni@gmail.com>
+// Rewrited by Josi Perez <josiperez.neuromat@gmail.com>, keeping the original code in comment
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -420,10 +418,8 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-    /**
-     * Esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
-     * ou a de giveUP (2)
-     */
+    // Esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
+    // ou a de giveUP (2)
     public IEnumerator waitTime(int gameSelected, float time, int whatScreen)
     {
         yield return new WaitForSeconds(time);
@@ -454,7 +450,7 @@ public class GameFlowManager : MonoBehaviour
                     bmGameOver.SetActive(true);
                 }
                 else
-                {  // reach the assymptote before the total plays
+                {  // Reach the assymptote before the total plays
                     if (whatScreen == 4)
                     {
                         if ((Application.platform == RuntimePlatform.Android) ||
