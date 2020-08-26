@@ -1,10 +1,8 @@
-﻿/**
- * Module written by scaroni <renato.scaroni@gmail.com>
- * Rewrited by Josi Perez <josiperez.neuromat@gmail.com>
- *
- * Responsible for making all http requests in all environments (standalone, android and web),
- * to save results.
- */
+﻿// Module written by scaroni <renato.scaroni@gmail.com>
+// Rewrited by Josi Perez <josiperez.neuromat@gmail.com>
+//
+// Responsible for making all http requests in all environments (standalone, android and web),
+// to save results.
 
 using UnityEngine;
 using System.Collections;

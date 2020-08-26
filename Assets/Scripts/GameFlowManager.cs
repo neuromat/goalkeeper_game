@@ -1174,6 +1174,10 @@ public class GameFlowManager : MonoBehaviour
             uiManager.ResetEventList(gameSelected);
             game.SetActive(true);
             intro.SetActive(false);
+            if (Application.platform != RuntimePlatform.WebGLPlayer)
+            {
+                betweenLevels.SetActive(true);
+            }
 
             //170927 novo param em btLevelController para precisar o nome do jogo
             int bmMode = (probCalculator.getMinHitsInSequence() > 0) ? 2 : 1;
