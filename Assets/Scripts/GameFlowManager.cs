@@ -1,8 +1,6 @@
-/**************************************************************************************/
-//  Module written by scaroni <renato.scaroni@gmail.com>
-//  Rewrited by Josi Perez <josiperez.neuromat@gmail.com>, keeping the original code in comment
-//
-/**************************************************************************************/
+// Module written by scaroni <renato.scaroni@gmail.com>
+// Rewrited by Josi Perez <josiperez.neuromat@gmail.com>, keeping the original code in comment
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,11 +9,10 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections;
-using System.Collections.Generic;  //170102 List
+using System.Collections.Generic;
 using JsonFx.Json;
 
 
-//---------------------------------------------------------------------------------------
 public class GameFlowManager : MonoBehaviour
 {
     private float StartTime;
@@ -76,7 +73,6 @@ public class GameFlowManager : MonoBehaviour
 
     private ProbCalculator probCalculator;
     private UIManager uiManager;
-    //	private bool barCalculated = false;     //170106 sem barra de progresso
 
     private bool onVersusMode = false;
 
@@ -86,36 +82,23 @@ public class GameFlowManager : MonoBehaviour
     public Button endLevel;   //MainScene/GameScene/BetweenLevelsCanvas/Panel/EndLevel = menu de jogos (goToIntro)
     public Button notAbandon; //MainScene/GameScene/GiveUpMenu/Nao
     public Button yesAbandon; //MainScene/GameScene/GiveUpMenu/Sim
-
-    public Button menuPrizes;   //180605 
-    public Button menuTutorial; //180605 old: 4 field with a little text
-    public Button menuCredits;  //180605
-    public Button menuAbout;    //180605
-    public GameObject bkgPrizes;//180706
-
-    //170322 para saber se o Exit foi clicado (para resolver as telas onde há o "aperte alguma tecla" e o click no Exit)
+    public Button menuPrizes;
+    public Button menuTutorial;
+    public Button menuCredits;
+    public Button menuAbout;
+    public GameObject bkgPrizes;
     public Button exitIcon;   //MainScene/GameScene/Exit; botao para, ao clicar, enviar para uiManager.QuitGame
-
-    //170303 menu dinamico: descrito no JSon e montado aqui no Start()
-    public GridLayoutGroup menuJogos;     //170302 mainScene/IntroScene(1)/Canvas/LogBox/MenuInicio/menuJogos - grid 1 coluna para receber os botoes dinamicos
-    public GameObject btnPrefab;          //170302 para o menu dinâmico; estrategia copiada do menu de pacotes dinamicos em loadStages
-                                          //       em Project/Prefabs/gameMenuBtn, com texto tamanho 30 (o dos pacotes está 20) - nao acertei a sintaxe para alterar por pograma
-    public GridLayoutGroup menuIcons;     //180521 mainScene/IntroScene(1)/Canvas/LogBox/MenuInicio/menuIcons - grid to receive the associated icon
+    public GridLayoutGroup menuJogos;
+    public GameObject btnPrefab;
+    public GridLayoutGroup menuIcons;
     public GameObject[] menuIconList;
-
-
-    public GameObject relaxTime;          //170818 estava no UIManager; 170222 aviso para dar um tempo de descanso ao jogador                                         
-
-    public Text jogoSelecionado;          //170303 na tela de pegaDados, mostrar o jogo selecionado e acrescentado o botão menu (nao tinha saida antes)
-    public Text obrigaAlias;              //170303 se user seleciona voltar ao Menu, msg fica com "obrigatorio preencher apelido"
-
-    public GameObject scrTutorial;        //180626 temporarily screen gameTutorial; will be changed for an Magara art
-                                          //180626 TMP are called as gameObjects
-										  
-	//public GameObject scrTelas;
+    public GameObject relaxTime;
+    public Text jogoSelecionado;
+    public Text obrigaAlias;
+    public GameObject scrTutorial;
 	
-    private LocalizationManager translate;    //171006 trazer script das rotinas de translation
-    public GameObject txtTut1;                //171006 elementos para traduzir na tela de Menu
+    private LocalizationManager translate;
+    public GameObject txtTut1;
     public GameObject txtTut2;
     public GameObject txtTut3;
     public GameObject txtTut4;
@@ -137,7 +120,7 @@ public class GameFlowManager : MonoBehaviour
     public Text txtStartG;
     public Text txtComP;
     public Text txtSemP;
-    int errorNumber;                         //180105 to create a function
+    int errorNumber;
     public string sequJMGiven;
     private bool failedRegisterUserEntry;
     static private GameFlowManager _instance;
@@ -169,7 +152,6 @@ public class GameFlowManager : MonoBehaviour
 
     void OnAnimationStarted()
     {
-        // Independente do jogo, deixar so animations
         uiManager.btnsAndQuestion.SetActive(false);
         frameChute.SetActive(false);  //sobra no JG
         uiManager.setaEsq.SetActive(false);
@@ -436,10 +418,8 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-        /**
-         * Esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
-         * ou a de giveUP (2) - virou public para chamar no UImanager.QuitGame
-         */
+    // Esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
+    // ou a de giveUP (2)
     public IEnumerator waitTime(int gameSelected, float time, int whatScreen)
     {
         yield return new WaitForSeconds(time);
@@ -450,20 +430,14 @@ public class GameFlowManager : MonoBehaviour
         }
         else
         {
-            //170327 ao clicar no Exit após waitTime de fim de animacao, deve ir para a tela de abandonar s/n
             if (whatScreen == 2)
             {
                 quitGameMenu.SetActive(true);
-
             }
             else
             {
                 if (whatScreen == 3)
                 {
-                    //170928 diferença de texto para Android
-                    //       lembrar que replace nao substitui a string inplace
-                    //171006 translation
-                    //171122 iOS (iPad/iPhone)
                     if ((Application.platform == RuntimePlatform.Android) ||
                         (Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
                     {
@@ -476,7 +450,7 @@ public class GameFlowManager : MonoBehaviour
                     bmGameOver.SetActive(true);
                 }
                 else
-                {  //180321 gameLover: congratulations: reach the assymptote before the total plays ------
+                {  // Reach the assymptote before the total plays
                     if (whatScreen == 4)
                     {
                         if ((Application.platform == RuntimePlatform.Android) ||
@@ -489,12 +463,11 @@ public class GameFlowManager : MonoBehaviour
                             bmGameLover.GetComponentInChildren<Text>().text = translate.getLocalizedValue("aperteBmGameLover").Replace("\\n", "\n");
                         }
                         bmGameLover.SetActive(true);
-                    } //-----------------------------------------------------------------------------------------
+                    }
                 }
             }
         }
     }
-
 
     void Start()
     {
@@ -513,7 +486,7 @@ public class GameFlowManager : MonoBehaviour
         bmGameLover.SetActive(false);
         scrTutorial.SetActive(true);
 
-		//171006 declarar a instance para permitir chamar rotinas do outro script
+		// Para permitir chamar rotinas do outro script
         translate = LocalizationManager.instance;
 
         //180627 from UiText to TMPro
@@ -764,20 +737,13 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-
-    //---------------------------------------------------------------------------------------
-    //Josi: ninguém chama esta function (falta fazer o configurador)
+    // Ninguém chama esta function (falta fazer o configurador)
     public void ToConfigurations()
     {
-        //PlayerPrefs.DeleteAll();
-        //Application.LoadLevel("Configurations");
         SceneManager.LoadScene("Configurations");
     }
 
-
-
-    //---------------------------------------------------------------------------------------
-    public void NewGame(int gameSelected) //Josi: 161214 agora a funcao tem um parametro para definir as telas do jogo
+    public void NewGame(int gameSelected)
     {
         useTimer = false;
 
@@ -828,7 +794,7 @@ public class GameFlowManager : MonoBehaviour
         {
             string content = "nickname: " + PlayerInfo.alias + "; entry date: " +
                              DateTime.Now.ToString("yyMMdd_HHmmss") + "\n"; 
-            StartCoroutine(ServerOperations.instance.logUserActivity("upload_file.php", content, uiManager));
+            StartCoroutine(ServerOperations.instance.LogUserActivity("upload_file.php", content, uiManager));
         }
 
         //180524
@@ -1463,12 +1429,6 @@ public class GameFlowManager : MonoBehaviour
         SceneManager.LoadScene("Configurations");
     }
 
-
-
-    // -----------------------------------------------------------------------------------------------------
-    // before, this was a question after inform playerAlias and was used for all games played in the same session
-    // now, it is a option above the game menu
-    // 180627 StartGamePaused yes or no (COM pausa/SEM pausa (default)
     public void startGamePaused(bool startPaused)
     {
         //170913 catar o parametro que indica se é para iniciar os jogos com pausa ou não

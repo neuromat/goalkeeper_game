@@ -34,7 +34,7 @@ public class ServerOperations
 		}
 	}
 
-	public IEnumerator uploadFile(string loginURL, WWWForm formData, UIManager uiManager)
+	public IEnumerator UploadFile(string loginURL, WWWForm formData, UIManager uiManager)
 	{
 		uiManager.www = new WWW (loginURL, formData);
 		uiManager.showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtSendingPlayData").Replace("\\n", "\n");
@@ -46,7 +46,7 @@ public class ServerOperations
 		yield return new WWW(gkgConfig.configItems[0].URL + "/get_sent.html");
 	}
 
-	public IEnumerator logUserActivity(string filename, string content, UIManager uiManager = null)
+	public IEnumerator LogUserActivity(string filename, string content, UIManager uiManager = null)
 	{
 		if (Application.platform != RuntimePlatform.WebGLPlayer) yield return "";
 

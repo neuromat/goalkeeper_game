@@ -416,7 +416,7 @@ public class UIManager : MonoBehaviour
 			{
 				string content = "nickname: " + PlayerInfo.alias + "; plays: " + eventCount + "; date: "
 				                 + DateTime.Now.ToString("yyMMdd_HHmmss") + "\n";
-				StartCoroutine(ServerOperations.instance.logUserActivity("log_user_activity.php", content));
+				StartCoroutine(ServerOperations.instance.LogUserActivity("log_user_activity.php", content));
 			}
 
 			int successCountInWindow = 0;
@@ -1733,12 +1733,12 @@ public class UIManager : MonoBehaviour
 			if ((Application.platform == RuntimePlatform.WebGLPlayer) || (Application.platform == RuntimePlatform.Android) ||
 				(Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
 			{
-				buildPost(resultsFileName, resultsFileContent);
+				BuildPost(resultsFileName, resultsFileContent);
 			}
 		}
 	}
 	
-	private void buildPost(string fileName, string contentFile)
+	private void BuildPost(string fileName, string contentFile)
 	{
 		byte[] fileData = Encoding.UTF8.GetBytes (contentFile);
 
@@ -1756,7 +1756,7 @@ public class UIManager : MonoBehaviour
 		// attribute with its elements. Improve access by referencing by name, not by index!
 		string loginURL = gkgConfig.configItems[0].URL + "/unityUpload.php";
 		
-		StartCoroutine(ServerOperations.instance.uploadFile(loginURL, formData, UIManager.instance));
+		StartCoroutine(ServerOperations.instance.UploadFile(loginURL, formData, UIManager.instance));
 	}
 	
 	static string GetHash(string input)
