@@ -1,0 +1,23 @@
+{"id":"grupo1-v3",
+ "limitPlays":"60",
+ "choices":"3",
+ "depth":"3",
+ "limitValue": "80",
+ "readSequ":"false",
+ "sequ": "112112112102112112112012012102002012112112002012112102102112",
+ "sequR":"nnnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYnYYn",
+ "states": [
+    { "path": "00", "probEvent0":  "0", "probEvent1":  "0"},
+    { "path": "10", "probEvent0":  "0", "probEvent1":  "0"},
+    { "path": "20", "probEvent0": ".3", "probEvent1": ".7"},
+    { "path": "01", "probEvent0":  "0", "probEvent1":  "0"},
+    { "path": "11", "probEvent0":  "0", "probEvent1":  "0"},
+    { "path": "21", "probEvent0": ".3", "probEvent1": ".7"},
+    { "path":  "2", "probEvent0": ".3", "probEvent1": ".7"}
+    ],
+ "animationTypeJG":"none",
+ "animationTypeOthers":"none",
+ "scoreboard":"true",
+ "finalScoreboard":"short",
+ "playsToRelax":"30"
+}

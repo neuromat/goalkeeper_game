@@ -1,0 +1,36 @@
+{"id":"grupo1-v1",
+ "limitPlays":"12",
+ "choices":"3",
+ "depth":"1",
+ "limitValue":"80",
+ "readSequ":"false",
+ "sequ": "201",
+ "sequR":"nnn",
+ "states":[
+    {"path":"0","probEvent0":"0","probEvent1":"1"},
+    {"path":"1","probEvent0":"0","probEvent1":"0"},
+    {"path":"2","probEvent0":"1","probEvent1":"0"}
+    ],
+ "bmSequ":"0201",
+ "bmLimitPlays":"5",
+ "bmReadSequ":"false",
+ "bmMinHits":"2", 
+ "mdSequ":"0021",
+ "mdLimitPlays":"4", 
+ "mdReadSequ":"false",
+ "animationTypeJG":"short",
+ "animationTypeOthers":"short",
+ "scoreboard":"true",
+ "finalScoreboard":"short",
+ "playsToRelax":"0",
+ "zeroPhaseJG":"true",
+ "zeroPhaseSequ":"102",
+ "zeroPhasePlays":"8",
+ "menus":[
+    {"game":"1","title":"Aquecimento",                 "sequMenu":"1"},
+    {"game":"2","title":"Jogo do Goleiro",             "sequMenu":"3"},
+    {"game":"3","title":"Memória Declarativa",         "sequMenu":"0"},
+    {"game":"4","title":"Aquecimento contra o relógio","sequMenu":"2"},
+    {"game":"5","title":"Jogo da Memória",             "sequMenu":"4"}
+    ]
+}
