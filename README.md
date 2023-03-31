@@ -4,4 +4,4 @@ The Goalkeeper's Game  EEG is a project developed by NeuroMAT to study the learn
 
 This version was development in unity 5.6.6f2
 
-This repository will be deleting ...
+
