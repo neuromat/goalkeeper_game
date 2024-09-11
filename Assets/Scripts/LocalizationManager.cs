@@ -218,8 +218,4 @@ public class LocalizationManager : MonoBehaviour {
 		}
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> gk-eeg-repo/main
 }

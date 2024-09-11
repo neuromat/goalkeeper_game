@@ -95,7 +95,7 @@ public class BetweenLevelsController : MonoBehaviour
 	//----------------------------------------------------------------------------------------
 	public void EndGame(int gameSelected, int bmMode)  //161226 parametro jogo jogado, com msg especifica para cada um
 	{                                                                    //170927 bmMode (AQ/AR): 1=minHits, 2=minSequ
-<<<<<<< HEAD
+// <<<<<<< HEAD
 		btnContinue.SetActive (false);
 		btnMenu.SetActive (false);
 // =======
