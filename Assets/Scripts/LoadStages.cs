@@ -53,7 +53,12 @@ public class LoadStages : MonoBehaviour
     //171124 same for iOS
     public static readonly string androidTreesServerLocation = "game.numec.prp.usp.br/game/CustomTreesANDROID/";
 	public static readonly string iosTreesServerLocation = "game.numec.prp.usp.br/game/CustomTreesIOS/";
+// <<<<<<< HEAD
 	public static readonly string webProtocol = "https://";
+// =======
+//	public static readonly string webProtocol = "http://";
+//
+// >>>>>>> gk-eeg-repo/main
 
 	//180126 Link https://www.myip.com/api-docs/
 	//       {"ip":"66.249.75.9","country":"United States","cc":"US"}
@@ -268,10 +273,15 @@ public class LoadStages : MonoBehaviour
 				
 
 			//put the team names in a vector
+// <<<<<<< HEAD
 			if (www.text != null)
 			{
 				string text = www.text.Replace(System.Environment.NewLine, ""); // reading with WWW puts new line char
 				string[] files = text.Split(';'); // package list
+// =======
+// 			if (www.text != null) {
+// 				string[] files = www.text.Split(';'); // package list  
+// >>>>>>> gk-eeg-repo/main
 
 				if(LoadedPackage.packages == null)	{
 					LoadedPackage.packages = new Dictionary<string, Package> ();
@@ -368,20 +378,58 @@ public class LoadStages : MonoBehaviour
 	//aqui le os arquivos de configuracao do time selecionado
 	IEnumerator LoadExternal(String url)
 	{
+// <<<<<<< HEAD
 		string fileToAccess;
 
+// =======
+// 		//170815 diferentes paths conforme o ambiente
+// 		//       a url Android continha o index.info
+// 		string fileToAccess;
+// 		string url2mobiles;       //180220 to solve paths with accents in iOS/Android environments
+//
+//
+// 		//170817 url android está carregando o nome do arquivo
+// >>>>>>> gk-eeg-repo/main
 		if (Application.platform == RuntimePlatform.Android) {
 			url = url.Replace ("index.info", "");
 		}
 		warning.text = "***** LoadExternal url = " + url;
 		
+// <<<<<<< HEAD
 		LoadedPackage.packages [url].stages.Clear ();
 
+// =======
+//
+// 		// Antes de mais nada, limpamos o que já existe
+// 		LoadedPackage.packages [url].stages.Clear ();
+//
+// 		//180220 in iOS paths, necessary to change to HTML codes (HTML URL Encoding Reference);
+// 		//    tip found in
+// 		//    1) https://forum.unity.com/threads/resources-load-with-special-characters-in-the-file-name-ios-and-mac.372881/
+// 		//    2) https://answers.unity.com/questions/546213/handling-special-characters-aeouuouo-in-unity.html 
+// 		//    fileToAccess = fileToAccess.Normalize(System.Text.NormalizationForm.FormD);
+// 		//    fileToAccess = WWW.EscapeURL(fileToAccess,System.Text.Encoding.UTF8);
+// 		//    fileToAccess = fileToAccess.Replace("á","%C3%A1");  //worked finally...
+// 		//
+// 		#if UNITY_IOS || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX  || UNITY_ANDROID
+// 		url2mobiles = convertPathToMobiles(url);
+// 		#endif
+//
+// >>>>>>> gk-eeg-repo/main
 		// para o total de fases (até 8) em um mesmo time, ler as configuracoes;
 		// isto precisa melhorar e virar um unico arquivo...
 		for (int i = 0; i < files.Length; i++)
 		{
+// <<<<<<< HEAD
 			warning.text = url + "/" + files [i] + ".txt";
+// =======
+// 			//180220 use url2iOS only for www access; after that comes to the normal
+// 			#if UNITY_IOS || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_ANDROID
+// 			warning.text = url2mobiles + "/" + files [i] + ".txt";
+// 			#else
+// 			warning.text = url + "/" + files [i] + ".txt";
+// 			#endif		
+// >>>>>>> gk-eeg-repo/main
 			fileToAccess = warning.text;
 
 			WWW www = new WWW (fileToAccess);
@@ -503,6 +551,8 @@ public class LoadStages : MonoBehaviour
 		LoadedPackage.loaded = pkg;
 	}
 
+
+	// -----------------------------------------------------------------------------------------------------
 	//180126 get machine/device IP and country from app by myip.com
 	IEnumerator readMachineIP()
 	{
@@ -524,8 +574,64 @@ public class LoadStages : MonoBehaviour
 		}
 	}
 
+// <<<<<<< HEAD
 	public void ToGame (int error)             //170310 param error, vindo do probs.confValidation
 	{    
+// =======
+//
+// 	// -----------------------------------------------------------------------------------------------------
+// 	//Josi: botao SAIR na tela inicial de menu de jogos
+//     //180627 centralized at Localization
+// 	//public void Sair ()	{
+// 		//170322 unity3d tem erro ao usar application.Quit
+// 		//       workaround: http://unity3dtrenches.blogspot.com.br/2015/10/unity-3d-compiled-game-freezes-or.html
+// 		//Application.Quit ();
+// 	//	if (!Application.isEditor) {  //if in the editor, this command would kill unity...
+// 	//		if (Application.platform == RuntimePlatform.WebGLPlayer) {
+// 	//			Application.OpenURL (PlayerPrefs.GetString ("gameURL"));
+// 	//		} else {
+// 	//			//171121 not working kill()
+// 	//			if ((Application.platform == RuntimePlatform.IPhonePlayer) || 
+// 	//				(SystemInfo.deviceModel.Contains("iPad"))) {           //try #IF UNITY_IOS
+// 	//				Application.Quit ();     
+// 	//			} else {
+// 	//				System.Diagnostics.Process.GetCurrentProcess ().Kill (); 
+// 	//			}
+// 	//		}
+// 	//	}
+// 	//}
+//
+//
+//
+// 	// -----------------------------------------------------------------------------------------------------
+// 	//170407 tela de créditos (pedido Carlos Ribas)
+//     //180614 out from team selection and goes to menu screen
+// 	//public void showCreditos()	{
+// 	//	SceneManager.LoadScene ("Credits");
+// 	//}
+//
+//
+//     // -----------------------------------------------------------------------------------------------------
+// 	//180220 to convert special characters into HTML reference code, using UTF-8
+// 	//       https://answers.unity.com/questions/546213/handling-special-characters-aeouuouo-in-unity.html 
+// 	//       https://www.w3schools.com/tags/ref_urlencode.asp
+// 	public string convertPathToMobiles(string url2mobiles)
+// 	{
+// 		string[] symbol = new string[]     {" ",  "À",     "Á",     "Â",     "Ã",     "Ç",     "È",     "É",     "Ê",     "Ì",     "Í",     "Î",     "Ñ",     "Ò",     "Ó",     "Ô",     "Õ",     "Ù",     "Ú",     "Û",     "à",     "á",     "â",     "ã",     "ç",     "è",     "é",     "ê",     "ì",     "í",     "î",     "ñ",     "ò",     "ó",     "ô",     "õ",     "ù",     "ú",     "û" };
+// 		string[] symbolHTML = new string[] {"%20","%C3%80","%C3%81","%C3%82","%C3%83","%C3%87","%C3%88","%C3%89","%C3%8A","%C3%8C","%C3%8D","%C3%8E","%C3%91","%C3%92","%C3%93","%C3%94","%C3%95","%C3%99","%C3%9A","%C3%9B","%C3%A0","%C3%A1","%C3%A2","%C3%A3","%C3%A7","%C3%A8","%C3%A9","%C3%AA","%C3%AC","%C3%AD","%C3%AE","%C3%B1","%C3%B2","%C3%B3","%C3%B4","%C3%B5","%C3%B9","%C3%BA","%C3%BB" };
+//
+// 		for (var i = 0; i < symbol.Length; i++) {
+// 			url2mobiles = url2mobiles.Replace (symbol [i], symbolHTML [i]);
+// 		}
+// 		return url2mobiles;
+// 	}
+//	
+//	
+//
+// 	// -----------------------------------------------------------------------------------------------------
+// 	public void ToGame (int error)             //170310 param error, vindo do probs.confValidation
+// 	{                                          
+// >>>>>>> gk-eeg-repo/main
 		SceneManager.LoadScene ("MainScene");
 	}
 
@@ -543,7 +649,7 @@ public class LoadStages : MonoBehaviour
 			//Application.Quit ();
 			if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 				if (Application.platform == RuntimePlatform.WebGLPlayer) {
-					Application.OpenURL ("https://game.numec.prp.usp.br");
+					Application.OpenURL (PlayerPrefs.GetString ("gameURL"));
 				} else {
 					//171121 not working kill()
 					if ((Application.platform == RuntimePlatform.IPhonePlayer) || 

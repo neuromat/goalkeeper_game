@@ -17,6 +17,10 @@ public class ProgressionBar : MonoBehaviour
 	private float currTarget = .1f;
 	private float currBaseValue = .1f;
 	private float barFactor;
+// <<<<<<< HEAD
+// =======
+// 	private ProbCalculator probCalculator;
+// >>>>>>> gk-eeg-repo/main
 	private float CurrentLimitValue = 80f; 
 	
 	public void SetInitialValue (float v)
@@ -44,8 +48,15 @@ public class ProgressionBar : MonoBehaviour
 	void Start () 
 	{
 		fill.fillAmount = initialValue;	
+// <<<<<<< HEAD
 	}
 	
+// =======
+// 		probCalculator = ProbCalculator.instance;
+// 	}
+//	
+// 	// Update is called once per frame
+// >>>>>>> gk-eeg-repo/main
 	void Update () 
 	{
 		if(!currTarget.Equals(fill.fillAmount))

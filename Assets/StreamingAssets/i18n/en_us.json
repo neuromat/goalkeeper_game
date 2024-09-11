@@ -37,7 +37,7 @@
 "aperteIniciar":"Press any key\nto start!",
 "toqueRelax":"Goalkeeper's Game break!\nQuick break for resting.\n\n\nTouch the screen\nto continue...",
 "aperteRelax":"Goalkeeper's Game break!\nQuick break for resting.\n\n\nPress the space bar\nto continue...",
-"concordaAcerto":" hit in ";
+"concordaAcerto":" hit in ",
 "concordaAcertos":" hits in ",
 "concordaJogada":" play (",
 "concordaJogadas":" plays (",
@@ -87,7 +87,7 @@
 "doc":"Docs",
 "txtWhat":"Goalkeeper Game\nWhat is\n\nOpen-source software, developed by NeuroMat, Amparo and Abraço, with the objective of studying the strategies of brain functioning, from the times and the decision making throughout the phases of the game.\n\nThere is an Informed Consent Form that allows your answers not to be collected, but it is noted that there is no way to recognize individuals unless JG is integrated with the Neuroscience Experiments System (NES).\n\nIn the NES it is possible to record personal, clinical, geographic, questionnaire responses, and these are integrated into the results of the Goalkeeper's Game.",
 "txtSoftware":"Goalkeeper Game\nSoftwares used in development:\n\nUnity3D Personal Edition (C#)\nJsonFx\nXcode\nPostgreSQL/pgAdmin\nGNU Image Manipulation Program (GIMP)\nInkScape",
-"txtDoc":"Goalkeeper Game\nDocumentation\n\nAvailable in GitHub Goleiro Wiki at\n<link="docJG">https://github.com/neuromat/goleiro-godot/wiki</link>",
+"txtDoc":"Goalkeeper Game\nDocumentation\n\nAvailable in GitHub Goleiro Wiki at\n<link=\"docJG\">https://github.com/neuromat/goleiro-godot/wiki</link>",
 "txtAbort":"As you exit Fullscreen mode the game was aborted.\nPlease click on Exit icon or close the browser tab/window.",
 "txtSendingPlayData":"Please don't close the browser tab.\nSending data to server...",
 "txtFailedSendPlayData":"Could not send the play data.",
