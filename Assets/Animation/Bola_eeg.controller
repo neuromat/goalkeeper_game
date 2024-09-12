@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Bola
+  m_Name: Bola_eeg
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: esq
@@ -534,10 +534,10 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions:
     data:
-      first: {fileID: 110748178}
+      first: {fileID: 110770928, guid: ae9dc97e3e8bec54d839cfc5f5cc801f, type: 2}
       second: []
     data:
-      first: {fileID: 110770928, guid: ae9dc97e3e8bec54d839cfc5f5cc801f, type: 2}
+      first: {fileID: 110748178}
       second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 48, y: 24, z: 0}
