@@ -24,7 +24,7 @@ using System.Net.Mime;
 
 
 //------------------------------------------------------------------------------------
-public class RandomEvent            //Josi: result matrix to save experiment results
+public class RandomEventEeg            //Josi: result matrix to save experiment results
 {
 	public int resultInt;           //defense waited: 0, 1 or 2 (if choices=3), or 1,2 (if choices=2)
 	public char ehRandom;           //170215 JG: random play? Y, or n; in any other module it is "n" (AQ/AR is random...)
@@ -42,7 +42,7 @@ public class RandomEvent            //Josi: result matrix to save experiment res
 
 
 //------------------------------------------------------------------------------------
-public class UIManager : MonoBehaviour
+public class UIManagerEeg : MonoBehaviour
 {
 	private float StartTime;
 	//public GameObject cronos;
@@ -136,8 +136,8 @@ public class UIManager : MonoBehaviour
 	public bool animCountDown = false;        //170111 para determinar continuacao ao fim das animacoes anim321, pegoal e perdeu
 	public bool animResult = false;           //170111 para determinar continuacao ao fim das animacoes anim321, pegoal e perdeu
 
-	private List<RandomEvent> _events = new List<RandomEvent> ();
-	public  List<RandomEvent> _eventsFirstScreen = new List<RandomEvent> ();  //170108 salvar experimentos da fase MD testes de memoria
+	private List<RandomEventEeg> _events = new List<RandomEventEeg> ();
+	public  List<RandomEventEeg> _eventsFirstScreen = new List<RandomEventEeg> ();  //170108 salvar experimentos da fase MD testes de memoria
 
 	public GameObject buttonPlay;             //170906 botões Play/Pause
 	public GameObject buttonPause;            //170906
@@ -203,21 +203,21 @@ public class UIManager : MonoBehaviour
 	public static event AnimationStarted OnAnimationStarted;
 
 
-	public List<RandomEvent> events
+	public List<RandomEventEeg> events
 	{
 		get	{
 			return _events;
 		}
 	}
 
-	static private UIManager _instance;
-	static public UIManager instance
+	static private UIManagerEeg _instance;
+	static public UIManagerEeg instance
 	{
 		get
 		{
 			if(_instance == null)
 			{
-				_instance = GameObject.Find("UIManager").GetComponent<UIManager>();
+				_instance = GameObject.Find("UIManagerEeg").GetComponent<UIManagerEeg>();
 			}
 
 			return _instance;
@@ -249,7 +249,7 @@ public class UIManager : MonoBehaviour
 	//	Debug.Log("@BtnActionGetEvent:--------------------gameFlow.startSessionTime = "+ gameFlow.startSessionTime);
 	//	Debug.Log("@BtnActionGetEvent:++++ tempoJogo = "+ tempoJogo);
 
-		RandomEvent eLog = new RandomEvent ();
+		RandomEventEeg eLog = new RandomEventEeg ();
 		eLog.time = Time.realtimeSinceStartup - movementTimeA - gameFlow.otherPausesTime ;
 		float tmpTime = eLog.time + decisionTimeA;
 	    tmpDecisao.GetComponent<Text>().text = eLog.time.ToString();
@@ -318,7 +318,7 @@ public class UIManager : MonoBehaviour
 
 
 			//170216
-			int e = probs.GetEvent (teclaMDinput);  //170130 teclaMDinput param para nao precisar instanciar uiManager no probCalc
+			int e = probs.GetEvent (teclaMDinput);  //170130 teclaMDinput param para nao precisar instanciar UIManagerEeg no probCalc
 
 			string dirEsq = System.String.Empty;    //170110 Use System.String.Empty instead of "" when dealing with lots of strings;
 
@@ -690,7 +690,7 @@ public class UIManager : MonoBehaviour
 				//180326 new parameters: minHitsInSequenceForJG, ForJM, mdMaxPlays
 				//180417 send speedAnim
 				//180418 keyboard markers
-				ServerOperations.instance.RegisterPlay (GameFlowManager.instance, locale, endSessionTime, probs.CurrentMachineID (),
+				ServerOperationsEeg.instance.RegisterPlay (GameFlowManager.instance, locale, endSessionTime, probs.CurrentMachineID (),
 					gameMode, phaseNumber, jogadas, acertos, successRate,
 					probs.getMinHits (), ProbCalculator.machines [0].bmMaxPlays, ProbCalculator.machines [0].bmMinHitsInSequence,
 					_events, userAbandonModule,
@@ -830,7 +830,7 @@ public class UIManager : MonoBehaviour
 	//Josi: inicializa listas, variáveis, histórico de jogadas (setas verdes e pretas), placar
 	public void ResetEventList(int gameSelected)
 	{
-		_events = new List<RandomEvent> ();    //inicializar vetor com dados das fases
+		_events = new List<RandomEventEeg> ();    //inicializar vetor com dados das fases
 		                                       //nao inicia a _eventsFirstScreen do MD porque pode estar acumulando uma nova jogada
 		eventCount = 0;
 		success = 0;
@@ -1063,7 +1063,7 @@ public class UIManager : MonoBehaviour
 	//       chamada no click do MostrarSequ, no Inspector
 	public void showSequMDagain(int gameSelected)
 	{
-		RandomEvent eLog = new RandomEvent ();
+		RandomEventEeg eLog = new RandomEventEeg ();
 		eLog.decisionTime = decisionTimeB - decisionTimeA;       //170214: tempo desde que aparece a tela até que
 		eLog.time = Time.realtimeSinceStartup - decisionTimeB;   //170214: tempo desde que apertou "aperte uma tecla quando pronto" até selecionar um botao "Mostrar de novo" ou "Jogar"
 		_eventsFirstScreen.Add(eLog);
@@ -1699,7 +1699,7 @@ public class UIManager : MonoBehaviour
 						decisionTimeA = Time.realtimeSinceStartup;  //170307 apareceram as setas de defesa: inicia-se a contagem do tempo de movimento
 					}
 				}
-				RandomEvent eLog = new RandomEvent ();
+				RandomEventEeg eLog = new RandomEventEeg ();
 				Debug.Log("@FINISHED:Time.realtimeSinceStartup = "+ Time.realtimeSinceStartup);
 				//Debug.Log("movementTimeA = "+ movementTimeA);
 				//Debug.Log("decisionTimeA = "+ decisionTimeA);

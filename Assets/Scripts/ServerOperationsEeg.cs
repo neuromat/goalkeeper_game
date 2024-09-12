@@ -28,7 +28,7 @@ using System.Security.Cryptography;     //170830 sha512Hash available
 
           
 //------------------------------------------------------------------------------------
-public class ServerOperations 
+public class ServerOperationsEeg 
 {
 	//170612 where to save results if Android, iOS or WebGL
 	public static readonly string gameServerLocation = "game.numec.prp.usp.br/game/";     //170928 from Carlos Ribas
@@ -60,12 +60,12 @@ public class ServerOperations
 
 
 	//--------------------------------------------------------------------------------------
-	static private ServerOperations _instance;
-	static public ServerOperations instance
+	static private ServerOperationsEeg _instance;
+	static public ServerOperationsEeg instance
 	{
 		get {
 			if(_instance == null) {
-				_instance = new ServerOperations();
+				_instance = new ServerOperationsEeg();
 			}
 			return _instance;
 		}
@@ -85,7 +85,7 @@ public class ServerOperations
 	//180417 send speedAnim
 	//180419 write keyboardTimeMarkers
 	public void RegisterPlay (MonoBehaviour mb, string locale, float endSessionTime, string stageID, bool gameMode, int phaseNumber, int totalPlays, int totalCorrect, float successRate,
-		int bmMinHits, int bmMaxPlays, int bmMinHitsInSequence, List<RandomEvent> log, bool interrupted, List<RandomEvent> firstScreenMD, string animationType,
+		int bmMinHits, int bmMaxPlays, int bmMinHitsInSequence, List<RandomEventEeg> log, bool interrupted, List<RandomEventEeg> firstScreenMD, string animationType,
 		int playsToRelax,
 		bool showHistory,
 		string sendMarkersToEEG,
@@ -372,14 +372,14 @@ public class ServerOperations
 			sequExecutada.Length = 0;
 
 			if (gameSelected != 5) {	
-				foreach (RandomEvent l in log) {
+				foreach (RandomEventEeg l in log) {
 					sequExecutada.Insert (line, l.resultInt.ToString ());
 					line++;                                               
 				}
 			} else {
 				//No JG, se o jogador erra, insiste-se ateh que acerte a jogada
 				//180418 save all plays, hit or error, until max plays...
-				foreach (RandomEvent l in log) {
+				foreach (RandomEventEeg l in log) {
 //					if (l.correct == true) {
 					sequExecutada.Insert (line, l.resultInt.ToString ());
 					line++;                                               
@@ -399,7 +399,7 @@ public class ServerOperations
 				sr.WriteLine ("try,timeUntilAnyKey,timeUntilShowAgain"); 
 
 				line = 0;
-				foreach (RandomEvent l in firstScreenMD) {
+				foreach (RandomEventEeg l in firstScreenMD) {
 					//170713 fixed format: 6 decimal places and dot as decimal separator
 				    sr.WriteLine ("{0},{1},{2}", ++line, l.decisionTime.ToString("f6").Replace("," , "." ), l.time.ToString("f6").Replace("," , "." ) ); 
 				}
@@ -420,7 +420,7 @@ public class ServerOperations
 
 			// -----
 			line = 0;   
-			foreach (RandomEvent l in log) {
+			foreach (RandomEventEeg l in log) {
 				//170713 some machines generate decimal with commas (locale?)
 				//170217 capitalize FALSE    //(l.correct ? "TRUE" : "false")
 				//170919 pauseTime of the play

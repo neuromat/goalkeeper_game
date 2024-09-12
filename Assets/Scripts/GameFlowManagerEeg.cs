@@ -13,7 +13,7 @@ using JsonFx.Json;
 
 
 //---------------------------------------------------------------------------------------
-public class GameFlowManager : MonoBehaviour
+public class GameFlowManagerEeg : MonoBehaviour
 {
     private float StartTime;
 //    public GameObject cronosIn;
@@ -79,7 +79,7 @@ public class GameFlowManager : MonoBehaviour
     public BetweenLevelsController btLevelsController; //Josi 161214 erro em betweenLevels.GetComponent<BetweenLevelsController>().PostEnd/Middle/EndGame
 
     private ProbCalculator probCalculator;
-    private UIManager uiManager;
+    private UIManagerEeg uiManager;
     //	private bool barCalculated = false;     //170106 sem barra de progresso
 
     private bool onVersusMode = false;
@@ -152,15 +152,15 @@ public class GameFlowManager : MonoBehaviour
     //-------------------------------------------------------------------------------------
     void OnEnable()
     {
-        UIManager.OnAnimationEnded += OnAnimationEnded;
-        UIManager.OnAnimationStarted += OnAnimationStarted;
+        UIManagerEeg.OnAnimationEnded += OnAnimationEnded;
+        UIManagerEeg.OnAnimationStarted += OnAnimationStarted;
     }
 
     //-------------------------------------------------------------------------------------
     void OnDisable()
     {
-        UIManager.OnAnimationEnded -= OnAnimationEnded;
-        UIManager.OnAnimationStarted -= OnAnimationStarted;
+        UIManagerEeg.OnAnimationEnded -= OnAnimationEnded;
+        UIManagerEeg.OnAnimationStarted -= OnAnimationStarted;
     }
 
 
@@ -532,7 +532,7 @@ public class GameFlowManager : MonoBehaviour
     void Start()
     {
         probCalculator = ProbCalculator.instance;
-        uiManager = UIManager.instance;
+        uiManager = UIManagerEeg.instance;
 
         intro.SetActive(true);
         introMenu.SetActive(true);
@@ -840,7 +840,7 @@ public class GameFlowManager : MonoBehaviour
         {       //170124 mantido o base memoria por teclado
             uiManager.jogadasFirstScreen = 0;
             uiManager.acertosFirstScreen = 0;
-            uiManager._eventsFirstScreen = new List<RandomEvent>();   //170105 nao pode er inicializado no entre testes de memoria
+            uiManager._eventsFirstScreen = new List<RandomEventEeg>();   //170105 nao pode er inicializado no entre testes de memoria
             jaPasseiPorFirstScreen = false;
             jogarMDfase3 = false;
             firstScreen = false;
@@ -1158,7 +1158,7 @@ public class GameFlowManager : MonoBehaviour
     {
         //170217 para contar o tempo em que o experimentador selecionou Jogar ao inves de Mostrar Again;
         //       talvez seja melhor nao marcar este tempo... fica assim e se for necessario, melhoramos este trecho
-        RandomEvent eLog = new RandomEvent();
+        RandomEventEeg eLog = new RandomEventEeg();
         eLog.decisionTime = uiManager.decisionTimeB - uiManager.decisionTimeA;  //170214: tempo desde que aparece a tela até que 
         eLog.time = Time.realtimeSinceStartup - uiManager.decisionTimeB;        //170214: tempo desde que apertou "aperte uma tecla quando pronto" até selecionar um botao "Mostrar de novo" ou "Jogar"
         uiManager._eventsFirstScreen.Add(eLog);
