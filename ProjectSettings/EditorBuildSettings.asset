@@ -11,9 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Configurations.unity
     guid: 906602a5ac458ff449fb7d27b045f8d9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ExpandScreen.unity
-    guid: 00000000000000000000000000000000
+    guid: f2f1b312ea6f76a41a024b6f552d1fdb
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: ea92167ec0038c14d85d5a0cbcac116f
