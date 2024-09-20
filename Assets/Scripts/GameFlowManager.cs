@@ -1,21 +1,24 @@
-// Module written by scaroni <renato.scaroni@gmail.com>
-// Rewrited by Josi Perez <josiperez.neuromat@gmail.com>, keeping the original code in comment
-
+/**************************************************************************************/
+//  Module written by scaroni <renato.scaroni@gmail.com>
+//  Rewrited by Josi Perez <josiperez.neuromat@gmail.com>, keeping the original code in comment
+//
+/**************************************************************************************/
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
-using System.IO;
-using System.Text;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic;  //170102 List
 using JsonFx.Json;
 
 
+//---------------------------------------------------------------------------------------
 public class GameFlowManager : MonoBehaviour
 {
     private float StartTime;
+//    public GameObject cronosIn;
+//    public GameObject cronosOut;
+    
     public GameObject game;
     public CanvasGroup gameCanvas;
     public GameObject betweenLevels;
@@ -27,13 +30,17 @@ public class GameFlowManager : MonoBehaviour
     public GameObject logBox;         //Josi: JG: box com as 8 jogadas mainScene/gameScene/gameUICanvas/LogBox
     public GameObject bmMsg;          //Josi: BM: tutorial ou "aperte tecla" mainScene/gameScene/gameUICanvas/bmMsg
     public GameObject aperteTecla;    //Josi: 161229: reuniao: sai tutorial, mas no BMcomTempo entra aviso de AperteTecla para 3-2-1
+
+    //	public GameObject mdTutorial;     //Josi: MD: tutorial do memoDecl - mainScene/gameScene/gameUICanvas/mdTutorial: Reuniao pede para eliminar
+    //	public GameObject progressionBar; //Josi: 161227: reuniao pede para eliminar a menos do Jogo do Goleiro
     public GameObject frameChute;     //Josi: 161229: reuniao: contorno que recebe a indicacao da seta de direcao mainScene/gameScene/gameUICanvas/bmIndicaChute
 
-    public GameObject mdFirstScreen;
+    public GameObject mdFirstScreen;  //170102: reuniao: primeira tela do MD (ou Base Memoria)
+                                      //	public GameObject ExitFirstScreenJM;     //170309 mainScene/gameScene/gameUIcanvas/mdFirstScreen/ExitFirstScreenJM botao de exit
     public GameObject mdAperteTecla;  //170912: para poder alterar a transparência enquanto está em modo Pause (não encontrei sintaxe sem declarar)
 
     public GameObject errorMessages;         //170311 em configuration/canvas/errorMessages; QG para apontar se o param ID estah repetido...
-    public Text txtMessage;
+    public Text txtMessage;                  //170623 txt do erro
     private bool waitingKeyToExit = false;   //170311 para sair apos encontrar erro nos confFiles
 
     public float startSessionTime;           //170316 inicio da sessao: selecionar jogo (para comparativo entre os tempos de decsao/movimento)
@@ -69,10 +76,11 @@ public class GameFlowManager : MonoBehaviour
     public Text txtAbandon;                 //MainScene... GiveUpMenu
     public int playLimit = 0;
 
-    public BetweenLevelsController btLevelsController;
+    public BetweenLevelsController btLevelsController; //Josi 161214 erro em betweenLevels.GetComponent<BetweenLevelsController>().PostEnd/Middle/EndGame
 
     private ProbCalculator probCalculator;
     private UIManager uiManager;
+    //	private bool barCalculated = false;     //170106 sem barra de progresso
 
     private bool onVersusMode = false;
 
@@ -82,47 +90,52 @@ public class GameFlowManager : MonoBehaviour
     public Button endLevel;   //MainScene/GameScene/BetweenLevelsCanvas/Panel/EndLevel = menu de jogos (goToIntro)
     public Button notAbandon; //MainScene/GameScene/GiveUpMenu/Nao
     public Button yesAbandon; //MainScene/GameScene/GiveUpMenu/Sim
-    public Button menuPrizes;
-    public Button menuTutorial;
-    public Button menuCredits;
-    public Button menuAbout;
-    public GameObject bkgPrizes;
+
+    public Button menuPrizes;   //180605 
+    public Button menuTutorial; //180605 old: 4 field with a little text
+    public Button menuCredits;  //180605
+    public Button menuAbout;    //180605
+    public GameObject bkgPrizes;//180706
+
+    //170322 para saber se o Exit foi clicado (para resolver as telas onde há o "aperte alguma tecla" e o click no Exit)
     public Button exitIcon;   //MainScene/GameScene/Exit; botao para, ao clicar, enviar para uiManager.QuitGame
-    public GridLayoutGroup menuJogos;
-    public GameObject btnPrefab;
-    public GridLayoutGroup menuIcons;
+
+    //170303 menu dinamico: descrito no JSon e montado aqui no Start()
+    public GridLayoutGroup menuJogos;     //170302 mainScene/IntroScene(1)/Canvas/LogBox/MenuInicio/menuJogos - grid 1 coluna para receber os botoes dinamicos
+    public GameObject btnPrefab;          //170302 para o menu dinâmico; estrategia copiada do menu de pacotes dinamicos em loadStages
+                                          //       em Project/Prefabs/gameMenuBtn, com texto tamanho 30 (o dos pacotes está 20) - nao acertei a sintaxe para alterar por pograma
+    public GridLayoutGroup menuIcons;     //180521 mainScene/IntroScene(1)/Canvas/LogBox/MenuInicio/menuIcons - grid to receive the associated icon
     public GameObject[] menuIconList;
-    public GameObject relaxTime;
-    public Text jogoSelecionado;
-    public Text obrigaAlias;
-    public GameObject scrTutorial;
-	
-    private LocalizationManager translate;
-    public GameObject txtTut1;
+
+
+    public GameObject relaxTime;          //170818 estava no UIManager; 170222 aviso para dar um tempo de descanso ao jogador                                         
+
+    public Text jogoSelecionado;          //170303 na tela de pegaDados, mostrar o jogo selecionado e acrescentado o botão menu (nao tinha saida antes)
+    public Text obrigaAlias;              //170303 se user seleciona voltar ao Menu, msg fica com "obrigatorio preencher apelido"
+
+    public GameObject scrTutorial;        //180626 temporarily screen gameTutorial; will be changed for an Magara art
+                                          //180626 TMP are called as gameObjects
+    private LocalizationManager translate;    //171006 trazer script das rotinas de translation
+    public GameObject txtTut1;                //171006 elementos para traduzir na tela de Menu
     public GameObject txtTut2;
     public GameObject txtTut3;
     public GameObject txtTut4;
-	//public GameObject txtTut5;
-
-//	public Text txtTut6;
-	public Text txtInstrT;
-	public Text txtInstr6;
-	public Text txtInstr7;
-	public Text txtInstr8;
-
-	public Text txtTut5;
+    public Text txtTut5;
     public Text txtJogo;
-	public Text txtMenu;
+    public Text txtMenu;
     public Text txtSair;
-    public Text txtHeader;
+    public Text txtHeader;                   //171009 errMsgs
     public Text txtExit;
-    public Text txtTeam;
-    public Text txtStartG;
-    public Text txtComP;
-    public Text txtSemP;
-    int errorNumber;
-    public string sequJMGiven;
-    private bool failedRegisterUserEntry;
+    public Text txtTeam;                     //180614 back to Team Selection
+    public Text txtStartG;                   //180629 start game
+    public Text txtComP;                     //180629 com pausa
+    public Text txtSemP;                     //180629 sem pausa
+
+    int errorNumber;                         //180105 to create a function
+    public string sequJMGiven;               //180418 to save the sequence given to the player in JM
+
+
+    //-------------------------------------------------------------------------------------
     static private GameFlowManager _instance;
     static public GameFlowManager instance
     {
@@ -150,16 +163,32 @@ public class GameFlowManager : MonoBehaviour
         UIManager.OnAnimationStarted -= OnAnimationStarted;
     }
 
+
+    //-------------------------------------------------------------------------------------
     void OnAnimationStarted()
     {
+        //-------------------------------------------------------
+        //float TimerControl = Time.time - StartTime;
+        //string mins = ((int)TimerControl/60).ToString("00");
+        //string segs = (TimerControl % 60).ToString("00");
+        //string milisegs = ((TimerControl * 100)%100).ToString ("00");
+         
+        //string TimerString = string.Format ("{00}:{01}:{02}", mins, segs, milisegs);
+         
+        //cronosIn.GetComponent<Text>().text = TimerString.ToString ();
+        //Debug.Log("Iniciou a animação"+TimerString.ToString ());
+
+        //-------------------------------------------------------
+        //Josi: 161212: independente do jogo, deixar so animations
         uiManager.btnsAndQuestion.SetActive(false);
-        frameChute.SetActive(false);  //sobra no JG
+        frameChute.SetActive(false);             //170112 sobra no JG
         uiManager.setaEsq.SetActive(false);
         uiManager.setaCen.SetActive(false);
         uiManager.setaDir.SetActive(false);
     }
 
 
+    //-------------------------------------------------------------------------------------
     void OnAnimationEnded()
     {
         if (!onVersusMode)
@@ -351,16 +380,35 @@ public class GameFlowManager : MonoBehaviour
                         }
                     }
                 }
+                //-------------------------------------------------------
+                //float TimerControl = Time.time - StartTime;
+                //string mins = ((int)TimerControl/60).ToString("00");
+                //string segs = (TimerControl % 60).ToString("00");
+                //string milisegs = ((TimerControl * 100)%100).ToString ("00");
+         
+                //string TimerString = string.Format ("{00}:{01}:{02}", mins, segs, milisegs);
+                //cronosOut.GetComponent<Text>().text = TimerString.ToString ();
+                //Debug.Log("Terminou a animação"+TimerString.ToString ());
+                //-------------------------------------------------------
+
+                //if(playing && uiManager.events.Count >= probCalculator.GetCurrentPlayLimit())    //Josi: era assim  
+                //				if (playing && uiManager.events.Count >= numPlays) {   //170106 events contem o log,que no caso do MD acumula os testes iniciais
+                //if (playing && (uiManager.eventCount >= numPlays)) {   //       eventCount contem o numero de jogadas de uma fase
                 if (playing && (uiManager.eventCount >= numPlays) && (PlayerPrefs.GetInt("gameSelected") != 5))
                 { //
                     uiManager.BtwnLvls = true;
-                    //Após esperar vai para betweenLevels
-                    StartCoroutine(waitTime(PlayerPrefs.GetInt("gameSelected"), probCalculator.animationTime(), 1));
+
+                    //170320 wait dependendo do tipo de animacao
+                    //170322 criada uma rotina para devolver o tempo das animacoes - pelo menos se concentra em um lugar
+                    StartCoroutine(waitTime(PlayerPrefs.GetInt("gameSelected"), probCalculator.animationTime(), 1)); //170307 param3: apos esperar vai para betweenLevels
                 }
             }
         }
     }
 
+
+    //----------------------------------------------------------------------------------------------------
+    //180312 to avoid repeat this code
     public void gameOver(int game)
     {
         //wait defended/ended animation to end before to shows up the gameOver screen
@@ -389,6 +437,9 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
+
+
+    //----------------------------------------------------------------------------------------------------
     //180321 to avoid repeat this code
     public void gameLover(int game)
     {
@@ -418,8 +469,10 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-    // Esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
-    // ou a de giveUP (2)
+
+    //------------------------------------------------------------------------------------------------------
+    //170205 esperar terminar a animacao da ultima jogada para aparecer a tela de betweenLevels (1)
+    //170307 ou a de giveUP (2) - virou public para chamar no UImanager.QuitGame
     public IEnumerator waitTime(int gameSelected, float time, int whatScreen)
     {
         yield return new WaitForSeconds(time);
@@ -430,14 +483,20 @@ public class GameFlowManager : MonoBehaviour
         }
         else
         {
+            //170327 ao clicar no Exit após waitTime de fim de animacao, deve ir para a tela de abandonar s/n
             if (whatScreen == 2)
             {
                 quitGameMenu.SetActive(true);
+
             }
             else
             {
                 if (whatScreen == 3)
                 {
+                    //170928 diferença de texto para Android
+                    //       lembrar que replace nao substitui a string inplace
+                    //171006 translation
+                    //171122 iOS (iPad/iPhone)
                     if ((Application.platform == RuntimePlatform.Android) ||
                         (Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
                     {
@@ -450,7 +509,7 @@ public class GameFlowManager : MonoBehaviour
                     bmGameOver.SetActive(true);
                 }
                 else
-                {  // Reach the assymptote before the total plays
+                {  //180321 gameLover: congratulations: reach the assymptote before the total plays ------
                     if (whatScreen == 4)
                     {
                         if ((Application.platform == RuntimePlatform.Android) ||
@@ -463,11 +522,12 @@ public class GameFlowManager : MonoBehaviour
                             bmGameLover.GetComponentInChildren<Text>().text = translate.getLocalizedValue("aperteBmGameLover").Replace("\\n", "\n");
                         }
                         bmGameLover.SetActive(true);
-                    }
+                    } //-----------------------------------------------------------------------------------------
                 }
             }
         }
     }
+
 
     void Start()
     {
@@ -477,33 +537,33 @@ public class GameFlowManager : MonoBehaviour
         intro.SetActive(true);
         introMenu.SetActive(true);
 
-		gameModeMenu.SetActive(false);
+        gameModeMenu.SetActive(false);
         betweenLevels.SetActive(false);
         gameCanvas.interactable = false;
         game.SetActive(false);
         quitGameMenu.SetActive(false);
-        bmGameOver.SetActive(false);
-        bmGameLover.SetActive(false);
-        scrTutorial.SetActive(true);
+        bmGameOver.SetActive(false);    //170925 start without gameOver
+        bmGameLover.SetActive(false);    //180321 start without gameLover
 
-		// Para permitir chamar rotinas do outro script
+
+        //171006 declarar a instance para permitir chamar rotinas do outro script
         translate = LocalizationManager.instance;
 
+        //171006 trocar os textos
+        //180626 manter a tela de tutorial com as 4 imagens/texto ate que venha uma sugestão do designer
+        //txtTut1.text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
+        //txtTut2.text = translate.getLocalizedValue("tut2").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
+        //txtTut3.text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
+        //txtTut4.text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
+        //txtTut5.text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");  //@@ SE APROVADO APAGAR
         //180627 from UiText to TMPro
         txtTut1.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut1").Replace("\\n", "\n");
         txtTut2.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut2").Replace("\\n", "\n");
         txtTut3.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut3").Replace("\\n", "\n");
         txtTut4.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut4").Replace("\\n", "\n");
-		// txtTut5.GetComponentInChildren<TMPro.TMP_Text>().text = translate.getLocalizedValue("tut5").Replace("\\n", "\n");
-
-		txtInstrT.text = translate.getLocalizedValue("menu").Replace("\\n", "\n"); 
-		txtInstr6.text = translate.getLocalizedValue("tut6").Replace("\\n", "\n");
-		txtInstr7.text = translate.getLocalizedValue("tut7").Replace("\\n", "\n");
-		txtInstr8.text = translate.getLocalizedValue("tut8").Replace("\\n", "\n");
 
         txtJogo.text = translate.getLocalizedValue("jogo");
-//        txtMenu.text = PlayerPrefs.GetString("teamSelected") + " : " + translate.getLocalizedValue("menu");
-		txtMenu.text = translate.getLocalizedValue("menu");
+        txtMenu.text = PlayerPrefs.GetString("teamSelected") + " : " + translate.getLocalizedValue("menu");
         txtSair.text = translate.getLocalizedValue("sair1");
         txtTeam.text = translate.getLocalizedValue("bckTeams");
 
@@ -511,14 +571,75 @@ public class GameFlowManager : MonoBehaviour
         txtComP.text = translate.getLocalizedValue("comP");                            //180629 com pausa
         txtSemP.text = translate.getLocalizedValue("semP");                            //180629 sem pausa
 
-        //180612 new buttons
-        menuAbout.GetComponentInChildren<Text>().text = translate.getLocalizedValue("sobre");       //.Replace("\\n", "\n");
-        //@@menuCredits.GetComponentInChildren<Text>().text = translate.getLocalizedValue("creditos");  //.Replace("\\n", "\n");
-        menuPrizes.GetComponentInChildren<Text>().text = translate.getLocalizedValue("premios");    //.Replace("\\n", "\n");
-        menuTutorial.GetComponentInChildren<Text>().text = translate.getLocalizedValue("tutor");    //.Replace("\\n", "\n");
+    //180612 new buttons
+    menuAbout.GetComponentInChildren<Text>().text = translate.getLocalizedValue("sobre");       //.Replace("\\n", "\n");
+    //@@menuCredits.GetComponentInChildren<Text>().text = translate.getLocalizedValue("creditos");  //.Replace("\\n", "\n");
+    menuPrizes.GetComponentInChildren<Text>().text = translate.getLocalizedValue("premios");    //.Replace("\\n", "\n");
+    menuTutorial.GetComponentInChildren<Text>().text = translate.getLocalizedValue("tutor");    //.Replace("\\n", "\n");
 
+        //170311 validar arq conf ======================================
         errorNumber = probCalculator.configValidation();
+        if (errorNumber != 0 || uiManager.diagSerial == 2)
+        { //180105 besides configvalidation, test if serial open in a defined port
+
+            //171009 translate frases de erro
+            //171122 iOS (iPad/iPhone) + change order to avoid negatives
+            txtHeader.text = translate.getLocalizedValue("errHeader");
+            if ((Application.platform == RuntimePlatform.Android) ||
+                (Application.platform == RuntimePlatform.IPhonePlayer) || (SystemInfo.deviceModel.Contains("iPad")))
+            {
+                txtExit.text = translate.getLocalizedValue("toqueErrExit");
+            }
+            else
+            {
+                txtExit.text = translate.getLocalizedValue("aperteErrExit");
+            }
+
+            errorMessages.SetActive(true);
+            txtMessage.text = string.Empty;
+            //---
+            //180105
+            if (errorNumber - 64 >= 0)
+            {
+                //txtMessage.text = "O parâmetro 'sendMarkersToEEG' aceita apenas os valores serial, parallel ou none)";
+                showErrorMessage("err05", 64);
+            }
+            //---
+            //180105
+            if (errorNumber - 32 >= 0 || uiManager.diagSerial == 2)
+            {
+                //txtMessage.text = "'sendMarkersToEEG' indica envio pela serial, mas falta indicar a porta em 'portEEGserial'";
+                showErrorMessage("err06", 32);
+            }
+            //---
+            if (errorNumber - 16 >= 0)
+            {
+                //txtMessage.text = "O parâmetro 'menus' está inexistente ou inválido (falta associar o primeiro item de menu ou este aparece mais de uma vez)";
+                showErrorMessage("err04", 16);
+            }
+            //---
+            if (errorNumber - 8 >= 0)
+            {
+                //txtMessage.text = "- Nos arquivos de configuração, o parâmetro ID está com o mesmo nome em fases diferentes - o ID deve ser único em cada um deles.";
+                showErrorMessage("err01", 8);
+            }
+            //---
+            if (errorNumber - 4 >= 0)
+            {
+                //txtMessage.text = "- Faltam parâmetros de configuração: executável do Jogo incompatível com a definição dos times."; 
+                showErrorMessage("err02", 4);
+            }
+            //---
+            if (errorNumber - 2 >= 0)
+            {
+                //txtMessage.text = "- O envio de marcadores ao EEG através da porta paralela só está válido para ambientes Windows 32bits (parâmetro sendMarkersToEEG)."; 
+                showErrorMessage("err03", 2);
+            }
+            waitingKeyToExit = true;  //aparece o quadro de erros e aguarda tecla para sair;
+        }
+
         //=============================================================
+
 
         //Josi; onClick nao funciona no betweenLevels; ideia em https://docs.unity3d.com/ScriptReference/UI.Button-onClick.html
         Button btnNextLevel = nextLevel.GetComponent<Button>();
@@ -554,6 +675,13 @@ public class GameFlowManager : MonoBehaviour
         Button btnAbout = menuAbout.GetComponent<Button>();
         btnAbout.onClick.AddListener(showAbout);
 
+        //================
+        //170302 definir MENU DE JOGOS com base no primeiro arquivo de configuracao
+        //170303 fixar machines[0] para o menu: somente estah arquivado aqui (depois de implementar a leitura do param no 1o arq conf)
+        //170303 *static members* don't belong to a specific instance, the variable only exists once and is shared between all instances of that class
+
+        //171006 reconhecer o locale para decidir sobre os titulos dos jogos no menu
+        string locale = translate.getLocalizedValue("locale");
         string gameN;
 
         //171130 refactoring the cellSizes to adapt to iPad (strategy found on Internet)
@@ -577,11 +705,15 @@ public class GameFlowManager : MonoBehaviour
                     GameObject go = Instantiate(btnPrefab);
                     go.transform.SetParent(menuJogos.transform);
 
+                    //171006 se idioma pt_br fica o title do param menu, dado que o user pode alterar,
+                    //       senao, pegar o texto do arquivo de locale
+                    //171113 title sempre coletado do arquivo de locale
                     gameN = "game" + ProbCalculator.machines[0].menuList[i].game;
                     go.GetComponentInChildren<Text>().text = translate.getLocalizedValue(gameN).Replace("\\n", "\n");
                     go.name = translate.getLocalizedValue(gameN);
                     go.GetComponentInChildren<Text>().color = new Color32(255, 255, 255, 220); //white without alpha
-					go.GetComponentInChildren<Text>().resizeTextForBestFit = true;
+                                                                                               //go.GetComponentInChildren<Text> ().fontSize = 10;
+                    go.GetComponentInChildren<Text>().resizeTextForBestFit = true;
 
                     //180523 Insert menu icon into the gameMenu: AQ 1;JG 2;AR 4;JM 5 (3 ficou sem uso)
                     GameObject menuIcon = Instantiate(menuIconList[ProbCalculator.machines[0].menuList[i].game - 1]);
@@ -662,14 +794,12 @@ public class GameFlowManager : MonoBehaviour
         bmGameLover.SetActive(false);      //Amparo, when gameLover, goes out using "yes,abandon", and these screens stayed fixed; corrected!
         bmGameOver.SetActive(false); 
         uiManager.userAbandonModule = true; //to guarantee to save results
-        if (Application.platform == RuntimePlatform.WebGLPlayer)
-        {
-            Application.OpenURL("https://game.numec.prp.usp.br");
-            return;
-        }
         GoToIntro();
     }
 
+
+    //---------------------------------------------------------------------------------------
+    //161227 Tela de menu; vem para cá ao terminar os níveis ou no "sim, quero abandonar este jogo"
     public void GoToIntro()
     {
         if (uiManager.userAbandonModule)    //180618 was: if(game.activeInHierarchy), but now, many options come to GoToIntro...
@@ -737,13 +867,20 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-    // Ninguém chama esta function (falta fazer o configurador)
+
+    //---------------------------------------------------------------------------------------
+    //Josi: ninguém chama esta function (falta fazer o configurador)
     public void ToConfigurations()
     {
+        //PlayerPrefs.DeleteAll();
+        //Application.LoadLevel("Configurations");
         SceneManager.LoadScene("Configurations");
     }
 
-    public void NewGame(int gameSelected)
+
+
+    //---------------------------------------------------------------------------------------
+    public void NewGame(int gameSelected) //Josi: 161214 agora a funcao tem um parametro para definir as telas do jogo
     {
         useTimer = false;
 
@@ -790,13 +927,6 @@ public class GameFlowManager : MonoBehaviour
     //---------------------------------------------------------------------------------------
     public void StartGame(int gameSelected)       //Josi: 161209: incluir parâmetro para o jogo selecionado
     {
-        if (Application.platform == RuntimePlatform.WebGLPlayer)
-        {
-            string content = "nickname: " + PlayerInfo.alias + "; entry date: " +
-                             DateTime.Now.ToString("yyMMdd_HHmmss") + "\n"; 
-            StartCoroutine(ServerOperations.instance.LogUserActivity("upload_file.php", content, uiManager));
-        }
-
         //180524
         uiManager.initKeyboardTimeMarkers();
 
@@ -919,8 +1049,8 @@ public class GameFlowManager : MonoBehaviour
                 aperteTecla.SetActive(false);                //BM msg aperteTecla
                 frameChute.SetActive(false);                 //BM: contorno amarelo para as setas de direcao
                 mdFirstScreen.SetActive(false);               //MD inicio
-                firstScreen = false; 
-               // mdTutorial.SetActive (false);
+                firstScreen = false;                          //MD
+                                                              //mdTutorial.SetActive (false);
 
                 //170622 agora existe o param showHistory para indicar se é para mostrar ou nao o historico na fase
                 if (probCalculator.getCurrentShowHistory())
@@ -1010,15 +1140,17 @@ public class GameFlowManager : MonoBehaviour
         }
 
 
-//        //180123 EEG valid for all game modules, not only JG
-//        if (probCalculator.getSendMarkersToEEG() != "none")
-//        {
-//            uiManager.sendStartMoveToSerial();
-//        }
+        //180123 EEG valid for all game modules, not only JG
+        if (probCalculator.getSendMarkersToEEG() != "none")
+        {
+            uiManager.sendStartMoveToSerial();
+        }
 
         uiManager.BtwnLvls = false;
         playing = true;
     }
+
+
 
     //---------------------------------------------------------------------------------------
     //170125 Jogo da Memória: experimentador passa a Jogar jogo do Goleiro fase 3 (com modificacoes)
@@ -1062,7 +1194,7 @@ public class GameFlowManager : MonoBehaviour
 
 
     //---------------------------------------------------------------------------------------
-    public void ShowInBetween(int gameSelected)
+    public void ShowInBetween(int gameSelected)   //Josi: 161226: parametro jogo jogado
     {
         playing = false;
         betweenLevels.SetActive(false); //171220
@@ -1166,23 +1298,24 @@ public class GameFlowManager : MonoBehaviour
             gameCanvas.interactable = false;
 
             //161207: passa a gravar ao chegar na tela betweenLevels, nao ao Avancar
-            uiManager.SendEventsToServer(gameSelected);
+            uiManager.SendEventsToServer(gameSelected);  //170109
+
         }
         else
         {
-            uiManager.SendEventsToServer(gameSelected);
+
+            //Josi: 161207: passa a gravar ao chegar na tela betweenLevels, nao ao Avancar; ultimo nivel eh um caso especial
+            uiManager.SendEventsToServer(gameSelected);   //170109
+
             uiManager.ResetEventList(gameSelected);
             game.SetActive(true);
             intro.SetActive(false);
-            if (Application.platform != RuntimePlatform.WebGLPlayer)
-            {
-                betweenLevels.SetActive(true);
-            }
+            betweenLevels.SetActive(true);
 
             //170927 novo param em btLevelController para precisar o nome do jogo
             int bmMode = (probCalculator.getMinHitsInSequence() > 0) ? 2 : 1;
 
-            btLevelsController.EndGame(gameSelected, bmMode);
+            btLevelsController.EndGame(gameSelected, bmMode);    //170927 novo param bmMode para AQ/AR minHits ou minSequ
             gameCanvas.interactable = false;
         }
     }
@@ -1242,55 +1375,64 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
+
+    //---------------------------------------------------------------------------------------
+    //Josi: botao SAIR na tela inicial de menu de jogos
+    //180628 changed by Exit Icon: betweenLevels screen
+    //public void Sair()
+    //{
+    //    //170322 unity3d tem erro ao usar application.Quit
+    //    //       workaround: http://unity3dtrenches.blogspot.com.br/2015/10/unity-3d-compiled-game-freezes-or.html
+    //    //Application.Quit ();
+    //    if (!Application.isEditor)
+    //    {  //if in the editor, this command would kill unity...
+    //        if (Application.platform == RuntimePlatform.WebGLPlayer)
+    //        {
+    //            Application.OpenURL(PlayerPrefs.GetString("gameURL"));
+    //        }
+    //        else
+    //       {
+    //            //171121 not working kill()
+    //            if ((Application.platform == RuntimePlatform.IPhonePlayer) ||
+    //                (SystemInfo.deviceModel.Contains("iPad")))
+    //            {           //try #IF UNITY_IOS
+    //                Application.Quit();
+    //            }
+    //            else
+    //            {
+    //                System.Diagnostics.Process.GetCurrentProcess().Kill();
+    //            }
+    //        }
+    //    }
+    //}
+
+
+    //---------------------------------------------------------------------------------------
     public bool playing = false;  //180402 public now: needed to avoid capture keys when gameOver/gameLover active
     public void Update()
     {
-        if (uiManager.sentFile)
-        {
-            if (uiManager.www.error == null)
-            {
-                Debug.Log("www done!");
-                betweenLevels.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("www.error: " + uiManager.www.error);
-                uiManager.showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtFailedSendPlayData").Replace("\\n", "\n");
-            }
-            uiManager.sentFile = false;
-        }
-
-        if (ServerOperations.instance.postDone)
-        {
-            if (ServerOperations.instance.www.error == null)
-            {
-                Debug.Log("www done (register user entry)!");
-                uiManager.showMsg.GetComponent<Text>().text = null;
-            }
-            else
-            {
-                Debug.Log("www.error (register user entry): " + ServerOperations.instance.www.error);
-                uiManager.showMsg.GetComponent<Text>().text = translate.getLocalizedValue("txtFailedRegisterUserEntry").Replace("\\n", "\n");
-                uiManager.failedRegisterUserEntry = true;
-            }
-            ServerOperations.instance.postDone = false;
-        }
-
+        //Josi: outra maneira de Sair, sem clicar no botão: apertar a tecla ESCAPE
+        //      https://docs.unity3d.com/ScriptReference/Application.Quit.html
+        //
         if (Input.GetKey("escape"))
         {
             translate.clickSair();
+
         }
 
-        //Trocado por "se nao pausado, pegaInput" dado que nao funcionou pegar o current;
+        //170915 trocado por "se nao pausado, pegaInput" dado que nao funcionou pegar o current;
+        //       algum dia deve-se  identar todo este jogo...
         if (!uiManager.pausePressed)
         {
 
             //170222 pegar tecla do "aperte qualquer tecla para continuar" após descanso
             if (uiManager.aguardandoTeclaPosRelax)
             {
-                if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))
-                {
+                if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))  //they want to stop the game in mobiles?!
+                {  //170223 aceitar tecla especifica para não confundir com as do jogo e a msg passar em branco
+                   //if (Input.anyKey) {               //para aceitar qualquer tecla
                     uiManager.aguardandoTeclaPosRelax = false;
+                    //uiManager.estouNoPegaQualquerTecla = true;  //170110 para aceitar qualquer tecla, inclusive as do jogo
                     relaxTime.SetActive(false);
 
                     endRelaxTime = Time.realtimeSinceStartup;
@@ -1306,12 +1448,19 @@ public class GameFlowManager : MonoBehaviour
             if (waitingKeyToExit)
             {
                 if (Input.anyKey || Input.GetMouseButtonDown(0))
-                {
+                {       //para aceitar qualquer tecla!
+                        //170322 unity3d tem erro ao usar application.Quit
+                        //       workaround: http://unity3dtrenches.blogspot.com.br/2015/10/unity-3d-compiled-game-freezes-or.html
+                        //Application.Quit ();
+
+                    //180105 the function verifies if serial isOpen before close
+                    //uiManager.closeSerialPort();
+
                     if (!Application.isEditor)
                     {  //if in the editor, this command would kill unity...
                         if (Application.platform == RuntimePlatform.WebGLPlayer)
                         {
-                            Application.OpenURL("https://game.numec.prp.usp.br");
+                            Application.OpenURL(PlayerPrefs.GetString("gameURL"));
                         }
                         else
                         {
@@ -1330,16 +1479,28 @@ public class GameFlowManager : MonoBehaviour
                 }
             }
 
+            //170925 take "spacebar" after "game over" (better keep separated from gameLover...)
+            //       Input.GetMouseButtonDown(0) simulates a tap on mobile devices
             if (waitingKeyGameOver)
             {
                 if (Input.GetKeyDown("space") || Input.GetMouseButtonDown(0))
                 {  //180620 aceitar tecla especifica para não confundir com as do jogo e a msg passar em branco
+                   //if (Input.anyKey) {               //para aceitar qualquer tecla
                     waitingKeyGameOver = false;
                     bmGameOver.SetActive(false);
+ //@@                   if (PlayerPrefs.GetInt("gameSelected") == 2)
+ //@@                   {
                         ShowInBetween(PlayerPrefs.GetInt("gameSelected"));
+ //@@                   }
+ //@@                   else
+ //@@                   {
+ //@@                       GoToIntro();  //180627 in this way, the player can't see the betweenLevels screen, creating a different protocol
+ //@@                   }
                 }
             }
 
+            //180321 take "spacebar" after "game lover"
+            //       Input.GetMouseButtonDown(0) simulates a tap on mobile devices
             if (waitingKeyGameLover)
             {
                 if (Input.GetKeyDown("space")  || Input.GetMouseButtonDown(0))
@@ -1347,7 +1508,14 @@ public class GameFlowManager : MonoBehaviour
                    //if (Input.anyKey) {                //para aceitar qualquer tecla
                     waitingKeyGameLover = false;
                     bmGameLover.SetActive(false);
+ //@@                   if (PlayerPrefs.GetInt("gameSelected") == 2)
+ //@@                   {
                         ShowInBetween(PlayerPrefs.GetInt("gameSelected"));
+ //@@                   }
+ //@@                   else
+ //@@                   {
+ //@@                   GoToIntro();  //180627 in this way, the player can't see the betweenLevels screen, creating a different protocol
+ //@@               }
                 }
             }
         }
@@ -1433,10 +1601,17 @@ public class GameFlowManager : MonoBehaviour
         SceneManager.LoadScene("Configurations");
     }
 
+
+
+    // -----------------------------------------------------------------------------------------------------
+    // before, this was a question after inform playerAlias and was used for all games played in the same session
+    // now, it is a option above the game menu
+    // 180627 StartGamePaused yes or no (COM pausa/SEM pausa (default)
     public void startGamePaused(bool startPaused)
     {
         //170913 catar o parametro que indica se é para iniciar os jogos com pausa ou não
         PlayerPrefs.SetInt("startPaused", startPaused ? 1 : 0); //menu "Jogar com pausa" selecionado
     }
+
 
 }
