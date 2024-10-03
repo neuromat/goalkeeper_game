@@ -37,7 +37,7 @@
 "aperteIniciar":"¡Pulsa una tecla\npara empezar!",
 "toqueRelax":"¡Intervalo en el Juego del Portero!\nPausa rápida para descanso.\n\n\nToque la pantalla\npara continuar...",
 "aperteRelax":"¡Intervalo en el Juego del Portero!\nPausa rápida para descanso.\n\n\nApriete la barra espaciadora\npara continuar...",
-"concordaAcerto":" acierto em ";
+"concordaAcerto":" acierto em ",
 "concordaAcertos":" aciertos em ",
 "concordaJogada":" jugada (",
 "concordaJogadas":" jugadas (",
@@ -87,7 +87,7 @@
 "doc":"Documentación",
 "txtWhat":"Juego del Portero\nQué es\n\nSoftware de código abierto, desarrollado por NeuroMat, Amparo y Abrazo, con el objetivo de estudiar las estrategias de funcionamiento del cerebro, a partir de los tiempos y de las decisiones a lo largo de las fases del juego.\n\nHay un Término de Consentimiento que permite que sus respuestas no sean recolectadas, pero, se destaca que no hay como reconocer individuos, a menos que el JG esté integrado al NeuroScience Experimentos System (NES).\n\nEm NES es posible registrar datos personales, clínicos, geográficos, de respuestas a cuestionarios, y éstos, ser integrados a los resultados del Juego del Portero.",
 "txtSoftware":"Juego del Portero\nSoftwares utilizados en el desarrollo:\n\nUnity3D Personal Edition (C#)\nJsonFx\nXcode\nPostgreSQL/pgAdmin\nGNU Image Manipulation Program (GIMP)\nInkScape",
-"txtDoc":"Juego del Portero\nDocumentación\n\nDisponible en GitHub Goleiro Wiki en\n<link="docJG">https://github.com/neuromat/goleiro-godot/wiki</link>",
+"txtDoc":"Juego del Portero\nDocumentación\n\nDisponible en GitHub Goleiro Wiki en\n<link=\"docJG\">https://github.com/neuromat/goleiro-godot/wiki</link>",
 "txtAbort":"Como saliste del modo de pantalla completa, el juego fue abortado.\nHaga clic en el icono Salir\no cierre la pestaña/ventana del navegador.",
 "txtSendingPlayData":"Por favor no cierre la pestaña del navegador.\nEnviando datos al servidor...",
 "txtFailedSendPlayData":"No fue possible enviar los datos del juego.",

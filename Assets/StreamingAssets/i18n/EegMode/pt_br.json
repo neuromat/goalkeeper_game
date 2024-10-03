@@ -1,0 +1,11 @@
+{
+    "aperteRelax": "Intervalo no Jogo do Goleiro!\nPausa para descanso!\n\n\nAperte a barra de espaços\npara continuar!",
+    "menu": "Menu de Jogos",
+    "sair1": "Sair (ou ESC)",
+    "tcle": "\nTERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO\n\n\nEste jogo foi desenvolvido pelo CEPID Neuromat com o objetivo de investigar o aprendizado de uma sequência de eventos.\n\nSeus dados pessoais (sexo, idade, lateralidade manual e familiaridade com jogos virtuais), tempo de resposta e quantidade de acertos serão, caso coletados, utilizados e armazenados em um banco de dados público, ficando disponíveis para futuras pesquisas científicas. A equipe responsável pela gestão deste banco de dados trabalha para proteger as informações coletadas contra o acesso e/ou uso indevido por terceiros.\n\nInformamos também que este experimento não apresenta risco e que é garantido a você, sem sofrer qualquer penalidade, o direito de não aceitar gravar seus dados.\n\nAlém disso, é importante notar que você não receberá qualquer tipo de recompensa financeira.",
+    "toqueRelax": "Intervalo no Jogo do Goleiro!\nPausa para descanso!\n\n\nToque na tela\npara continuar!",
+    "tut1": "Clique nas setas para\ndecidir em qual direção\no goleiro deve pular",
+    "tut2": "Em cada fase\no batedor irá adotar\numa nova estratégia",
+    "tut3": "Histórico das direções\ndos últimos chutes",
+    "tut5": "Você é um goleiro na hora do pênalti.\n\nQuando aparecem as setas de direção, você deve decidir rapidamente para onde pular (esquerda, direita ou centro) antes da bola sair.\n\nAtenção: cada batedor tem uma estratégia para escolher onde vai chutar. Mas cuidado... ele pode tentar te enganar!"
+}

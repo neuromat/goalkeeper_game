@@ -441,9 +441,9 @@ public class ProbCalculator : MonoBehaviour
 					} else {
 						//Josi: jogada probabilistica - já estava assim
 						//      com base no random gerado, define onde fazer o sorteio (no evento 0, 1 ou 2)
-						float r = UnityEngine.Random.Range (0.0f, 1.0f);
+						float r = UnityEngine.Random.Range (0.0f, 1.0f);  //Josi: como estah float, vai gerar numeros entre 0 e 1 inclusive: https://docs.unity3d.com/ScriptReference/Random.Range.html
 
-						ehRandomKick = true;
+						ehRandomKick = true;  //170215
 
 						result = "0";
 
@@ -459,7 +459,9 @@ public class ProbCalculator : MonoBehaviour
 				
 					int i = -1;
 
-					// Josi: garantir comecar de contexto
+					//Josi: garantir comecar de contexto
+					//      @@ Insert é menos eficiente do que Add, mas trocar vai alterar muita coisa, melhor deixar para a versao Godot
+					//      @@ Também penso que a cada nivel: transitionHistory.Clear() para restartar a history...
 					if (transitionHistory.Count == 0) {
 						for (int j = 0; j < currentState.path.Length; j++) {
 							transitionHistory.Insert (0, currentState.path [j].ToString ());
@@ -845,6 +847,7 @@ public class ProbCalculator : MonoBehaviour
 		currentState = t.states[r];
 	}
 
+// <<<<<<< HEAD
 	static bool inited = false;
 	public void Start () 
 	{
@@ -860,13 +863,47 @@ public class ProbCalculator : MonoBehaviour
 			currentMDSequIndex = 0;
 			currentJGSequIndex = 0;
 
+// =======
+//
+// 	//------------------------------------------------------------------------------------
+// 	static bool inited = false;	
+// 	public void Start () 
+// 	{
+// 		//Josi ** sai daqui e entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
+// 		//currentStateMachineIndex = 0;
+// 		StateMachine tmp;
+// 		if (!inited) {
+//
+//             //180614 need this case player backToMenuTeams
+//             machines.Clear();
+//
+//
+//             //Josi ** entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
+//             currentStateMachineIndex = 0;
+//
+// 			currentSequOtimaIndex = 0; //Josi: ponteiro que le a sequ otima no JG
+// 			currentBMSequIndex = 0;    //Josi: ponteiro que le a sequ de chutes na BM
+// 			currentMDSequIndex = 0;    //Josi: 161212: pointer para a sequ do memoriaDeclarativa
+// 			currentJGSequIndex = 0;    //170216
+//
+// 			// carrega as árvores caso ainda não tenham sido carregadas
+// >>>>>>> gk-eeg-repo/main
 			if (LoadedPackage.loaded == null)
 				LoadStages.LoadTreePackageFromResources ();
 
 			int i = 0;
 			foreach (string s in LoadedPackage.loaded.stages) {
-				if ((i == 0) && !configFileIncompatibleWithVersion) {   // detected error in other config file
-					if (s.Contains ("limitValue") || s.Contains ("zeroPhaseJG")) {
+				//se eh o primeiro arquivo (tem param menus) e ainda nao detectou IncompatibleVersion
+				//170921 new params for september/17 version
+				//170922 if  there is a missing parameter in some file, error
+				//180104 param portEEGserial after v180102
+				//180326 param minHitsInSequence for JG + mdMaxPlays to stop JM in some play
+				//180328 param user input defense keys
+				//180402 param alternative for playPause button
+				//180410 param attentionPoint and attentionDiameter
+				//180413 param speedGKAnim
+				if ((i == 0) && !configFileIncompatibleWithVersion) {   //detected error in other config file
+					if (s.Contains ("limitValue") || s.Contains ("zeroPhaseJG")) {  //180328 params removed (obsolete)
 						configFileIncompatibleWithVersion = true;
 					} else {
 						if (!(s.Contains ("menus") && s.Contains ("showHistory")

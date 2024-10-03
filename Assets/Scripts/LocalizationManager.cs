@@ -17,6 +17,7 @@ using UnityEngine.UI;
 
 public class LocalizationManager : MonoBehaviour {
 
+	//171005 to make this module available to all programs
 	static private LocalizationManager _instance;
 	static public LocalizationManager instance
 	{	get
@@ -29,6 +30,7 @@ public class LocalizationManager : MonoBehaviour {
 	}
 
 
+//	private GameObject localizationScreen;               //171004 language selection screen
 	private string missingTextString = "@";              //171004 missing key msgCalledInTheCode
 	public static Dictionary<string, string> localizedText = new Dictionary<string, string>();
 	private bool isRunning = false;                      //171023 not sure if it is necessary...
@@ -102,15 +104,24 @@ public class LocalizationManager : MonoBehaviour {
 			Debug.LogError (">>> Cannot find localization file StreamingAssets" + "/i18n/" + language + ".json");
 		}
 
+        //read or not, call up the team selection screen
+        //180625 GameDevIME suggests intercalate TCLE screen here  - SceneManager.LoadScene("Configurations");
         SceneManager.LoadScene("TCLE");
     }
 		
+
+	// -----------------------------------------------------------------------------------------------------
+	// routine used by all programs 
+	// returns the key translation to the selected language
     public string getLocalizedValue(string key)
     {	
 		if (localizedText.ContainsKey (key)) return localizedText [key];
 		else return missingTextString;
     }
 		
+
+	// -----------------------------------------------------------------------------------------------------
+	//180115 ESC button
 	public void Update()
 	{
 		if (Input.GetKey ("escape")) {
@@ -118,25 +129,33 @@ public class LocalizationManager : MonoBehaviour {
 		}
 	}
 
+
+
+    // -----------------------------------------------------------------------------------------------------
+    //170407 Return button
+    //180627 Centralizes here goes to "where"
     public void clickVoltar(int where)
     {
         if (where == 1)
         {
             SceneManager.LoadScene("About");
         }
-        else {
+        else { //where==2
             SceneManager.LoadScene("MainScene");
         }
         
     }
 
+
+    // -----------------------------------------------------------------------------------------------------
+    //171025 Exit button
     public void clickSair ()
     {   //170322 unity3d tem erro ao usar application.Quit
         //       workaround: http://unity3dtrenches.blogspot.com.br/2015/10/unity-3d-compiled-game-freezes-or.html
         //Application.Quit ();
         if (!Application.isEditor) {  //if in the editor, this command would kill unity...
 			if (Application.platform == RuntimePlatform.WebGLPlayer) {
-				Application.OpenURL("https://game.numec.prp.usp.br");
+				Application.OpenURL(PlayerPrefs.GetString("gameURL"));
             } else {
 				//171121 not working kill()
 				if ((Application.platform == RuntimePlatform.IPhonePlayer) || 
