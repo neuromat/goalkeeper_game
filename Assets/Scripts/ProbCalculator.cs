@@ -445,6 +445,8 @@ public class ProbCalculator : MonoBehaviour
 
 						ehRandomKick = true;  //170215
 
+						//gerando
+						//print(">>>> Random:"+r);
 						result = "0";
 
                         if (r > currentState.GetProbEvent0() && r < currentState.GetProbEvent0() + currentState.GetProbEvent1()) {
@@ -467,8 +469,9 @@ public class ProbCalculator : MonoBehaviour
 							transitionHistory.Insert (0, currentState.path [j].ToString ());
 						}
 					}
+					//logString += " estado anterior: " + currentState.path;    //Josi: comentado
 
-					// Josi: busca o contexto da arvore, a partir da folha em maos e juntando a folha anterior, com base na altura da arvore
+					//Josi: busca o contexto da arvore, a partir da folha em maos e juntando a folha anterior, com base na altura da arvore
 					while (i < machines [currentStateMachineIndex].depth) {
 						if (i >= 0)
 							result = transitionHistory [i] + result;
@@ -479,11 +482,16 @@ public class ProbCalculator : MonoBehaviour
 						}
 					}
 		
+					//logString += " estado atual: "+currentState.path+" resultado: "+ bkpResult +"\n";    //Josi: comentado	
+					//print ("Estado atual: "+currentState.path);                                          //Josi: comentado
+		
 					transitionHistory.Insert (0, bkpResult);
 				
 					return System.Convert.ToInt16 (bkpResult);
-				}
-			}
+				} //else ler da arvore
+			} //fim JG
+
+//		//-----------------------------------------------------------------------------------------------------------
 			else 
 			{
 				if (gameSelected == 3)      //MD
@@ -838,7 +846,8 @@ public class ProbCalculator : MonoBehaviour
 	}
 
 
-	// Ninguém chama este trecho
+	//------------------------------------------------------------------------------------
+	//Josi: ninguem chama este trecho
 	void SetInitState(JsonInput t)
 	{
 		int max = t.states.Length;
@@ -847,47 +856,29 @@ public class ProbCalculator : MonoBehaviour
 		currentState = t.states[r];
 	}
 
-// <<<<<<< HEAD
-	static bool inited = false;
+
+	//------------------------------------------------------------------------------------
+	static bool inited = false;	
 	public void Start () 
 	{
+		//Josi ** sai daqui e entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
+		//currentStateMachineIndex = 0;
 		StateMachine tmp;
 		if (!inited) {
 
-            // Need this in case of player backToMenuTeams
+            //180614 need this case player backToMenuTeams
             machines.Clear();
 
-            currentStateMachineIndex = 0;
-			currentSequOtimaIndex = 0;
-			currentBMSequIndex = 0;
-			currentMDSequIndex = 0;
-			currentJGSequIndex = 0;
 
-// =======
-//
-// 	//------------------------------------------------------------------------------------
-// 	static bool inited = false;	
-// 	public void Start () 
-// 	{
-// 		//Josi ** sai daqui e entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
-// 		//currentStateMachineIndex = 0;
-// 		StateMachine tmp;
-// 		if (!inited) {
-//
-//             //180614 need this case player backToMenuTeams
-//             machines.Clear();
-//
-//
-//             //Josi ** entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
-//             currentStateMachineIndex = 0;
-//
-// 			currentSequOtimaIndex = 0; //Josi: ponteiro que le a sequ otima no JG
-// 			currentBMSequIndex = 0;    //Josi: ponteiro que le a sequ de chutes na BM
-// 			currentMDSequIndex = 0;    //Josi: 161212: pointer para a sequ do memoriaDeclarativa
-// 			currentJGSequIndex = 0;    //170216
-//
-// 			// carrega as árvores caso ainda não tenham sido carregadas
-// >>>>>>> gk-eeg-repo/main
+            //Josi ** entra para o trecho do "nao iniciado"; irah entrar novamente com a variavel somada
+            currentStateMachineIndex = 0;
+
+			currentSequOtimaIndex = 0; //Josi: ponteiro que le a sequ otima no JG
+			currentBMSequIndex = 0;    //Josi: ponteiro que le a sequ de chutes na BM
+			currentMDSequIndex = 0;    //Josi: 161212: pointer para a sequ do memoriaDeclarativa
+			currentJGSequIndex = 0;    //170216
+
+			// carrega as árvores caso ainda não tenham sido carregadas
 			if (LoadedPackage.loaded == null)
 				LoadStages.LoadTreePackageFromResources ();
 
@@ -927,6 +918,7 @@ public class ProbCalculator : MonoBehaviour
 				}
 			}
 
+			//inited = true;           //180614 now, it is possible backToMenuTeams
             currentSequOtimaIndex = 0; //Josi garantir ponteiro da sequOtima
 			currentBMSequIndex = 0;    //Josi: ponteiro que le a sequ de chutes na BM
 			currentMDSequIndex = 0;    //Josi: 161212: pointer para a sequ do memo Declarativa
@@ -938,11 +930,12 @@ public class ProbCalculator : MonoBehaviour
 			saveOriginalMDsequ = machines [currentStateMachineIndex].mdSequ;
 		}
 
-		// Josi: todo o trecho abaixo estaria melhor em outro ponto do programa, onde se soubesse qual jogo será selecionado
-		// dado que se refere especificamente ao JG no modo ler árvore - como tenho prazo e nao atrapalha, fica ai
+		//Josi: todo o trecho abaixo estaria melhor em outro ponto do programa, onde se soubesse qual jogo será selecionado
+		//      dado que se refere especificamente ao JG no modo ler árvore - como tenho prazo e nao atrapalha, fica ai
 		int max = machines[currentStateMachineIndex].states.Count;
 
 		// Define o início da sequência aleatória.  Sempre fixa.
+		//Random.InitState(42);  //manter apenas uma, no loadStages
 		int index = UnityEngine.Random.Range(0, max);
 
 		string key = machines[currentStateMachineIndex].dicKeys[index];

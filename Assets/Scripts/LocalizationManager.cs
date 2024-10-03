@@ -1,18 +1,17 @@
-/**
- * Module written by Josi Perez <josiperez.neuromat@gmail.com> (out/17)
- *
- * Responsible for loading localization files from StreamingAssets/i18n
- * Name <locale>.json (example: en_us.json, pt_br.json)
- * Manual reading to keep small files, using pairs "msgCalledInTheCode":"translation"
- * (example: "locale":"en_us") 
- */
-
+/**************************************************************************************/
+//  Module written by Josi Perez <josiperez.neuromat@gmail.com> (out/17)
+//
+//	Responsible for loading localization files from StreamingAssets/i18n
+//  Name <locale>.json (example: en_us.json, pt_br.json)
+//  Manual reading to keep small files, using pairs "msgCalledInTheCode":"translation"
+//  (example: "locale":"en_us")
+/**************************************************************************************/
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-using System;
-using UnityEngine.UI;
+using System.Collections;                //171005 IEnumerator
+using System.Collections.Generic;        //171005 Dictionary
+using UnityEngine.SceneManagement;       //171005 LoadScene
+using System;                            //180130 [serializable] json myIP
+using UnityEngine.UI;                    //180627 Text
 
 
 public class LocalizationManager : MonoBehaviour {
@@ -83,6 +82,7 @@ public class LocalizationManager : MonoBehaviour {
 		if (!string.IsNullOrEmpty (www.error)) {
 			error = true;
 		}
+			
 
 		//171020 if the file does not exist send msg to the output.txt and it does not stop the game,
 		//       but all translatable texts will appear as @ - as defined above (arbitrary)
@@ -217,5 +217,6 @@ public class LocalizationManager : MonoBehaviour {
 			}
 		}
 	}
+
 
 }
