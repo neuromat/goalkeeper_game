@@ -1,0 +1,22 @@
+{"id":"CT-01",
+ "limitPlays":"102",
+ "choices":"3",
+ "depth":"2",
+ "readSequ":"true",
+ "sequ": "011012012012012012011012012012011012012012011011012012012012011012011011012012012011012012012012012012",
+ "sequR":"nnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnYnnY",
+ "states": [
+    { "path": "0", "probEvent0":  "0", "probEvent1": "1"},
+    { "path": "01", "probEvent0": "0", "probEvent1": "0.25"},
+    { "path": "11", "probEvent0": "1", "probEvent1": "0"},
+    { "path": "2", "probEvent0":  "1", "probEvent1": "0"}
+    ],
+ "minHitsInSequence":"0",
+ "animationTypeJG":"none",
+ "animationTypeOthers":"short",
+ "scoreboard":"true",
+ "finalScoreboard":"long",
+ "playsToRelax":"51",
+ "showHistory":"false",
+ "speedGKAnim":"1.3"
+}
