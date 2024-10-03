@@ -24,11 +24,11 @@
  "mdMaxPlays":"20",
  "animationTypeJG":"short",
  "animationTypeOthers":"short",
- "scoreboard":"true",
- "groupCode":"G4-D1",
+ "scoreboard":"false",
+ "groupCode":"WEB",
  "finalScoreboard":"long",
  "playsToRelax":"0",
- "showHistory":"true",
+ "showHistory":"false",
  "sendMarkersToEEG":"none",
  "portEEGserial":"COM4",
  "showPlayPauseButton":"false",
@@ -42,12 +42,18 @@
  "attentionColorStart":"#FFF",
  "attentionColorCorrect":"#00F",
  "attentionColorWrong":"#333",
- "speedGKAnim":"1.0",
+ "speedGKAnim":"2.0",
+ "portSendData":"0xbd00",
+ "timeFaixa0":"0.1",
+ "timeFaixa1":"0.1",
+ "timeFaixa2":"0.1",
+ "timeFaixa3":"0.1",
+ "timeFaixa4":"0.1",
  "menus":[
     {"game":"1","title":"Aquecimento",                 "sequMenu":"1"},
     {"game":"2","title":"Jogo do Goleiro",             "sequMenu":"2"},
-    {"game":"3","title":"Memória Declarativa",         "sequMenu":"0"},
-    {"game":"4","title":"Aquecimento contra o relógio","sequMenu":"0"},
-    {"game":"5","title":"Jogo da Memória",             "sequMenu":"0"}
+    {"game":"3","title":"Memória Declarativa",         "sequMenu":"3"},
+    {"game":"4","title":"Aquecimento contra o relógio","sequMenu":"4"},
+    {"game":"5","title":"Jogo da Memória",             "sequMenu":"5"}
     ]
 }
