@@ -9,3 +9,20 @@ A collection of scripts that help maintaining the test documents up-to-date. It 
 - Menus UI Testing:
     - `state_machine_generator.py`: generates the State Machine from which the derives later artifacts
     - `transitions_tree_generator.py`: generates the Transitions Tree
+
+## Scripts usage
+
+1. [optional] create and activate the Virtual Environment
+    ```shell
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
+1. install dependencies
+    ```shell
+    pip install -r requirements.txt
+    ```
+1. Run script
+    >Replace `<script>` with the script you want to run
+    ```shell
+    python <script>
+    ```
