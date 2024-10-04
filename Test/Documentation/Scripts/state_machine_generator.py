@@ -12,7 +12,6 @@ class MenusUi(StateMachine):
     quit_game_confirmation = State("Quit Game Confirmation")
     tutorial = State("Tutorial")
 
-    # About UI State Machine
     about = State("About")
 
     proceed = language_selection.to(tos_eula_nickname) | \
@@ -20,14 +19,18 @@ class MenusUi(StateMachine):
         opponent_selection.to(game_mode_selection) | \
         game_mode_selection.to(game) | \
         game_mode_selection.to(tutorial) | \
-        game_mode_selection.to(about)
+        game_mode_selection.to(about) | \
+        post_game.to(game_mode_selection)
     
     go_back = game_mode_selection.to(opponent_selection) | \
         tutorial.to(game_mode_selection) | \
         about.to(game_mode_selection)
-    
+
+    play = game.to(game)
+    end = game.to(post_game)
+
     quit_game = game.to(quit_game_confirmation)
-    quit_yes = quit_game_confirmation.to(post_game)
+    quit_yes = quit_game_confirmation.to(game_mode_selection)
     quit_no = quit_game_confirmation.to(game)
 
 

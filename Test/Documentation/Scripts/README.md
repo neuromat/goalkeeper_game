@@ -4,6 +4,8 @@ A collection of scripts that help maintaining the test documents up-to-date. It 
 
 - Transitions Tree Testing
 
+>If you make changes to any script, make sure you re-generate and commit the resulting diagrams
+
 ## Scripts available
 
 - Menus UI Testing:
