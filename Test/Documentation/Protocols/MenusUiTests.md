@@ -1,14 +1,77 @@
 # Menu UI Tests
 
-Successfully execute paths derived from the Transitions Tree diagram.
-
 ## Basic Flow
 
-[] Language Selection -> ToS/EULA and Nickname -> Opponent Selection -> Game Mode Selection
-[] Game Mode Selection -> About -> Game Mode Selection
-[] Game Mode Selection -> Tutorial -> Game Mode Selection
-[] Game Mode Selection -> Opponent Selection
-[] Game Mode Selection -> Game
-[] Game -> Post-Game -> Game Mode Selection
-[] Game -> Quit Game Confirmation -> Game
-[] Game -> Quit Game Confirmation -> Mode Selection 
+Successfully execute paths derived from the Transitions Tree diagram. Aims to validate the UI navigation.
+
+- [ ] Language Selection -> ToS/EULA and Nickname -> Opponent Selection -> Game Mode Selection
+- [ ] Game Mode Selection -> About -> Game Mode Selection
+- [ ] Game Mode Selection -> Tutorial -> Game Mode Selection
+- [ ] Game Mode Selection -> Opponent Selection
+- [ ] Game Mode Selection -> Game
+- [ ] Game -> Post-Game -> Game Mode Selection
+- [ ] Game -> Quit Game Confirmation -> Game
+- [ ] Game -> Quit Game Confirmation -> Mode Selection
+
+## Textual Content
+
+After selecting one of the languages, verify if the textual components match:
+
+- content: expected content in the view;
+- language: the language selected in the first view.
+
+1. ToS/EULA and Nickname:
+    - Terms of Service and End-User License Agreement text box
+        - [ ] content
+        - [ ] language
+    - Nickname placeholder
+        - [ ] content
+        - [ ] language
+    - Agree/Do Not Agree checkboxes
+        - [ ] content
+        - [ ] language
+    - Next button
+        - [ ] content
+        - [ ] language
+
+1. Opponent Selection
+    - Instructional text (above the opponents list)
+        - [ ] content
+        - [ ] language
+    - Opponents: expected to see a list of opponents/teams defined in `<GameData>/CustomTrees/index.info`, unaffected by the language selection
+        - [ ] content
+    - Next button
+        - [ ] content
+        - [ ] language
+
+1. Game Mode Selection:
+    - Title: `<Opponent> : Game Menu`
+        - [ ] content
+        - [ ] language
+    - Instruction text: on the right side
+        - [ ] content
+        - [ ] language
+    - Tutorial, About, Change opponent and Exit buttons
+        - [ ] content
+        - [ ] language
+    - Start game checkboxes: if enabled in the opponent's `<GameData>/CustomTrees/<Opponent>/tree1.txt`
+        - [ ] content
+        - [ ] language
+    - Game Modes: listed in the `<GameData>/CustomTrees/<Opponent>/tree1.txt`, affected by the selected language
+
+1. About
+    - Submenus buttons on the left side: "What is", "Software", "Docs", "Credits" and "Return"
+        - [ ] content
+        - [ ] language
+    - "What is" descriptive text on the right side
+        - [ ] content
+        - [ ] language
+    - "Software" descriptive text on the right side
+        - [ ] content
+        - [ ] language
+    - "Docs" descriptive text on the right side
+        - [ ] content
+        - [ ] language
+    - "Credits" descriptive text on the right side
+        - [ ] content
+        - [ ] language
