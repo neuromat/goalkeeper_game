@@ -1,7 +1,7 @@
 from statemachine import StateMachine, State
 
 
-class MenusUi(StateMachine):
+class MenusUiStateMachine(StateMachine):
     """Menus UI state machine"""
     language_selection = State("Language Selection", initial=True)
     tos_eula_nickname = State("ToS/EULA and Nickname")
@@ -35,5 +35,5 @@ class MenusUi(StateMachine):
 
 
 if __name__ == '__main__':
-    state_machine = MenusUi()
+    state_machine = MenusUiStateMachine()
     state_machine._graph().write_png("../Diagrams/menu_ui_state_machine.png")
