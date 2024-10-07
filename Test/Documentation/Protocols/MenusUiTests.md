@@ -75,3 +75,41 @@ After selecting one of the languages, verify if the textual components match:
     - "Credits" descriptive text on the right side
         - [ ] content
         - [ ] language
+
+## Opponents and Game Modes
+
+For this section, copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`.
+
+1. Opponents: "Easy", "Medium" and "Hard"
+
+1. Game Modes
+    - Easy
+        - [ ] "Warm-Up" and "Goalkeeper"
+        - [ ] "Start game" checkboxes **enabled** 
+    - Medium
+        - [ ] "Timed Warm-Up", "Goalkeeper"
+        - [ ] "Start game" checkboxes **enabled**
+    - Hard
+        - [ ] "Memory Game", "Declarative Memory"
+        - [ ] "Start game" checkboxes **disabled**
+
+1. Remove one of the opponents in `Test/Samples/CustomTrees/index.info`. The opponent should no longer be available in the "Opponent Selection" view.
+
+## Gameplay
+
+1. Easy Goalkeeper
+    - [ ] 2 actions: left and right
+    - [ ] 1 match with 3 rounds
+    - [ ] History enabled
+    - [ ] Scoreboards disabled
+
+1. Medium Goalkeeper
+    - [ ] 3 actions: left, center and right
+    - [ ] 2 matches: 1st with 3 rounds, 2nd with 4 rounds
+    - [ ] History enabled
+    - [ ] Scoreboards enabled
+
+<!-- 1. Hard - Memory Game
+    - [ ] 3 actions: left, center and right
+    - [ ] 2 matches: 1st with 3 rounds, 2nd with 4 rounds
+    - [ ] Scoreboards enabled -->
