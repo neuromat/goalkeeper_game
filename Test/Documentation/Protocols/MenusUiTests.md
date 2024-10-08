@@ -1,5 +1,7 @@
 # Menu UI Tests
 
+Copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`. `CustomTrees` contain the opponent folders (`Easy`, `Medium` and `Hard`) and the `index.info`
+
 ## Basic Flow
 
 Successfully execute paths derived from the Transitions Tree diagram. Aims to validate the UI navigation.
@@ -10,6 +12,7 @@ Successfully execute paths derived from the Transitions Tree diagram. Aims to va
 - [ ] Game Mode Selection -> Opponent Selection
 - [ ] Game Mode Selection -> Game
 - [ ] Game -> Post-Game -> Game Mode Selection
+- [ ] Game -> Post-Game -> Next Phase (only for "Medium" and "Hard" opponents)
 - [ ] Game -> Quit Game Confirmation -> Game
 - [ ] Game -> Quit Game Confirmation -> Mode Selection
 
@@ -78,7 +81,7 @@ After selecting one of the languages, verify if the textual components match:
 
 ## Opponents and Game Modes
 
-For this section, copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`.
+> Note: the gamemodes and gameplay presented in this document might not be relevant from a research perspective and, instead, they aim to exercise relevant test paths
 
 1. Opponents: "Easy", "Medium" and "Hard"
 
@@ -93,23 +96,4 @@ For this section, copy the CustomTrees from `Test/Samples/CustomTrees` into `<Ga
         - [ ] "Memory Game", "Declarative Memory"
         - [ ] "Start game" checkboxes **disabled**
 
-1. Remove one of the opponents in `Test/Samples/CustomTrees/index.info`. The opponent should no longer be available in the "Opponent Selection" view.
-
-## Gameplay
-
-1. Easy Goalkeeper
-    - [ ] 2 actions: left and right
-    - [ ] 1 match with 3 rounds
-    - [ ] History enabled
-    - [ ] Scoreboards disabled
-
-1. Medium Goalkeeper
-    - [ ] 3 actions: left, center and right
-    - [ ] 2 matches: 1st with 3 rounds, 2nd with 4 rounds
-    - [ ] History enabled
-    - [ ] Scoreboards enabled
-
-<!-- 1. Hard - Memory Game
-    - [ ] 3 actions: left, center and right
-    - [ ] 2 matches: 1st with 3 rounds, 2nd with 4 rounds
-    - [ ] Scoreboards enabled -->
+1. *optional*: remove one of the opponents in `Test/Samples/CustomTrees/index.info`. The opponent should no longer be available in the "Opponent Selection" view
