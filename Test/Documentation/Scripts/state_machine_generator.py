@@ -20,7 +20,8 @@ class MenusUiStateMachine(StateMachine):
         game_mode_selection.to(game) | \
         game_mode_selection.to(tutorial) | \
         game_mode_selection.to(about) | \
-        post_game.to(game_mode_selection)
+        post_game.to(game_mode_selection) | \
+        post_game.to(game)
     
     go_back = game_mode_selection.to(opponent_selection) | \
         tutorial.to(game_mode_selection) | \

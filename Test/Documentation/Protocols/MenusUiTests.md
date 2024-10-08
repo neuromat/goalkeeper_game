@@ -13,6 +13,7 @@ Successfully execute paths derived from the Transitions Tree diagram. Aims to va
 - [ ] Game Mode Selection -> Game
 - [ ] Game -> Post-Game -> Game Mode Selection
 - [ ] Game -> Post-Game -> Next Phase (only for "Medium" and "Hard" opponents)
+- [ ] Next Phase -> Game
 - [ ] Game -> Quit Game Confirmation -> Game
 - [ ] Game -> Quit Game Confirmation -> Mode Selection
 
