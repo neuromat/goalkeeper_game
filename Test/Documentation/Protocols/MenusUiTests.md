@@ -1,6 +1,8 @@
 # Menu UI Tests
 
-Copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`. `CustomTrees` contain the opponent folders (`Easy`, `Medium` and `Hard`) and the `index.info`
+Copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`. `CustomTrees` contain the opponent folders (`Easy`, `Medium`, `Hard` and `Empty`*) and the `index.info`
+
+*`Empty` is a workaround to a known issue where the last opponent does not have any game mode available
 
 ## Basic Flow
 

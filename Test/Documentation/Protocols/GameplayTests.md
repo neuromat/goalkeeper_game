@@ -36,11 +36,9 @@ Copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`. `CustomT
 
 1. Hard - Memory Game
     - [ ] 3 actions: left, center and right
-    - [ ] 2 matches:
-        - 1st: at least 3 rounds, up to 21; expects 3 succesful hits in a row
-        - 2nd: 3 rounds that should resolve in the sequence: right, left and center
-    - [ ] History disabled
-    - [ ] Scoreboards enabled
+    - [ ] History **disabled**
+    - [ ] Scoreboards **disabled**
+    - [ ] Final scordeboard **enabled**
+    - [ ] 1 match:
+        - 1st: probabilistic; up to 12 rounds; expects 3 hits in a row
 
-1. Hard - Declarative Memory:
-    - [ ] Same as "Hard - Memory Game"
