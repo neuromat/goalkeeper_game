@@ -4,31 +4,40 @@ Copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`. `CustomT
 
 1. Easy - Warm-Up
     - [ ] 2 actions: left and right
-    - [ ] 1 match with 11 rounds
+    - [ ] 1 match with 2 rounds; resolves in "left" and "right" (`bmSequ`)
+    - [ ] Maximum of 4 plays (`bmMaxPlays`)
     - [ ] History **disabled**
-    - [ ] Final score **enabled**: X hits in Y plays (X/Y * 100 %)
-    - [ ] Post-Game screen should have only the "Game Menu" button
-    - [ ] Return to Game Modes menu
+    - [ ] Scoreboard **enabled**
+    - [ ] Final scordeboard **enabled**
+
 1. Easy - Goalkeeper
     - [ ] 2 actions: left and right
-    - [ ] 1 match with 3 rounds and it should resolve in: center, right and left
+    - [ ] 1 match with 3 rounds: first kick is random, and the others are deterministic (`state`)
     - [ ] History **enabled**
-    - [ ] Final scode **disabled**
-    - [ ] Post-Game screen should have only the "Game Menu" button
-    - [ ] Return to Game Modes menu
-1. Medium Goalkeeper
+    - [ ] Scoreboard **enabled**
+    - [ ] Final scordeboard **disabled**
+
+1. Medium - Goalkeeper
     - [ ] 3 actions: left, center and right
     - [ ] 2 matches:
         - 1st with 5 rounds
         - 2nd with 3 rounds
-    - [ ] History enabled
-    - [ ] Scoreboards enabled
+    - [ ] History **enabled**
+    - [ ] Scoreboard **enabled**
+    - [ ] Final scordeboard **disabled**
+
+1. Medium - Warm-up with time
+    - [ ] 3 actions: left, center and right
+    - [ ] Countdown before enabling the action buttons
+    - [ ] History **disabled**
+    - [ ] Scoreboard **enabled**
+    - [ ] Final scordeboard **enabled**
 
 1. Hard - Memory Game
     - [ ] 3 actions: left, center and right
     - [ ] 2 matches:
-        - 1st: has at least 3 rounds, up to 21, and expects 3 succesful rounds in a row
-        - 2nd: has 3 rounds should resolve in the sequence: right, left and center
+        - 1st: at least 3 rounds, up to 21; expects 3 succesful hits in a row
+        - 2nd: 3 rounds that should resolve in the sequence: right, left and center
     - [ ] History disabled
     - [ ] Scoreboards enabled
 
