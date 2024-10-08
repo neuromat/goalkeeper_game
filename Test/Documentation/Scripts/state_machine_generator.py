@@ -11,6 +11,8 @@ class MenusUiStateMachine(StateMachine):
     post_game = State("Post-Game")
     quit_game_confirmation = State("Quit Game Confirmation")
     tutorial = State("Tutorial")
+    memorizing_sequence = State("Memorizing Sequence")
+    back_play_game_modes = State("Back / Play / Game Modes")
 
     about = State("About")
 
@@ -21,13 +23,18 @@ class MenusUiStateMachine(StateMachine):
         game_mode_selection.to(tutorial) | \
         game_mode_selection.to(about) | \
         post_game.to(game_mode_selection) | \
-        post_game.to(game)
+        post_game.to(game) | \
+        game_mode_selection.to(memorizing_sequence) | \
+        memorizing_sequence.to(back_play_game_modes)
     
     go_back = game_mode_selection.to(opponent_selection) | \
         tutorial.to(game_mode_selection) | \
-        about.to(game_mode_selection)
+        about.to(game_mode_selection) | \
+        back_play_game_modes.to(memorizing_sequence) | \
+        back_play_game_modes.to(game_mode_selection)
 
-    play = game.to(game)
+    play = game.to(game) | \
+        back_play_game_modes.to(game)
     end = game.to(post_game)
 
     quit_game = game.to(quit_game_confirmation)

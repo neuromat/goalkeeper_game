@@ -14,10 +14,13 @@ Successfully execute paths derived from the Transitions Tree diagram. Aims to va
 - [ ] Game Mode Selection -> Opponent Selection
 - [ ] Game Mode Selection -> Game
 - [ ] Game -> Post-Game -> Game Mode Selection
-- [ ] Game -> Post-Game -> Next Phase (only for "Medium" and "Hard" opponents)
+- [ ] Game -> Post-Game -> Next Phase ("Medium" and "Hard" opponents: more than 1 CustomTree)
 - [ ] Next Phase -> Game
 - [ ] Game -> Quit Game Confirmation -> Game
 - [ ] Game -> Quit Game Confirmation -> Mode Selection
+
+### Memory Game Mode Only
+- [ ] Game Mode Selection -> Memorizing Sequence -> Quit / Play / Game Mode -> Game
 
 ## Textual Content
 
@@ -96,7 +99,7 @@ After selecting one of the languages, verify if the textual components match:
         - [ ] "Timed Warm-Up", "Goalkeeper"
         - [ ] "Start game" checkboxes **enabled**
     - Hard
-        - [ ] "Memory Game", "Declarative Memory"
+        - [ ] "Memory Game"
         - [ ] "Start game" checkboxes **disabled**
 
 1. *optional*: remove one of the opponents in `Test/Samples/CustomTrees/index.info`. The opponent should no longer be available in the "Opponent Selection" view
