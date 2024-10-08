@@ -32,6 +32,7 @@ Copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`. `CustomT
     - [ ] History **disabled**
     - [ ] Scoreboard **enabled**
     - [ ] Final scordeboard **enabled**
+    - [ ] Probabilistic kicks; max of 5 (`limitPlays`)
 
 1. Hard - Memory Game
     - [ ] 3 actions: left, center and right

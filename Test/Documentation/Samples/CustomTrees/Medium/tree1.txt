@@ -12,7 +12,7 @@
     ],
  "minHitsInSequence":"3",
  "bmSequ":"0201",
- "bmLimitPlays":"10",
+ "bmLimitPlays":"5",
  "bmReadSequ":"false",
  "bmMinHits":"0",
  "bmMinHitsInSequence":"5",
