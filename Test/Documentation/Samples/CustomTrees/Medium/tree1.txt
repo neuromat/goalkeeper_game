@@ -10,7 +10,7 @@
     {"path":"1","probEvent0":"0","probEvent1":"0"},
     {"path":"2","probEvent0":"1","probEvent1":"0"}
     ],
- "minHitsInSequence":"0",
+ "minHitsInSequence":"3",
  "bmSequ":"0201",
  "bmLimitPlays":"10",
  "bmReadSequ":"false",
@@ -26,7 +26,7 @@
  "animationTypeOthers":"short",
  "scoreboard":"true",
  "groupCode":"WEB",
- "finalScoreboard":"none",
+ "finalScoreboard":"short",
  "playsToRelax":"0",
  "showHistory":"true",
  "sendMarkersToEEG":"none",

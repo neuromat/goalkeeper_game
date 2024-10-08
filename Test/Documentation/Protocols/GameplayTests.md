@@ -4,27 +4,27 @@ Copy the CustomTrees from `Test/Samples/CustomTrees` into `<GameData>`. `CustomT
 
 1. Easy - Warm-Up
     - [ ] 2 actions: left and right
-    - [ ] 1 match with 2 rounds; resolves in "left" and "right" (`bmSequ`)
-    - [ ] Maximum of 4 plays (`bmMaxPlays`)
     - [ ] History **disabled**
     - [ ] Scoreboard **enabled**
     - [ ] Final scordeboard **enabled**
+    - [ ] 1 match with 2 rounds; resolves in "left" and "right" (`bmSequ`)
+    - [ ] Maximum of 4 plays (`bmMaxPlays`)
 
 1. Easy - Goalkeeper
     - [ ] 2 actions: left and right
-    - [ ] 1 match with 3 rounds: first kick is random, and the others are deterministic (`state`)
     - [ ] History **enabled**
     - [ ] Scoreboard **enabled**
     - [ ] Final scordeboard **disabled**
+    - [ ] 1 match with 3 rounds: first kick is random, and the others are deterministic (`state`)
 
 1. Medium - Goalkeeper
     - [ ] 3 actions: left, center and right
-    - [ ] 2 matches:
-        - 1st with 5 rounds
-        - 2nd with 3 rounds
     - [ ] History **enabled**
     - [ ] Scoreboard **enabled**
-    - [ ] Final scordeboard **disabled**
+    - [ ] Final scordeboard **enabled** (short)
+    - [ ] 2 matches:
+        - 1st with 5 rounds maximum; resolves in right, left, center, and repeat; requires at least 3 hits in a row
+        - 2nd with 3 rounds maximum; resolves in left, center and right; requires at least 3 hits in a row
 
 1. Medium - Warm-up with time
     - [ ] 3 actions: left, center and right
