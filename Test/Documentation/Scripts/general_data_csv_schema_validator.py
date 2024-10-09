@@ -154,7 +154,6 @@ def validate_general_data(csv_file_path: str):
             schema defined
     """
     schema, schema_type = get_schema(csv_file_path)
-    print(schema_type)
     if schema_type == "JG":
         data_frame = parse_jg_results_data(csv_file_path)
     else:
