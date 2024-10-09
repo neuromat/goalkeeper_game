@@ -1,6 +1,7 @@
 from pathlib import Path
 from general_data_csv_schema_validator import validate_general_data
 from moves_data_csv_schema_validator import validate_moves_data
+from memory_game_data_csv_schema_validator import validate_memory_game_data
 
 
 def get_results_file_paths(relative_game_data_root_path_str: str):
@@ -15,6 +16,8 @@ def validate(file_paths_str: str):
     for f in file_paths_str:
         validate_general_data(f)
         validate_moves_data(f)
+        if "_JM_" in f:
+            validate_memory_game_data(f)
 
 def main():
     build_version = "v2024-10-03_17h58"
