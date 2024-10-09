@@ -2,7 +2,7 @@ from pandera import DataFrameSchema, Column
 from pandera.errors import SchemaErrors
 from pandas import read_csv, DataFrame
 
-schema = DataFrameSchema({
+base_schema_mapping = {
     "currentLanguage": Column(str),
     "operatingSystem": Column(str),
     "ipAddress": Column(str),
@@ -65,11 +65,17 @@ schema = DataFrameSchema({
     "keyboardMarker8": Column(float),
     "keyboardMarker9": Column(float),
     "keyboardMarker0": Column(float),
-    "minHits": Column(int),
     "minHitsInSequence": Column(int),
-    "maxPlays": Column(int),
     "sequExecuted": Column(int)
-})
+}
+
+jg_schema = DataFrameSchema(base_schema_mapping)
+ar_aq_schema = DataFrameSchema({
+    **base_schema_mapping, "minHits": Column(int),
+    "maxPlays": Column(int) })
+jm_schema = DataFrameSchema({
+    **base_schema_mapping, "sequJMGiven": Column(int),
+    "maxPlays": Column(int) })
 
 def parse_data_in_column(data, i):
     # since the DataFrame has to be transposed,
@@ -77,7 +83,7 @@ def parse_data_in_column(data, i):
 
     # when opening the CSV with a spreadsheet
     #   software, lines start in '1', making
-    #   it easier to manually verify
+    #   it easier to manually verify it
     i += 1
     int_fields_indexes = [
         11, 12, 18, 26, 27, 28, 30, 31,
@@ -94,25 +100,66 @@ def parse_data_in_column(data, i):
         if i in float_fields_indexes:
             return float(data)
     except ValueError:
-        # keep as str if unable to parse.
+        # keep as str if unable to parse;
         #   the schema validator will take
         #   care of the validation
         pass
     return str(data)
 
-def validate_csv(csv_file_path: str):
+def get_schema(csv_file_path: str) -> DataFrameSchema:
+    if "_JG_" in csv_file_path:
+        schema = jg_schema
+        schema_type = "JG"
+    elif "_JM_" in csv_file_path:
+        schema = jm_schema
+        schema_type = "JM"
+    elif "_AR_" in csv_file_path \
+        or "_AQ_" in csv_file_path:
+        schema = ar_aq_schema
+        schema_type = "AR_AQ"
+    else:
+        message = f"{csv_file_path} cannot be validated.\n" + \
+            "The file name has to follow the results file naming convention.\n" + \
+            "If this is not a result file, please move it to a different folder"
+        raise Exception(message)
+    return schema, schema_type
+
+def parse_jg_results_data(csv_file_path: str) -> DataFrame:
+    # loads the first 65 lines (0 to 64), skipping "tree" line
+    raw_data = read_csv(
+        csv_file_path, nrows=64, skiprows=[63], header=None,
+        keep_default_na=False).transpose()
+    parsed_data = [
+        parse_data_in_column(data, i)
+        for i, data in enumerate(raw_data.to_numpy()[1])
+    ]
+    return DataFrame([parsed_data], columns=raw_data.to_numpy()[0])
+
+def parse_jm_ar_aq_results_data(csv_file_path: str):
+    # loads the first 66 lines
+    raw_data = read_csv(
+        csv_file_path, nrows=66, header=None,
+        keep_default_na=False).transpose()
+    parsed_data = [
+        parse_data_in_column(data, i)
+        for i, data in enumerate(raw_data.to_numpy()[1])
+    ]
+    return DataFrame([parsed_data], columns=raw_data.to_numpy()[0])
+
+
+def validate_general_data(csv_file_path: str):
     """
     Raises:
         SchemaError: if the file's content doesn't match the
             schema defined
     """
-    raw_data = read_csv(
-        csv_file_path, nrows=66, header=None, keep_default_na=False).transpose()
-    parsed_data = [
-        parse_data_in_column(data, i)
-        for i, data in enumerate(raw_data.to_numpy()[1])
-    ]
-    data_frame = DataFrame([parsed_data], columns=raw_data.to_numpy()[0])
+    schema, schema_type = get_schema(csv_file_path)
+    print(schema_type)
+    if schema_type == "JG":
+        data_frame = parse_jg_results_data(csv_file_path)
+    else:
+        data_frame = parse_jm_ar_aq_results_data(csv_file_path)
+    
     try:
         schema.validate(data_frame, lazy=True)
     except SchemaErrors as e:
@@ -123,9 +170,13 @@ def validate_csv(csv_file_path: str):
         success_message = f"\u2705 {csv_file_path}"
         print(success_message)
 
-if __name__ == "__main__":
+def main():
     build_version = "v2024-10-03_17h58"
     relative_game_data_root_path = f"../../../Build/{build_version}/GK-EEG_Data"
     relative_file_path = f"{relative_game_data_root_path}/" + \
         "Plays_AQ_Test-Easy-1_cybersys-Inspiron-5458_241008_170334_027.csv"
-    validate_csv(relative_file_path)
+    validate_general_data(relative_file_path)
+
+
+if __name__ == "__main__":
+    main()
