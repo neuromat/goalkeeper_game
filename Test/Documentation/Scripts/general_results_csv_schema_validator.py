@@ -106,7 +106,8 @@ def validate_csv(csv_file_path: str):
         SchemaError: if the file's content doesn't match the
             schema defined
     """
-    raw_data = read_csv(csv_file_path, header=None, keep_default_na=False).transpose()
+    raw_data = read_csv(
+        csv_file_path, nrows=66, header=None, keep_default_na=False).transpose()
     parsed_data = [
         parse_data_in_column(data, i)
         for i, data in enumerate(raw_data.to_numpy()[1])
@@ -126,5 +127,5 @@ if __name__ == "__main__":
     build_version = "v2024-10-03_17h58"
     relative_game_data_root_path = f"../../../Build/{build_version}/GK-EEG_Data"
     relative_file_path = f"{relative_game_data_root_path}/" + \
-        "Plays_AQ_Test-Easy-1_cybersys-Inspiron-5458_241008_170334_027_general_fields.csv"
+        "Plays_AQ_Test-Easy-1_cybersys-Inspiron-5458_241008_170334_027.csv"
     validate_csv(relative_file_path)
