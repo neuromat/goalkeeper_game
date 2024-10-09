@@ -162,11 +162,11 @@ def validate_general_data(csv_file_path: str):
     try:
         schema.validate(data_frame, lazy=True)
     except SchemaErrors as e:
-        fail_message = f"\u274C {csv_file_path}"
+        fail_message = f"\u274C [general] {csv_file_path}"
         print(fail_message)
         print(e.failure_cases)
     else:
-        success_message = f"\u2705 {csv_file_path}"
+        success_message = f"\u2705 [general] {csv_file_path}"
         print(success_message)
 
 def main():
