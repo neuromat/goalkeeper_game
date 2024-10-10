@@ -162,19 +162,20 @@ def validate_general_data(csv_file_path: str):
     try:
         schema.validate(data_frame, lazy=True)
     except SchemaErrors as e:
-        fail_message = f"\u274C [general] {csv_file_path}"
-        print(fail_message)
-        print(e.failure_cases)
+        message = f"\u274C [general] {csv_file_path}\n{e.failure_cases}"
+        is_valid = False
     else:
-        success_message = f"\u2705 [general] {csv_file_path}"
-        print(success_message)
+        message = f"\u2705 [general] {csv_file_path}"
+        is_valid = True
+    return is_valid, message
 
 def main():
     build_version = "v2024-10-03_17h58"
     relative_game_data_root_path = f"../../../Build/{build_version}/GK-EEG_Data"
     relative_file_path = f"{relative_game_data_root_path}/" + \
         "Plays_AQ_Test-Easy-1_cybersys-Inspiron-5458_241008_170334_027.csv"
-    validate_general_data(relative_file_path)
+    _, message = validate_general_data(relative_file_path)
+    print(message)
 
 
 if __name__ == "__main__":

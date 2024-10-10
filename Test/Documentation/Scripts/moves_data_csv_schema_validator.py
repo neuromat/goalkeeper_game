@@ -31,15 +31,16 @@ def validate_moves_data(csv_file_path: str):
     data_frame = read_csv(
         csv_file_path, skiprows=skip_rows,
         keep_default_na=False)
+    
     try:
         moves_data_schema.validate(data_frame, lazy=True)
     except SchemaErrors as e:
-        fail_message = f"\u274C [moves] {csv_file_path}"
-        print(fail_message)
-        print(e.failure_cases)
+        message = f"\u274C [moves] {csv_file_path}\n{e.failure_cases}"
+        is_valid = False
     else:
-        success_message = f"\u2705 [moves] {csv_file_path}"
-        print(success_message)
+        message = f"\u2705 [moves] {csv_file_path}"
+        is_valid = True
+    return is_valid, message
 
 def main():
     build_version = "v2024-10-03_17h58"

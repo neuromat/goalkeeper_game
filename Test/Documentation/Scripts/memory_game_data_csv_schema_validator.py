@@ -40,12 +40,12 @@ def validate_memory_game_data(csv_file_path: str):
     try:
         memory_game_data_schema.validate(data_frame, lazy=True)
     except SchemaErrors as e:
-        fail_message = f"\u274C [memory] {csv_file_path}"
-        print(fail_message)
-        print(e.failure_cases)
+        message = f"\u274C [memory] {csv_file_path}"
+        is_valid = False
     else:
-        success_message = f"\u2705 [memory] {csv_file_path}"
-        print(success_message)
+        message = f"\u2705 [memory] {csv_file_path}"
+        is_valid = True
+    return is_valid, message
 
 def main():
     build_version = "v2024-10-03_17h58"

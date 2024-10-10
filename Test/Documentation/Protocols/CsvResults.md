@@ -44,17 +44,28 @@ If the validation fails, it will indicate which field has an error and what data
 
 Example of output:
 ```shell
-❌ [general] ../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_JM_Test-Hard-1_cybersys-Inspiron-5458_241008_170650_115.csv
-  schema_context    column           check check_number failure_case index
-0         Column  maxPlays  dtype('int64')         None       object  None
-✅ [moves] ../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_JM_Test-Hard-1_cybersys-Inspiron-5458_241008_170650_115.csv
-❌ [memory] ../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_JM_Test-Hard-1_cybersys-Inspiron-5458_241008_170650_115.csv
+../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_AQ_CT-0_DESKTOP-G4IET5H_191112_160332_843.csv
+✅ [general]
+✅ [moves]
+../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_JG_CT-0_celso.local_191125_181103_656.csv
+✅ [general]
+✅ [moves]
+../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_AQ_CT-0_DESKTOP-G4IET5H_191112_143515_474.csv
+❌ [general]
+✅ [moves]
+../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_AQ_CT-0_DESKTOP-G4IET5H_191112_155828_131.csv
+✅ [general]
+✅ [moves]
+
+--- Summary of invalid files ---
+
+❌ [general] ../../../Build/v2024-10-03_17h58/GK-EEG_Data/Plays_AQ_CT-0_DESKTOP-G4IET5H_191112_143515_474.csv
   schema_context column           check check_number failure_case index
-0         Column    try  dtype('int64')         None       object  None
+0         Column  phase  dtype('int64')         None       object  None
 ```
 
-In this example, the output indicates that the field `maxPlays` is invalid, as it expects a **integer** data type (`dtype(int64)`) in the **general** data section (`[general]`), and expects `try` to also be an **integer** (`dtype(int64)`) in the **memory game** data (`[memory]`)
+In this example, in the *Summary of invalid files*, the output indicates that the field `phase` in the `Plays_AQ_CT-0_DESKTOP-G4IET5H_191112_143515_474.csv` file is *invalid*, as it expects an **integer** data type (`dtype(int64)`) in the **general** data section (`[general]`).
 
 ## Running the validator against samples
 
-If you wish to run the validator against provided samples, copy the files from `Samples/Results` into the `<GameData>` folder.
+If you wish to run the validator against provided samples, copy the files from `Samples/SimpleResults` or `Samples/ComplexResults` into the `<GameData>` folder.
