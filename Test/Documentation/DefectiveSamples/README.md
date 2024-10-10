@@ -21,7 +21,7 @@ Using `SuccessRate1` (snippet):
 
 If we successfully defend the 3 first attempts, thus ending the match, we expect to have a `successRate` of `1.0`. Instead, we observe `0.3`.
 
-### 1. Reaching the attempts in less than 10 rounds
+### 1. Completing a match with less than 10 rounds
 
 Using `SuccessRate1` (snippet):
 ```json
