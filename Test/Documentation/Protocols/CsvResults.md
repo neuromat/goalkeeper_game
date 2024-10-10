@@ -53,6 +53,8 @@ Example of output:
 0         Column    try  dtype('int64')         None       object  None
 ```
 
+In this example, the output indicates that the field `maxPlays` is invalid, as it expects a **integer** data type (`dtype(int64)`) in the **general** data section (`[general]`), and expects `try` to also be an **integer** (`dtype(int64)`) in the **memory game** data (`[memory]`)
+
 ## Running the validator against samples
 
 If you wish to run the validator against provided samples, copy the files from `Samples/Results` into the `<GameData>` folder.
