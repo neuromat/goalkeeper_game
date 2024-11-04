@@ -78,8 +78,8 @@ crashlytics-build.properties
 *.csv.meta
 
 # Game configuration files
-CustomTrees
-CustomTrees.meta
+Assets/**/CustomTrees
+Assets/**/CustomTrees.meta
 Assets/CustomTrees_example.meta
 Assets/CustomTrees_example/README.txt.meta
 Assets/Resources/GKGConfig.meta
