@@ -446,12 +446,15 @@ public class UIManager : MonoBehaviour
 
 					//marcador de direcao de defesa esperada
 					if (e == 0) {
-						Write (0x02);        //marcador 2: DEFESA ESPERADA aa esquerda
+						Debug.Log ("Expected left");
+						Write (0x22);        //marcador 2: DEFESA ESPERADA aa esquerda
 					} else {
 						if (e == 1) {
-							Write (0x04);    //marcador 4: DEFESA ESPERADA ao centro
+							Debug.Log ("Expected center");
+							Write (0x44);    //marcador 4: DEFESA ESPERADA ao centro
 						} else {
-							Write (0x08);    //marcador 8: DEFESA ESPERADA aa direita
+							Debug.Log ("Expected right");
+							Write (0x88);    //marcador 8: DEFESA ESPERADA aa direita
 						}
 					}
 					for (j = 1; j < timeBetweenMarkers; j++) {
@@ -462,11 +465,11 @@ public class UIManager : MonoBehaviour
 
 
 					// marcador indicativo de jogada random ou não random
-					if (eLog.ehRandom == 'Y') {
-						Write (0x10);        //marcador 16: JOGADA RANDOM
-					} else {
-						Write (0x20);        //marcador 32: JOGADA NAO RANDOM
-					}
+					// if (eLog.ehRandom == 'Y') {
+					// 	Write (0x10);        //marcador 16: JOGADA RANDOM
+					// } else {
+					// 	Write (0x20);        //marcador 32: JOGADA NAO RANDOM
+					// }
 					for (j = 1; j < timeBetweenMarkers; j++) {
 						j = j + 1;
 					}
@@ -476,12 +479,15 @@ public class UIManager : MonoBehaviour
 
 					// marcador de direcao de defesa selecionada
 					if (eLog.optionChosenInt == 0) {
-						Write (0x02);        //marcador 2: DEFESA DADA aa esquerda
+						Debug.Log ("Action left");
+						Write (0x22);        //marcador 2: DEFESA DADA aa esquerda
 					} else {
 						if (eLog.optionChosenInt == 1) {
-							Write (0x04);    //marcador 4: DEFESA DADA ao centro
+							Debug.Log ("Action center");
+							Write (0x44);    //marcador 4: DEFESA DADA ao centro
 						} else {
-							Write (0x08);    //marcador 4: DEFESA DADA aa direita
+							Debug.Log ("Action right");
+							Write (0x88);    //marcador 4: DEFESA DADA aa direita
 						}
 					}
 					for (j = 1; j < timeBetweenMarkers; j++) {
@@ -1353,9 +1359,12 @@ public class UIManager : MonoBehaviour
 				//
 				//180104
 				#if UNITY_STANDALONE_WIN  || UNITY_EDITOR_WIN
-//				Debug.Log("Porta="+ probs.getPortSendData());
-				definePortAccess (0xbd00);
-//				definePortAccess (0x378);
+				/*
+				String portAddress = probs.getPortSendData();
+				Debug.Log ("Port address: " + portAddress);
+				definePortAccess (Convert.ToUInt16(portAddress));
+				*/
+				definePortAccess (0xEEFC); // Hard-coded portSendData
 //				pIn = probs.getPortSendData();
 //				ushort pOut = Convert.ToUInt16(pIn);
 //				definePortAccess (pOut);
