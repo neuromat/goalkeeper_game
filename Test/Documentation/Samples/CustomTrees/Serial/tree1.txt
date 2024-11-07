@@ -1,4 +1,4 @@
-{"id":"CT-0",
+{"id":"Serial-1",
  "limitPlays":"18",
  "choices":"3",
  "depth":"2",
