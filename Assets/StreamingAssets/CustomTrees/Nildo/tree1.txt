@@ -51,9 +51,9 @@
  "timeFaixa4":"0.1",
  "menus":[
     {"game":"1","title":"Aquecimento",                 "sequMenu":"0"},
-    {"game":"2","title":"Jogo do Goleiro",             "sequMenu":"2"},
-    {"game":"3","title":"Memória Declarativa",         "sequMenu":"0"},
+    {"game":"2","title":"Jogo do Goleiro",             "sequMenu":"0"},
+    {"game":"3","title":"Memória Declarativa",         "sequMenu":"1"},
     {"game":"4","title":"Aquecimento contra o relógio","sequMenu":"0"},
-    {"game":"5","title":"Jogo da Memória",             "sequMenu":"0"}
+    {"game":"5","title":"Jogo da Memória",             "sequMenu":"2"}
     ]
 }
