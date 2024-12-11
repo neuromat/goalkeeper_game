@@ -1,9 +1,8 @@
-/**
- * Module written by scaroni <renato.scaroni@gmail.com>
- * Removed by decision of Amparo Research Group: no progressionBar
- */
-
-using UnityEngine;
+/**************************************************************************************/
+// Module written by scaroni <renato.scaroni@gmail.com>
+//  
+// Removed by decision of Amparo Research Group: no progressionBar
+/**************************************************************************************/using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -13,14 +12,11 @@ public class ProgressionBar : MonoBehaviour
 	public float totalTime;
 	
 	private float timeTicker;
-	private float initialValue = .0f;
+	private float initialValue = .0f;  //Josi: era assim, mas comecava preenchido....  .1f;
 	private float currTarget = .1f;
 	private float currBaseValue = .1f;
 	private float barFactor;
-// <<<<<<< HEAD
-// =======
-// 	private ProbCalculator probCalculator;
-// >>>>>>> gk-eeg-repo/main
+	private ProbCalculator probCalculator;
 	private float CurrentLimitValue = 80f; 
 	
 	public void SetInitialValue (float v)
@@ -41,6 +37,7 @@ public class ProgressionBar : MonoBehaviour
 	
 	public void RecalculateBarFactor ()
 	{
+		//* float max = probCalculator.GetCurrentLimitValue()/100; //180327 obsolet param
 		float max = CurrentLimitValue/100;
 		barFactor = max;
 	}
@@ -48,15 +45,10 @@ public class ProgressionBar : MonoBehaviour
 	void Start () 
 	{
 		fill.fillAmount = initialValue;	
-// <<<<<<< HEAD
+		probCalculator = ProbCalculator.instance;
 	}
 	
-// =======
-// 		probCalculator = ProbCalculator.instance;
-// 	}
-//	
-// 	// Update is called once per frame
-// >>>>>>> gk-eeg-repo/main
+	// Update is called once per frame
 	void Update () 
 	{
 		if(!currTarget.Equals(fill.fillAmount))
